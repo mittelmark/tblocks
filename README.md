@@ -45,9 +45,10 @@ we get the following output:
 
 ## Installation
 
-Copy the tblock.tcl file to a belonging to your PATH and make it executable.
+Copy the [tblock.tcl](https://raw.githubusercontent.com/mittelmark/tblocks/main/tblocks/tblocks.tcl)
+file to a belonging to your PATH and make it executable. You need to have the
+Tcl programming language installed on your machine.
 
-Alternatively you can just download the single file Tcl-script https://raw.githubusercontent.com/mittelmark/tsvg/main/tsvg/tsvg.tcl and source it into your Tcl application.
 
 ## Changes
 
