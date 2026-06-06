@@ -6,7 +6,7 @@ The basic idea is that we write our flowcharts with block diagrams in
 Markdown. Here an example:
 
 ```md
-__Call by Value__
+## Call by Value
 Concept:
     Clones the data.
 
@@ -16,7 +16,7 @@ Concept:
 Safe but inefficient for large
 data structures.
 
-__Pointers__
+## Pointers
 Concept:
     Passes memory address.
 
@@ -26,7 +26,7 @@ Concept:
 Requires eight '*' and two '&' symbols
 for resolving the address issues.
 
-__References__
+## References
 Concept:
     Creates an alias.
 
