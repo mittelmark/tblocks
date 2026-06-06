@@ -83,7 +83,7 @@ Here an example for a sequence:
 
 And here the output after a call like this `tclsh tblocks.tcl sequence.md sequence.svg`.
 
-![](assets/sequences.svg)
+![](assets/sequence.svg)
 
 If you need pdf or png files as output you might use a tool like cairosvg to
 convert the svg files to these other image formats. :
@@ -101,7 +101,8 @@ Tcl programming language installed on your machine.
 ## TODO's
 
 - flexible block height based on the number of input lines
-- more block types, more icons
+- more block types
+- more icons
 - documentation
 
 ## Changes
