@@ -51,12 +51,58 @@ If you have four blocks, your tour blocks would be aligned as a 2x2 matrix. Ther
 
 To generate images out of these files see the commands in the [Makefile](Makefile).
 
+Here an example for a sequence:
+
+```md
+## Title 1
+
+- point 1
+- point 2
+- point 3
+
+
+## Title 2 icon:yes
+
+- point 4
+- point 5
+- point 6
+
+## Title 3
+
+* point 7
+* point 8
+* point 9
+
+
+## Title 4
+
+* point 10
+* point 11
+* point 12
+```
+
+And here the output after a call like this `tclsh tblocks.tcl sequence.md sequence.svg`.
+
+![](assets/sequences.svg)
+
+If you need pdf or png files as output you might use a tool like cairosvg to
+convert the svg files to these other image formats. :
+
+## Documentation
+
+WIP
+
 ## Installation
 
 Copy the [tblock.tcl](https://raw.githubusercontent.com/mittelmark/tblocks/main/tblocks/tblocks.tcl)
 file to a belonging to your PATH and make it executable. You need to have the
 Tcl programming language installed on your machine.
 
+## TODO's
+
+- flexible block height based on the number of input lines
+- more block types, more icons
+- documentation
 
 ## Changes
 
