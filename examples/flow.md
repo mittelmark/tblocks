@@ -2,8 +2,8 @@
 
 Input
 
-This is some text which is
-displayed over several 
+This is some text which
+is displayed over several 
 lines in sequence.
 
 ## UNKOWN
@@ -11,14 +11,14 @@ lines in sequence.
 Function
 
 
-This function has to be found
-by the algorithm.
+This function has to be
+found by the algorithm.
 
 ## KNOWN
 
 Output
 
-This is the final output, we
-optimize the function to find 
-this.
+This is the final output,
+we optimize the function
+to find this.
 

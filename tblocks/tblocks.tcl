@@ -366,7 +366,7 @@ proc ::tblocks::main {argv} {
         if {[regexp {^__} $line] || [regexp {^## } $line]} {
             if {$mode eq "inout"} {
                 if {$n == 0} {
-                    puts $out [::tblocks::in-out [list [lindex [lindex $colors 0] 0] [lindex [lindex $colors 3] 1]]]
+                    puts $out [::tblocks::in-out [list [lindex [lindex $colors 0] 0] [lindex [lindex $colors 0] 1]]]
                 }
                 puts $out [::tblocks::text [lindex [lindex $coords $n] 0] [lindex [lindex $coords $n] 1] [regsub {^[#_]+ } $line ""] header middle]
                 set cy 160

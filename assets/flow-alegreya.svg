@@ -17,7 +17,7 @@
   .bold {
       font-family: 'Alegreya', sans-serif;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 22px;
   }
   
   </style>

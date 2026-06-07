@@ -24,3 +24,4 @@ example:
 	tclsh tblocks/tblocks.tcl --boxes examples/cpp-overload.md examples/cpp-overload.svg	
 	tclsh tblocks/tblocks.tcl --boxes examples/cpp-func.md examples/cpp-func.svg
 	tclsh tblocks/tblocks.tcl --sequence examples/sequence.md examples/sequence.svg	
+	tclsh tblocks/tblocks.tcl --inout examples/flow.md assets/flow.svg

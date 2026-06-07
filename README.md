@@ -148,7 +148,6 @@ the file. Here an example where we create grey color diagram.
 
 ```md
 ---
----
 sans-font: "Mali"
 mono-font: "Chivo Mono"
 color0: "#eeeeee" "#bbbbbb"
