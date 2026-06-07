@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
  <svg width="900" height="400" xmlns="http://www.w3.org/2000/svg">
   <style>
-  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  @import url(https://fonts.bunny.net/css?family=alegreya-sans-sc:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
   .header {
-      font-family: 'Andika', sans-serif;
+      font-family: 'Alegreya Sans SC', sans-serif;
       font-size: 28px;
   }
   .normal {
-      font-family: 'Andika', sans-serif;
+      font-family: 'Alegreya Sans SC', sans-serif;
       font-size: 22px;
   }
   .mono {
@@ -15,7 +15,7 @@
       font-size: 22px;
   }
   .bold {
-      font-family: 'Andika', sans-serif;
+      font-family: 'Alegreya Sans SC', sans-serif;
       font-weight: bold;
       font-size: 20px;
   }

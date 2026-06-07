@@ -18,31 +18,42 @@ proc ::tblocks::usage {app} {
 proc ::tblocks::help {app argv} {
     puts help
 }
-proc ::tblocks::header {} {
-    return {<?xml version="1.0" encoding="ISO-8859-1"?>
+proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
+    set sans [lindex $fonts 0]
+    set mono [lindex $fonts 1]
+    set code {<?xml version="1.0" encoding="ISO-8859-1"?>
  <svg width="__width__" height="__height__" xmlns="http://www.w3.org/2000/svg">
   <style>
-  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  @import url(https://fonts.bunny.net/css?family=__sans-font__:400,400i,700,700i|__mono-font__:400,400i,700,700i);
   .header {
-      font-family: 'Andika', sans-serif;
+      font-family: '__Sans-Font__', sans-serif;
       font-size: 28px;
   }
   .normal {
-      font-family: 'Andika', sans-serif;
+      font-family: '__Sans-Font__', sans-serif;
       font-size: 22px;
   }
   .mono {
-      font-family: 'Ubuntu Mono', monospaced;
+      font-family: '__Mono-Font_', monospaced;
       font-size: 22px;
   }
   .bold {
-      font-family: 'Andika', sans-serif;
+      font-family: '__Sans-Font__', sans-serif;
       font-weight: bold;
       font-size: 20px;
   }
   
   </style>
 }
+set code [regsub -all {__height__} $code $height]
+set code [regsub -all {__width__} $code $width]
+set sansfont [string tolower [regsub -all { } $sans "-"]]
+set monofont [string tolower [regsub -all { } $mono "-"]]
+set code [regsub -all {__Sans-Font__} $code $sans]
+set code [regsub -all {__Mono-Font__} $code $mono]
+set code [regsub -all {__sans-font__} $code $sansfont]
+set code [regsub -all {__mono-font__} $code $monofont]
+return $code
 }
 
 proc ::tblocks::footer {} {
@@ -204,28 +215,47 @@ proc ::tblocks::text {cx cy text style anchor} {
     set code [string map {"LOWER" "&lt;"} $code]            
 }
 
-proc ::tblocks::main {argv} {
-    set mode boxes
-    if {[lsearch $argv --table] > -1} {
-        set mode table
-        set idx [lsearch $argv --table]
-        set argv [lreplace $argv $idx $idx]
-    } 
-    if {[lsearch $argv --inout] > -1} {
-        set mode inout
-        set idx [lsearch $argv --inout]
-        set argv [lreplace $argv $idx $idx]
-    } 
-    if {[lsearch $argv --boxes] > -1} {
-        set mode boxes
-        set idx [lsearch $argv --boxes]
-        set argv [lreplace $argv $idx $idx]
-    } 
-    if {[lsearch $argv --sequence] > -1} {
-        set mode sequence
-        set idx [lsearch $argv --sequence]
-        set argv [lreplace $argv $idx $idx]
+proc ::tblocks::pargs {} {
+    uplevel 1 {
+        if {[lsearch $argv --table] > -1} {
+            set mode table
+            set idx [lsearch $argv --table]
+            set argv [lreplace $argv $idx $idx]
+        } 
+        if {[lsearch $argv --inout] > -1} {
+            set mode inout
+            set idx [lsearch $argv --inout]
+            set argv [lreplace $argv $idx $idx]
+        } 
+        if {[lsearch $argv --boxes] > -1} {
+            set mode boxes
+            set idx [lsearch $argv --boxes]
+            set argv [lreplace $argv $idx $idx]
+        } 
+        if {[lsearch $argv --sequence] > -1} {
+            set mode sequence
+            set idx [lsearch $argv --sequence]
+            set argv [lreplace $argv $idx $idx]
+        }
+        if {[lsearch $argv --sans-font*] > -1} {
+            set idx [lsearch $argv --sans-font*]
+            set font [regsub {.+=} [lindex $argv $idx] ""]
+            lset fonts 0 $font
+            set argv [lreplace $argv $idx $idx]
+        }
+        if {[lsearch $argv --mono-font*] > -1} {
+            set idx [lsearch $argv --mono-font*]
+            set font [regsub {.+=} [lindex $argv $idx] ""]
+            lset fonts 1 $font
+            set argv [lreplace $argv $idx $idx]
+        }
+
     }
+}
+proc ::tblocks::main {argv} {
+    set fonts [list Andika "Ubuntu Mono"]
+    set mode boxes
+    ::tblocks::pargs
     set infile [lindex $argv 0]
     set outfile [lindex $argv 1]
     ## lightgreen lightmagenta lightblue lightred sand1 sand2
@@ -297,7 +327,7 @@ proc ::tblocks::main {argv} {
     }
     set out [open $outfile w 0600]
     
-    puts $out [regsub __height__ [regsub {__width__}  [::tblocks::header] $width] $height]
+    puts $out [::tblocks::header $height $width $fonts]
     set n 0
     set m 0
     set cy 0

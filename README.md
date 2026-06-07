@@ -48,6 +48,7 @@ If you have four blocks, your tour blocks would be aligned as a 2x2 matrix. Ther
 - tables - basically to big blocks side by side - see [examples/cpp-does.md](examples/cpp-does.md)
 - sequences -  see [examples/sequence.md](examples/sequence.md)
 - blocks - see [examples/cpp-overload.md](examples/cpp-overload.md)
+- in-out sequences - see [examples/flow.md](examples/flow.md)
 
 To generate images out of these files see the commands in the [Makefile](Makefile).
 
@@ -119,6 +120,18 @@ this.
 If you need pdf or png files as output you might use a tool like cairosvg to
 convert the svg files to these other image formats. :
 
+## Fonts
+
+The default fonts used by the application/package are Andika, a sans serif
+font available from [https://www.fonts.bunny.net](https://www.fonts.bunny.net) and "Ubuntu
+Mono" for monospaced text. Both fonts are dynmically loaded from that website. You can switch the fonts by providing the command line arguments `--sans-font="FONTNAME"`or `--mono-font="FONTNAME"` to change these two default fonts here an example,
+
+Let's change the last image by using the "Alegreya Sans SC" font like so:
+
+`tclsh tblocks/tblocks.tcl --inout --sans-font="Alegreya Sans SC" low.md flow-sc.svg`
+
+![](assets/flow-sc.svg)
+
 ## Documentation
 
 WIP
@@ -131,6 +144,7 @@ Tcl programming language installed on your machine.
 
 ## TODO's
 
+- font change via bunny.net
 - first level header sets the type or/and colors so '# mode:inout color1:#eeeeee #bbbbbbb' creates an inout diagram and sets color 1 to greyish
 - greyish backgrounds #eeeeee and #bbbbbb as defaut for all blocks
 - bluish backgrounds #eeeeff and #aaaaff for all blocks - etc
