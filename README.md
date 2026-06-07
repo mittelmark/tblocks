@@ -134,6 +134,7 @@ Tcl programming language installed on your machine.
 - first level header sets the type or/and colors so '# mode:inout color1:#eeeeee #bbbbbbb' creates an inout diagram and sets color 1 to greyish
 - grey backgrounds #eeeeee and #bbbbbb as defaut for all blocks
 - blush backgrounds #eeeeff and #aaaaff for all blocks - etc
+- list items starting with - are always left aligned
 - flexible block height based on the number of input lines
 - more block types
 - more icons
