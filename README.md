@@ -140,9 +140,6 @@ Fonts is open source and non tracking so should be GDPR compliant. Here an examp
 
 ![](assets/flow-alegreya.svg)
 
-.
-
-
 ## Documentation
 
 WIP
