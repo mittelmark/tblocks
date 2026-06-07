@@ -132,10 +132,11 @@ Tcl programming language installed on your machine.
 ## TODO's
 
 - first level header sets the type or/and colors so '# mode:inout color1:#eeeeee #bbbbbbb' creates an inout diagram and sets color 1 to greyish
-- grey backgrounds #eeeeee and #bbbbbb as defaut for all blocks
-- blush backgrounds #eeeeff and #aaaaff for all blocks - etc
+- greyish backgrounds #eeeeee and #bbbbbb as defaut for all blocks
+- bluish backgrounds #eeeeff and #aaaaff for all blocks - etc
 - list items starting with - are always left aligned
 - flexible block height based on the number of input lines
+- 5 and 6 blocks for default blocks with 2/3 and 3/3 layout
 - more block types
 - more icons
 - documentation
