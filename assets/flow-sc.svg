@@ -11,7 +11,7 @@
       font-size: 22px;
   }
   .mono {
-      font-family: '__Mono-Font_', monospaced;
+      font-family: 'Ubuntu Mono', monospaced;
       font-size: 22px;
   }
   .bold {
