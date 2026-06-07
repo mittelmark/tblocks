@@ -13,7 +13,7 @@
 
 namespace eval ::tblocks { }
 proc ::tblocks::usage {app} {
-    puts "Usage $app [-h,--help|--boxes|--table|--sequence] INFILE.md OUTFILE.svg"
+    puts "Usage $app \[-h,--help|--boxes|--table|--sequence\] INFILE.md OUTFILE.svg"
 }
 proc ::tblocks::help {app argv} {
     puts help
@@ -151,6 +151,21 @@ proc ::tblocks::table {xy colors title} {
     }
     return $code
 }
+proc ::tblocks::in-out {colors} {
+    set col1 [lindex $colors 0]
+    set col2 [lindex $colors 1]
+    set code {
+        <polygon points="180,130 290,130 290,115 320,150 290,185 290,170 180,170" fill="__col2__" stroke-width="2" stroke="#888888" />
+        <polygon points="540,130 650,130 650,115 680,150 650,185 650,170 540,170" fill="__col2__" stroke-width="2" stroke="#888888" />
+        <rect width="260" height="180" x="320" y="60" rx="20" ry="20" fill="__col1__" stroke-width="2" stroke="#888888" />
+        <circle cx="150" cy="150" r="70" fill="__col1__" stroke-width="2" stroke="#888888" />
+        <circle cx="750" cy="150" r="70" fill="__col1__" stroke-width="2" stroke="#888888" />
+    }
+    set code [regsub -all {__col1__} $code $col1]
+    set code [regsub -all {__col2__} $code $col2]
+    return $code
+}
+    
 proc ::tblocks::box {xy colors title} {
     set x [lindex $xy 0]
     set y [lindex $xy 1]
@@ -170,18 +185,19 @@ proc ::tblocks::box {xy colors title} {
     set code [regsub __title__ $code [regsub -all {[#_]{2}} $title ""]]
     return $code
 }
-proc ::tblocks::text {cx cy text {style normal}} {
+proc ::tblocks::text {cx cy text style anchor} {
     set text [string map {"&" "ampersand"} $text]
     set text [string map {">" "GREATER"} $text]    
     set text [string map {"<" "LOWER"} $text]        
     while {[regexp {^ } $text]} {
         set text [regsub {^ } $text WSP]
     }
-    set code {   <text x="__x__" y="__y__" class="__style__" text-anchor="left">__text__</text>}
+    set code {   <text x="__x__" y="__y__" class="__style__" text-anchor="__anchor__">__text__</text>}
     set code [regsub __x__ $code $cx]
     set code [regsub __y__ $code $cy]    
     set code [regsub __text__ $code $text]        
     set code [regsub __style__ $code $style] 
+    set code [regsub __anchor__ $code $anchor]     
     set code [string map {"ampersand" "&amp;"} $code]
     set code [string map {"WSP" "&#160;"} $code]    
     set code [string map {"GREATER" "&gt;"} $code]        
@@ -193,6 +209,11 @@ proc ::tblocks::main {argv} {
     if {[lsearch $argv --table] > -1} {
         set mode table
         set idx [lsearch $argv --table]
+        set argv [lreplace $argv $idx $idx]
+    } 
+    if {[lsearch $argv --inout] > -1} {
+        set mode inout
+        set idx [lsearch $argv --inout]
         set argv [lreplace $argv $idx $idx]
     } 
     if {[lsearch $argv --boxes] > -1} {
@@ -241,6 +262,9 @@ proc ::tblocks::main {argv} {
     } elseif {$mode eq "sequence"} {
         set width [expr {300*$n}]
         set height 400
+    } elseif {$mode eq "inout"} {
+        set width 900
+        set height 400
     } else {
         set width 500
         set height 320
@@ -258,6 +282,8 @@ proc ::tblocks::main {argv} {
     set coords [list [list 20 50]]
     if {$mode eq "sequence"} {
         set coords [list [list 30 20] [list 330 20] [list 630 20] [list 930 20] [list 1230 20]]
+    } elseif {$mode eq "inout"} {
+        set coords [list [list 150 30] [list 450 30] [list 750 30]]
     } elseif {$mode eq "table"} {
         set coords [list [list 20 20] [list 520 20]]
     } else {
@@ -278,37 +304,64 @@ proc ::tblocks::main {argv} {
     set cx 0
     foreach line $lines {
         if {[regexp {^__} $line] || [regexp {^## } $line]} {
-            if {$mode eq "table"} {
-                puts $out [::tblocks::table [lindex $coords $n] [lindex $colors $n] $line]
-            } elseif {$mode eq "sequence"} {
-                if {$n > 0} {
-                    puts $out [::tblocks::arrow-right [lindex $coords $n] [lindex $colors [expr {$n-1}]]]
+            if {$mode eq "inout"} {
+                if {$n == 0} {
+                    puts $out [::tblocks::in-out [list [lindex [lindex $colors 0] 0] [lindex [lindex $colors 3] 1]]]
                 }
-                puts $out [::tblocks::sequence [lindex $coords $n] [lindex $colors $n] $line]
+                puts $out [::tblocks::text [lindex [lindex $coords $n] 0] [lindex [lindex $coords $n] 1] [regsub {^[#_]+ } $line ""] header middle]
+                set cy 160
+                set cx [lindex [lindex $coords $n] 0]
+                incr n
             } else {
-                puts $out [::tblocks::box [lindex $coords $n] [lindex $colors $n] $line]
-            }
-            set xy [lindex $coords $n]
-            set x [lindex $xy 0]
-            set y [lindex $xy 1]
-            incr n
-            set cx [expr {$x+15}]
-            set cy [expr {$y+55}]
-            if {$mode in [list "table" "sequence"]} {
-                incr cy 20
+                if {$mode eq "table"} {
+                    puts $out [::tblocks::table [lindex $coords $n] [lindex $colors $n] $line]
+                } elseif {$mode eq "sequence"} {
+                    if {$n > 0} {
+                        puts $out [::tblocks::arrow-right [lindex $coords $n] [lindex $colors [expr {$n-1}]]]
+                    }
+                    puts $out [::tblocks::sequence [lindex $coords $n] [lindex $colors $n] $line]
+                } else {
+                    puts $out [::tblocks::box [lindex $coords $n] [lindex $colors $n] $line]
+                }
+                set xy [lindex $coords $n]
+                set x [lindex $xy 0]
+                set y [lindex $xy 1]
+                incr n
+                set cx [expr {$x+15}]
+                set cy [expr {$y+55}]
+                if {$mode in [list "table" "sequence"]} {
+                    incr cy 20
+                }
             }
         } else {
-            if {[regexp {[^\\s]} $line]} {
-                if {[regexp {`.+`} $line]} {
-                    puts $out [::tblocks::text $cx $cy [regsub -all {`} $line ""] mono]
-                } elseif {[regexp {.+:$} $line]} {
-                    puts $out [::tblocks::text $cx $cy $line bold]
+            if {$mode eq "inout"} {
+                if {[regexp {^[^\\s]} $line]} {
+                    if {$cy == 160} {
+                        puts $out [tblocks::text $cx $cy $line header middle]
+                        set cy 275
+                    } else {
+                        puts $out [tblocks::text $cx $cy $line bold middle]
+                        incr cy 30
+                    }
                 } else {
-                    puts $out [::tblocks::text $cx $cy $line]
+                    # empty lines in the bottom text
+                    if {$cy > 270} {
+                        incr cy 15
+                    }
                 }
-                incr cy 12
+            } else {
+                if {[regexp {[^\\s]} $line]} {
+                    if {[regexp {`.+`} $line]} {
+                        puts $out [::tblocks::text $cx $cy [regsub -all {`} $line ""] mono left]
+                    } elseif {[regexp {.+:$} $line]} {
+                        puts $out [::tblocks::text $cx $cy $line bold left]
+                    } else {
+                        puts $out [::tblocks::text $cx $cy $line left]
+                    }
+                    incr cy 12
+                }
+                incr cy 12 ;# default for empty lines
             }
-            incr cy 12 ;# default for empty lines
         }
     }
     puts $out [::tblocks::footer]

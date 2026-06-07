@@ -1,4 +1,4 @@
-__Call by Value__
+## Call by Value
 Concept:
     Clones the data.
 
@@ -8,7 +8,7 @@ Concept:
 Safe but inefficient for large
 data structures.
 
-__Pointers__
+## Pointers
 Concept:
     Passes memory address.
 
@@ -18,7 +18,7 @@ Concept:
 Requires eight '*' and two '&' symbols
 for resolving the address issues.
 
-__References__
+## References
 Concept:
     Creates an alias.
 

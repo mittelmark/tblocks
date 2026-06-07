@@ -85,6 +85,37 @@ And here the output after a call like this `tclsh tblocks.tcl sequence.md sequen
 
 ![](assets/sequence.svg)
 
+Here an example of an input-output flow chart which can be processed with
+`tclsh tblocks.tcl --inout flow.md flow.svg`:
+
+```md
+## KNOWN
+
+Input
+
+This is some text which is
+displayed over several 
+lines in sequence.
+
+## UNKOWN
+
+Function
+
+
+This function has to be found
+by the algorithm.
+
+## KNOWN
+
+Output
+
+This is the final output, we
+optimize the function to find 
+this.
+```
+
+![](assets/flow.svg)
+
 If you need pdf or png files as output you might use a tool like cairosvg to
 convert the svg files to these other image formats. :
 
@@ -100,6 +131,7 @@ Tcl programming language installed on your machine.
 
 ## TODO's
 
+- grey backgrounds
 - flexible block height based on the number of input lines
 - more block types
 - more icons
