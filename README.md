@@ -1,9 +1,9 @@
 # tblocks
 
-Tcl package to create presentation diagrams with block elements.
+Tcl package to create diagrams with block elements.
 
-The basic idea is that we write our flowcharts with block diagrams in
-Markdown. Here an example:
+Why should we invent just another diagram language if we could just follow the
+basic idea that we write our flowcharts simply in Markdown. Here an example:
 
 ```md
 ## Call by Value
@@ -131,7 +131,9 @@ Tcl programming language installed on your machine.
 
 ## TODO's
 
-- grey backgrounds
+- first level header sets the type or/and colors so '# mode:inout color1:#eeeeee #bbbbbbb' creates an inout diagram and sets color 1 to greyish
+- grey backgrounds #eeeeee and #bbbbbb as defaut for all blocks
+- blush backgrounds #eeeeff and #aaaaff for all blocks - etc
 - flexible block height based on the number of input lines
 - more block types
 - more icons
