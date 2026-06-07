@@ -128,13 +128,19 @@ Mono" for monospaced text. Both fonts are dynmically loaded from that website. Y
 
 Let's change the last image by using the "Alegreya Sans SC" font like so:
 
-`tclsh tblocks/tblocks.tcl --inout --sans-font="Alegreya Sans SC" low.md flow-sc.svg`
+`tclsh tblocks/tblocks.tcl --inout --sans-font="Alegreya Sans SC" flow.md flow-sc.svg`
 
 ![](assets/flow-sc.svg)
 
 It is generally recommended to use sans serif fonts for the main text in
 presentations as serif text is more suitable for longer text paragraphs. Bunny
-Fonts is open source and non tracking so should be GDPR compliant.
+Fonts is open source and non tracking so should be GDPR compliant. Here an example with a serif font which looks not clear enough for me.
+
+`tclsh tblocks/tblocks.tcl --inout --sans-font="Alegreya" flow.md flow-alegreya.svg`
+
+![](assets/flow-alegreya.svg)
+
+.
 
 
 ## Documentation
