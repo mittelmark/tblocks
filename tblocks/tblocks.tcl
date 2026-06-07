@@ -34,7 +34,7 @@ proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
       font-size: 22px;
   }
   .mono {
-      font-family: '__Mono-Font_', monospaced;
+      font-family: '__Mono-Font__', monospaced;
       font-size: 22px;
   }
   .bold {
