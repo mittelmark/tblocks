@@ -130,7 +130,7 @@ Let's change the last image by using the "Alegreya Sans SC" font like so:
 
 `tclsh tblocks/tblocks.tcl --inout --sans-font="Alegreya Sans SC" flow.md flow-sc.svg`
 
-![](assets/flow-sc.svg)
+![](assets/flow-sc.png)
 
 It is generally recommended to use sans serif fonts for the main text in
 presentations as serif text is more suitable for longer text paragraphs. Bunny
