@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
  <svg width="1000" height="640" xmlns="http://www.w3.org/2000/svg">
   <style>
-  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  @import url(https://fonts.bunny.net/css?family=mali:400,400i,700,700i|chivo-mono:400,400i,700,700i);
   .header {
-      font-family: 'Andika', sans-serif;
+      font-family: 'Mali', sans-serif;
       font-size: 28px;
   }
   .normal {
-      font-family: 'Andika', sans-serif;
+      font-family: 'Mali', sans-serif;
       font-size: 22px;
   }
   .mono {
-      font-family: 'Ubuntu Mono', monospaced;
+      font-family: 'Chivo Mono', monospaced;
       font-size: 22px;
   }
   .bold {
-      font-family: 'Andika', sans-serif;
+      font-family: 'Mali', sans-serif;
       font-weight: bold;
       font-size: 22px;
   }
@@ -23,8 +23,8 @@
   </style>
 
 
-<rect width="460" height="240" x="270" y="50" rx="20" ry="20" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
-<rect width="260" height="60" x="370" y="20" rx="20" ry="20" fill="#E68080" stroke-width="2" stroke="#888888" />   
+<rect width="460" height="240" x="270" y="50" rx="20" ry="20" fill="#eeeeee" stroke-width="2" stroke="#888888" />
+<rect width="260" height="60" x="370" y="20" rx="20" ry="20" fill="#bbbbbb" stroke-width="2" stroke="#888888" />   
 <text x="500" y="60" class="header" text-anchor="middle"> Call by Value</text>
 
    <text x="285" y="105" class="bold" text-anchor="left">Concept:</text>
@@ -34,8 +34,8 @@
    <text x="285" y="225" class="normal" text-anchor="left">Safe but inefficient for large</text>
    <text x="285" y="249" class="normal" text-anchor="left">data structures.</text>
 
-<rect width="460" height="240" x="20" y="370" rx="20" ry="20" fill="#FFE5CC" stroke-width="2" stroke="#888888" />
-<rect width="260" height="60" x="120" y="340" rx="20" ry="20" fill="#E6B380" stroke-width="2" stroke="#888888" />   
+<rect width="460" height="240" x="20" y="370" rx="20" ry="20" fill="#eeeeee" stroke-width="2" stroke="#888888" />
+<rect width="260" height="60" x="120" y="340" rx="20" ry="20" fill="#bbbbbb" stroke-width="2" stroke="#888888" />   
 <text x="250" y="380" class="header" text-anchor="middle"> Pointers</text>
 
    <text x="35" y="425" class="bold" text-anchor="left">Concept:</text>
@@ -45,8 +45,8 @@
    <text x="35" y="545" class="normal" text-anchor="left">Requires eight '*' and two '&amp;' symbols</text>
    <text x="35" y="569" class="normal" text-anchor="left">for resolving the address issues.</text>
 
-<rect width="460" height="240" x="520" y="370" rx="20" ry="20" fill="#CCFFCC" stroke-width="2" stroke="#888888" />
-<rect width="260" height="60" x="620" y="340" rx="20" ry="20" fill="#80CC80" stroke-width="2" stroke="#888888" />   
+<rect width="460" height="240" x="520" y="370" rx="20" ry="20" fill="#eeeeee" stroke-width="2" stroke="#888888" />
+<rect width="260" height="60" x="620" y="340" rx="20" ry="20" fill="#bbbbbb" stroke-width="2" stroke="#888888" />   
 <text x="750" y="380" class="header" text-anchor="middle"> References</text>
 
    <text x="535" y="425" class="bold" text-anchor="left">Concept:</text>

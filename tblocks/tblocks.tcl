@@ -40,7 +40,7 @@ proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
   .bold {
       font-family: '__Sans-Font__', sans-serif;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 22px;
   }
   
   </style>
@@ -259,8 +259,16 @@ proc ::tblocks::main {argv} {
     set infile [lindex $argv 0]
     set outfile [lindex $argv 1]
     ## lightgreen lightmagenta lightblue lightred sand1 sand2
-    set colors [list {#D7F5EB #B8EBDF} {#EADEF6 #D6BEEE} {#DCEBFE #BCDAFB}  {#FCE1E8 #FAC5D5} \
-                {#FDE8D5 #FCD3B5} {#FAD0D5 #F9C9B2}]
+   # set colors [list {#D7F5EB #B8EBDF} {#EADEF6 #D6BEEE} {#DCEBFE #BCDAFB}  {#FCE1E8 #FAC5D5} \
+   #             {#FDE8D5 #FCD3B5} {#FAD0D5 #F9C9B2}]
+    set colors [list \
+                {#FFCCCC #E68080} \
+                {#FFE5CC #E6B380} \
+                {#CCFFCC #80CC80} \
+                {#CCFFFF #80CCCC} \
+                {#CCE5FF #80B3E6} \
+                {#E5CCFF #B380E6}]
+    
     if [catch {open $infile r} infh] {
         puts stderr "Cannot open $infile: $infh"
         exit
@@ -268,7 +276,29 @@ proc ::tblocks::main {argv} {
         set lines [list]
         set n 0
         set max 0
+        set lnr 0
+        set yaml false
         while {[gets $infh line] >= 0} {
+            incr lnr
+            if {$lnr == 1 && [regexp {^---} $line]} {
+                set yaml true
+                continue
+            } 
+            if {$yaml && [regexp {^---} $line]} {
+                set yaml false
+                continue
+            }
+            if {$yaml} {
+                regexp {^mode: ([-a-zA-Z0-9]+)} $line -> mode
+                if {[regexp {^sans-font: "([-a-zA-Z0-9 ]+)"} $line -> font]} {
+                    lset fonts 0 $font
+                } elseif {[regexp {^mono-font: "([-a-zA-Z0-9 ]+)"} $line -> font]} {
+                    lset fonts 1 $font
+                } elseif {[regexp {^color([0-9]): "([-#a-zA-Z0-9]+)" "([-#a-zA-Z0-9]+)"}  $line -> x col1 col2]} {
+                    lset colors $x [list $col1 $col2]
+                }
+                continue
+            }
             if {[regexp {^__.+__} $line] || [regexp {^## } $line]} {
                 incr n
                 set m 0
@@ -386,7 +416,7 @@ proc ::tblocks::main {argv} {
                     } elseif {[regexp {.+:$} $line]} {
                         puts $out [::tblocks::text $cx $cy $line bold left]
                     } else {
-                        puts $out [::tblocks::text $cx $cy $line left]
+                        puts $out [::tblocks::text $cx $cy $line normal left]
                     }
                     incr cy 12
                 }

@@ -140,6 +140,33 @@ Fonts is open source and non tracking so should be GDPR compliant. Here an examp
 
 ![](assets/flow-alegreya.svg)
 
+## Colors
+
+You can as well change the default color palette. You can do this, and as well
+change the default fonts that way, within a header section at the beginning of
+the file. Here an example where we create grey color diagram.
+
+```md
+---
+---
+sans-font: "Mali"
+mono-font: "Chivo Mono"
+color0: "#eeeeee" "#bbbbbb"
+color1: "#eeeeee" "#bbbbbb"
+color2: "#eeeeee" "#bbbbbb"
+---
+## Call by Value
+Concept:
+    Clones the data.
+
+`int add(int x, int y);`
+`add(x,y);`
+
+...
+```
+
+![](assets/cpp-func-colors.svg)
+
 ## Documentation
 
 WIP
