@@ -124,13 +124,18 @@ convert the svg files to these other image formats. :
 
 The default fonts used by the application/package are Andika, a sans serif
 font available from [https://www.fonts.bunny.net](https://www.fonts.bunny.net) and "Ubuntu
-Mono" for monospaced text. Both fonts are dynmically loaded from that website. You can switch the fonts by providing the command line arguments `--sans-font="FONTNAME"`or `--mono-font="FONTNAME"` to change these two default fonts here an example,
+Mono" for monospaced text. Both fonts are dynamically loaded from that website. You can switch the fonts by providing the command line arguments `--sans-font="FONTNAME"`or `--mono-font="FONTNAME"` to change these two default fonts here an example,
 
 Let's change the last image by using the "Alegreya Sans SC" font like so:
 
 `tclsh tblocks/tblocks.tcl --inout --sans-font="Alegreya Sans SC" flow.md flow-sc.svg`
 
 ![](assets/flow-sc.png)
+
+> [!CAUTION]
+> Please note that in some situations or for instance during conversion fo these fonts to PNG or PDF files suing 
+> cairosvg or rsvg-convert the fonts must be as well installed locally to be embedded into the final output.
+
 
 It is generally recommended to use sans serif fonts for the main text in
 presentations as serif text is more suitable for longer text paragraphs. Bunny
