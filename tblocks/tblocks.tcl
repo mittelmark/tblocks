@@ -13,7 +13,7 @@
 
 namespace eval ::tblocks { }
 proc ::tblocks::usage {app} {
-    puts "Usage $app \[-h,--help|--mode=(boxes|inout|timelie|table|sequence)\] INFILE.md OUTFILE.svg"
+    puts "Usage $app \[-h,--help|--mode=(boxes|inout|timeline|table|sequence)\] INFILE.md OUTFILE.svg"
 }
 proc ::tblocks::help {app argv} {
     puts help
@@ -223,6 +223,7 @@ proc ::tblocks::pargs {} {
             if {$mode ni [list table inout boxes sequence timeline]}  {
                 puts "Error: unkown mode $mode!"
                 ::tblocks::usage
+                exit 0
             }
             set argv [lreplace $argv $idx $idx]
         } 

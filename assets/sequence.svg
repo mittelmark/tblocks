@@ -17,28 +17,28 @@
   .bold {
       font-family: 'Andika', sans-serif;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 22px;
   }
   
   </style>
 
     
-    <rect width="240" height="266" x="30" y="20" rx="20" ry="20" fill="#B8EBDF" stroke-width="0" stroke="#888888" />    
-    <rect width="240" height="266" x="30" y="120" rx="20" ry="20" fill="#D7F5EB" stroke-width="0" stroke="#888888" />
-    <rect width="240" height="266" x="30" y="70" rx="0" ry="0" fill="#D7F5EB" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="30" y="20" rx="20" ry="20" fill="#E68080" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="30" y="120" rx="20" ry="20" fill="#FFCCCC" stroke-width="0" stroke="#888888" />
+    <rect width="240" height="266" x="30" y="70" rx="0" ry="0" fill="#FFCCCC" stroke-width="0" stroke="#888888" />    
     <text x="150" y="55" class="header" text-anchor="middle"> Title 1</text>
     
    <text x="45" y="107" class="normal" text-anchor="left">- point 1</text>
    <text x="45" y="131" class="normal" text-anchor="left">- point 2</text>
    <text x="45" y="155" class="normal" text-anchor="left">- point 3</text>
 
-        <circle r="24" cx="300" cy="200" fill="#B8EBDF" />
+        <circle r="24" cx="300" cy="200" fill="#E68080" />
         <polygon points="287,185 300,185 319,200 300,215 287,215 305,200" style="fill:white;stroke:white;stroke-width:0" />
     
     
-    <rect width="240" height="266" x="330" y="20" rx="20" ry="20" fill="#D6BEEE" stroke-width="0" stroke="#888888" />    
-    <rect width="240" height="266" x="330" y="120" rx="20" ry="20" fill="#EADEF6" stroke-width="0" stroke="#888888" />
-    <rect width="240" height="266" x="330" y="70" rx="0" ry="0" fill="#EADEF6" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="330" y="20" rx="20" ry="20" fill="#E6B380" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="330" y="120" rx="20" ry="20" fill="#FFE5CC" stroke-width="0" stroke="#888888" />
+    <rect width="240" height="266" x="330" y="70" rx="0" ry="0" fill="#FFE5CC" stroke-width="0" stroke="#888888" />    
     <text x="450" y="55" class="header" text-anchor="middle"> Title 2</text>
     
         <circle cx="16" cy="16" r="10" fill="#A2CB90" stroke="#091812" transform="translate(350 23) scale(1.5)" />
@@ -49,26 +49,26 @@
    <text x="345" y="131" class="normal" text-anchor="left">- point 5</text>
    <text x="345" y="155" class="normal" text-anchor="left">- point 6</text>
 
-        <circle r="24" cx="600" cy="200" fill="#D6BEEE" />
+        <circle r="24" cx="600" cy="200" fill="#E6B380" />
         <polygon points="587,185 600,185 619,200 600,215 587,215 605,200" style="fill:white;stroke:white;stroke-width:0" />
     
     
-    <rect width="240" height="266" x="630" y="20" rx="20" ry="20" fill="#BCDAFB" stroke-width="0" stroke="#888888" />    
-    <rect width="240" height="266" x="630" y="120" rx="20" ry="20" fill="#DCEBFE" stroke-width="0" stroke="#888888" />
-    <rect width="240" height="266" x="630" y="70" rx="0" ry="0" fill="#DCEBFE" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="630" y="20" rx="20" ry="20" fill="#80CC80" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="630" y="120" rx="20" ry="20" fill="#CCFFCC" stroke-width="0" stroke="#888888" />
+    <rect width="240" height="266" x="630" y="70" rx="0" ry="0" fill="#CCFFCC" stroke-width="0" stroke="#888888" />    
     <text x="750" y="55" class="header" text-anchor="middle"> Title 3</text>
     
    <text x="645" y="107" class="normal" text-anchor="left">* point 7</text>
    <text x="645" y="131" class="normal" text-anchor="left">* point 8</text>
    <text x="645" y="155" class="normal" text-anchor="left">* point 9</text>
 
-        <circle r="24" cx="900" cy="200" fill="#BCDAFB" />
+        <circle r="24" cx="900" cy="200" fill="#80CC80" />
         <polygon points="887,185 900,185 919,200 900,215 887,215 905,200" style="fill:white;stroke:white;stroke-width:0" />
     
     
-    <rect width="240" height="266" x="930" y="20" rx="20" ry="20" fill="#FAC5D5" stroke-width="0" stroke="#888888" />    
-    <rect width="240" height="266" x="930" y="120" rx="20" ry="20" fill="#FCE1E8" stroke-width="0" stroke="#888888" />
-    <rect width="240" height="266" x="930" y="70" rx="0" ry="0" fill="#FCE1E8" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="930" y="20" rx="20" ry="20" fill="#80CCCC" stroke-width="0" stroke="#888888" />    
+    <rect width="240" height="266" x="930" y="120" rx="20" ry="20" fill="#CCFFFF" stroke-width="0" stroke="#888888" />
+    <rect width="240" height="266" x="930" y="70" rx="0" ry="0" fill="#CCFFFF" stroke-width="0" stroke="#888888" />    
     <text x="1050" y="55" class="header" text-anchor="middle"> Title 4</text>
     
    <text x="945" y="107" class="normal" text-anchor="left">* point 10</text>
