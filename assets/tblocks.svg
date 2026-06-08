@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="900" height="400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+  }
+  
+  </style>
+
+
+        <polygon points="180,130 290,130 290,115 320,150 290,185 290,170 180,170" fill="#E68080" stroke-width="2" stroke="#888888" />
+        <polygon points="540,130 650,130 650,115 680,150 650,185 650,170 540,170" fill="#E68080" stroke-width="2" stroke="#888888" />
+        <rect width="260" height="180" x="320" y="60" rx="20" ry="20" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
+        <circle cx="150" cy="150" r="70" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
+        <circle cx="750" cy="150" r="70" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
+    
+   <text x="150" y="30" class="header" text-anchor="middle">Input</text>
+   <text x="150" y="160" class="header" text-anchor="middle">MD file</text>
+   <text x="150" y="290" class="bold" text-anchor="middle">Markdown document with</text>
+   <text x="150" y="320" class="bold" text-anchor="middle">headers and normal text</text>
+   <text x="150" y="350" class="bold" text-anchor="middle">as input for your diagram.</text>
+   <text x="450" y="30" class="header" text-anchor="middle">Tcl-Script</text>
+   <text x="450" y="160" class="header" text-anchor="middle">tblocks.tcl</text>
+   <text x="450" y="290" class="bold" text-anchor="middle">The standalone Tcl script</text>
+   <text x="450" y="320" class="bold" text-anchor="middle">which can create several</text>
+   <text x="450" y="350" class="bold" text-anchor="middle">type of diagrams such </text>
+   <text x="450" y="380" class="bold" text-anchor="middle">as this.</text>
+   <text x="750" y="30" class="header" text-anchor="middle">Output</text>
+   <text x="750" y="160" class="header" text-anchor="middle">SVG file</text>
+   <text x="750" y="290" class="bold" text-anchor="middle">A SVG graphics file which</text>
+   <text x="750" y="320" class="bold" text-anchor="middle">can be further converted </text>
+   <text x="750" y="350" class="bold" text-anchor="middle">to other file types like</text>
+   <text x="750" y="380" class="bold" text-anchor="middle">&#160;PDF or SVG.</text>
+</svg>

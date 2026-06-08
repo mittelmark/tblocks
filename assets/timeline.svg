@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="1600" height="450" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+  }
+  
+  </style>
+
+<polygon points="2,20 370,20 400,70 370,120 2,120 32,70" fill="#E68080" stroke-width="2" stroke="#888888" />
+<rect x="10" y="140" width="352" height="250" fill="#FFCCCC" rx="20" stroke-width="2" stroke="#888888" />
+<text x="201" y="60" class="header" text-anchor="middle">1. Classical Era (PSA)</text>
+<text x="201" y="100" class="normal" text-anchor="middle">Exact Alignment / String Metrics</text>
+<text x="20" y="180" class="normal" text-anchor="left">1965 - Levenshtein</text>
+<text x="20" y="210" class="normal" text-anchor="left">1970 - Needleman-Wunsch</text>
+<text x="20" y="240" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Dynamic Programming</text>
+<text x="20" y="270" class="normal" text-anchor="left">1974 - Chou-Fasman</text>
+<text x="20" y="300" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;secondary structure</text>
+<text x="20" y="330" class="normal" text-anchor="left">1981 - Smith-Waterman       </text>
+<text x="20" y="360" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;local alignment</text>
+<polygon points="402,20 770,20 800,70 770,120 402,120 432,70" fill="#E6B380" stroke-width="2" stroke="#888888" />
+<rect x="410" y="140" width="352" height="250" fill="#FFE5CC" rx="20" stroke-width="2" stroke="#888888" />
+<text x="601" y="60" class="header" text-anchor="middle">2. Heuristic Era (DB)</text>
+<text x="601" y="100" class="normal" text-anchor="middle">Database Searches / Subst. Mat</text>
+<text x="420" y="180" class="normal" text-anchor="left">1978 - PAM Matrix</text>
+<text x="420" y="210" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Substitution Matrix</text>
+<text x="420" y="240" class="normal" text-anchor="left">1985 - FASTA</text>
+<text x="420" y="270" class="normal" text-anchor="left">1990 - BLAST</text>
+<text x="420" y="300" class="normal" text-anchor="left">1992 - BLOSUM Matrix</text>
+<polygon points="802,20 1170,20 1200,70 1170,120 802,120 832,70" fill="#80CC80" stroke-width="2" stroke="#888888" />
+<rect x="810" y="140" width="352" height="250" fill="#CCFFCC" rx="20" stroke-width="2" stroke="#888888" />
+<text x="1001" y="60" class="header" text-anchor="middle">3. Profile Era (MSA)</text>
+<text x="1001" y="100" class="normal" text-anchor="middle">Conservation Profile / Cladogram</text>
+<text x="820" y="180" class="normal" text-anchor="left">1988 - Clustal </text>
+<text x="820" y="210" class="normal" text-anchor="left">1994 - ClustalW</text>
+<text x="820" y="240" class="normal" text-anchor="left">1997 - PSI-BLAST and PSSMs</text>
+<text x="820" y="270" class="normal" text-anchor="left">---</text>
+<text x="820" y="300" class="normal" text-anchor="left">1998 - HMMER (HMM)</text>
+<text x="820" y="330" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Hidden Markov Model</text>
+<text x="820" y="360" class="normal" text-anchor="left">2011 - Clustal Omega (HMM)</text>
+<polygon points="1202,20 1570,20 1600,70 1570,120 1202,120 1232,70" fill="#80CCCC" stroke-width="2" stroke="#888888" />
+<rect x="1210" y="140" width="352" height="250" fill="#CCFFFF" rx="20" stroke-width="2" stroke="#888888" />
+<text x="1401" y="60" class="header" text-anchor="middle">4. Modern Era (NN, LLM)</text>
+<text x="1401" y="100" class="normal" text-anchor="middle">Deep Learning / Struc. Pred.</text>
+<text x="1220" y="180" class="normal" text-anchor="left">2018 - Alpha Fold (Deepmind)</text>
+<text x="1220" y="210" class="normal" text-anchor="left">2020 - Protein Language Models</text>
+<text x="1220" y="240" class="normal" text-anchor="left">2023 - Biological LLM's and</text>
+<text x="1220" y="270" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Retrieval Augmented</text>
+<text x="1220" y="300" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Generation (RAG)</text>
+</svg>

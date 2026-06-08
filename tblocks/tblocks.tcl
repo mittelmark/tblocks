@@ -13,7 +13,7 @@
 
 namespace eval ::tblocks { }
 proc ::tblocks::usage {app} {
-    puts "Usage $app \[-h,--help|--boxes|--table|--sequence\] INFILE.md OUTFILE.svg"
+    puts "Usage $app \[-h,--help|--mode=(boxes|inout|timelie|table|sequence)\] INFILE.md OUTFILE.svg"
 }
 proc ::tblocks::help {app argv} {
     puts help
@@ -217,26 +217,15 @@ proc ::tblocks::text {cx cy text style anchor} {
 
 proc ::tblocks::pargs {} {
     uplevel 1 {
-        if {[lsearch $argv --table] > -1} {
-            set mode table
-            set idx [lsearch $argv --table]
+        if {[lsearch $argv --mode*] > -1} {
+            set idx [lsearch $argv --mode*]
+            set mode [regsub {.+=} [lindex $argv $idx] ""]
+            if {$mode ni [list table inout boxes sequence timeline]}  {
+                puts "Error: unkown mode $mode!"
+                ::tblocks::usage
+            }
             set argv [lreplace $argv $idx $idx]
         } 
-        if {[lsearch $argv --inout] > -1} {
-            set mode inout
-            set idx [lsearch $argv --inout]
-            set argv [lreplace $argv $idx $idx]
-        } 
-        if {[lsearch $argv --boxes] > -1} {
-            set mode boxes
-            set idx [lsearch $argv --boxes]
-            set argv [lreplace $argv $idx $idx]
-        } 
-        if {[lsearch $argv --sequence] > -1} {
-            set mode sequence
-            set idx [lsearch $argv --sequence]
-            set argv [lreplace $argv $idx $idx]
-        }
         if {[lsearch $argv --sans-font*] > -1} {
             set idx [lsearch $argv --sans-font*]
             set font [regsub {.+=} [lindex $argv $idx] ""]
@@ -251,6 +240,45 @@ proc ::tblocks::pargs {} {
         }
 
     }
+}
+
+proc ::tblocks::timeline {outfile fonts colors lines n m} {
+    set height [expr {210+($m*30)}]
+    set width [expr {$n*400}]
+    set boxh [expr {$m*30+10}]
+    set out [open $outfile w 0600]
+    puts $out [::tblocks::header $height $width $fonts]
+    set n 0
+    foreach line $lines {
+        if {[regexp {^##} $line]} {
+            puts $out "<polygon points=\"[expr {$n*400+2}],20 [expr {($n+1)*400-30}],20 [expr {($n+1)*400}],70 [expr {($n+1)*400-30}],120 [expr {$n*400+2}],120 [expr {$n*400+32}],70\" fill=\"[lindex [lindex $colors $n] 1]\" stroke-width=\"2\" stroke=\"#888888\" />"
+            puts $out "<rect x=\"[expr {$n*400+10}]\" y=\"140\" width=\"352\" height=\"$boxh\" fill=\"[lindex [lindex $colors $n] 0]\" rx=\"20\" stroke-width=\"2\" stroke=\"#888888\" />"
+            set cx [expr {$n*400+201}]
+            if {[regexp {^## (.+): (.+)} $line -> l1 l2]} {
+                puts $out "<text x=\"$cx\" y=\"60\" class=\"header\" text-anchor=\"middle\">$l1</text>"
+                puts $out "<text x=\"$cx\" y=\"100\" class=\"normal\" text-anchor=\"middle\">$l2</text>"
+            } elseif {[regexp {^## (.+)} $line -> l1]} {
+                puts $out "<text x=\"$cx\" y=\"80\" class=\"header\" text-anchor=\"middle\">$l1</text>"
+            }
+            set cy 180
+            set cx [expr {$n*400+20}]
+            incr n
+        } else {
+            if {[string trim $line] ne ""} {
+                if {[regexp {^ +} $line match]} {
+                    set x [string length $match]
+                    set r [string repeat "&#160;" [expr {$x*2}]]
+                    set line [string trim $line]
+                    set line "$r$line"
+                }
+                puts $out "<text x=\"$cx\" y=\"$cy\" class=\"normal\" text-anchor=\"left\">$line</text>"
+            }
+            incr cy 30
+        }
+    }
+    puts $out [::tblocks::footer]
+    close $out
+    
 }
 proc ::tblocks::main {argv} {
     set fonts [list Andika "Ubuntu Mono"]
@@ -312,6 +340,10 @@ proc ::tblocks::main {argv} {
             }
         }
         close $infh
+    }
+    if  {$mode eq "timeline"} {
+        ::tblocks::timeline $outfile $fonts $colors $lines $n $max
+        return
     }
     if {$mode eq "table"} {
         set width 500
