@@ -1,3 +1,6 @@
+---
+mode: inout
+---
 ## KNOWN
 
 Input

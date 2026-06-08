@@ -1,4 +1,5 @@
 ---
+mode: blocks
 sans-font: "Mali"
 mono-font: "Chivo Mono"
 color0: "#eeeeee" "#bbbbbb"
