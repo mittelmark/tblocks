@@ -179,7 +179,8 @@ Concept:
 Click on the images to see the source code:
 
 
-<img src="assets/timeline.svg" width="300" /> <img src="assets/flow.svg" width="300" />
+[<img src="assets/timeline.svg" width="400" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/timeline.md)
+[<img src="assets/flow.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/flow.md)
 
 ## Documentation
 
