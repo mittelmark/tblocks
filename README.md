@@ -182,7 +182,7 @@ Click on the images to see the source code:
 [<img src="assets/timeline.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/timeline.md)
 [<img src="assets/flow.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/flow.md)
 
-[<img src="assets/sequence.svg" width="4500" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/sequence.md)
+[<img src="assets/sequence.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/sequence.md)
 [<img src="assets/cpp-func-colors.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/cpp-func-colors.md)
 
 ## Documentation
