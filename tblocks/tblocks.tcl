@@ -322,14 +322,16 @@ proc ::tblocks::main {argv} {
                 {#E5CCFF #B380E6}]
     if {$infile eq "-"} {
         set infh stdin
+            
     } elseif {![file exists $infile]} {
         puts "Error: File '$infile' does not exists!"
         exit 0
+    } else {
+        if [catch {open $infile r} infh] {
+            puts stderr "Cannot open $infile: $infh"
+            exit
+        } 
     }
-    if [catch {open $infile r} infh] {
-        puts stderr "Cannot open $infile: $infh"
-        exit
-    } 
     set lines [list]
     set n 0
     set max 0
