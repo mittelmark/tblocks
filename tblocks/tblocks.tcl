@@ -16,7 +16,25 @@ proc ::tblocks::usage {app} {
     puts "Usage $app \[-h,--help|--mode=(boxes|inout|timeline|table|sequence)\] INFILE.md OUTFILE.svg"
 }
 proc ::tblocks::help {app argv} {
-    puts help
+    puts {
+tblocks - application to create SVG diagram based on Markdown documents
+
+Usage: tblocks [OPTIONS] INFILE [OUTFILE]
+
+Arguments:
+    INFILE       - Markdown file used as input for the diagram,
+                   if the argument is '-' it is assumed to read from stdin
+    OUTFILE      - SVG output file, if not given it used the 
+                   basename if the INFILE argument but adds a svg extension
+                   if the argument is '-' the program write to stdout 
+                
+Options:
+    --help,-h        - display this help page
+    --mode=MODE      - the type of output diagram, current diagram types are
+                       boxes, inout, sequence, table, timeline
+    --mono-font=FONT - a monospaced font from fonts.bunny.net               
+    --sans-font=FONT - a sans serif font from fonts.bunny.net
+}
 }
 proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
     set sans [lindex $fonts 0]
@@ -239,27 +257,32 @@ proc ::tblocks::pargs {} {
             lset fonts 1 $font
             set argv [lreplace $argv $idx $idx]
         }
-
+        if {[lsearch -regex $argv {^--}] > -1} { 
+            set idx [lsearch -regex $argv {^--}] 
+            puts "Error: Wrong argument '[lindex $argv $idx]'!"
+            puts "Valid arguments are --help, --mode=MODE, --mono-font=MONOFONT, --sans-font=SANSFONT!"
+            exit 0
+        }
     }
 }
 
-proc ::tblocks::timeline {outfile fonts colors lines n m} {
+proc ::tblocks::timeline {fonts colors lines n m} {
     set height [expr {210+($m*30)}]
     set width [expr {$n*400}]
     set boxh [expr {$m*30+10}]
-    set out [open $outfile w 0600]
-    puts $out [::tblocks::header $height $width $fonts]
+    set res ""
+    append res [::tblocks::header $height $width $fonts]
     set n 0
     foreach line $lines {
         if {[regexp {^##} $line]} {
-            puts $out "<polygon points=\"[expr {$n*400+2}],20 [expr {($n+1)*400-30}],20 [expr {($n+1)*400}],70 [expr {($n+1)*400-30}],120 [expr {$n*400+2}],120 [expr {$n*400+32}],70\" fill=\"[lindex [lindex $colors $n] 1]\" stroke-width=\"2\" stroke=\"#888888\" />"
-            puts $out "<rect x=\"[expr {$n*400+10}]\" y=\"140\" width=\"352\" height=\"$boxh\" fill=\"[lindex [lindex $colors $n] 0]\" rx=\"20\" stroke-width=\"2\" stroke=\"#888888\" />"
+            append res "\n<polygon points=\"[expr {$n*400+2}],20 [expr {($n+1)*400-30}],20 [expr {($n+1)*400}],70 [expr {($n+1)*400-30}],120 [expr {$n*400+2}],120 [expr {$n*400+32}],70\" fill=\"[lindex [lindex $colors $n] 1]\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            append res "<rect x=\"[expr {$n*400+10}]\" y=\"140\" width=\"352\" height=\"$boxh\" fill=\"[lindex [lindex $colors $n] 0]\" rx=\"20\" stroke-width=\"2\" stroke=\"#888888\" />\n"
             set cx [expr {$n*400+201}]
             if {[regexp {^## (.+): (.+)} $line -> l1 l2]} {
-                puts $out "<text x=\"$cx\" y=\"60\" class=\"header\" text-anchor=\"middle\">$l1</text>"
-                puts $out "<text x=\"$cx\" y=\"100\" class=\"normal\" text-anchor=\"middle\">$l2</text>"
+                append res "<text x=\"$cx\" y=\"60\" class=\"header\" text-anchor=\"middle\">$l1</text>\n"
+                append res "<text x=\"$cx\" y=\"100\" class=\"normal\" text-anchor=\"middle\">$l2</text>\n"
             } elseif {[regexp {^## (.+)} $line -> l1]} {
-                puts $out "<text x=\"$cx\" y=\"80\" class=\"header\" text-anchor=\"middle\">$l1</text>"
+                append res "<text x=\"$cx\" y=\"80\" class=\"header\" text-anchor=\"middle\">$l1</text>"
             }
             set cy 180
             set cx [expr {$n*400+20}]
@@ -272,13 +295,13 @@ proc ::tblocks::timeline {outfile fonts colors lines n m} {
                     set line [string trim $line]
                     set line "$r$line"
                 }
-                puts $out "<text x=\"$cx\" y=\"$cy\" class=\"normal\" text-anchor=\"left\">$line</text>"
+                append res "<text x=\"$cx\" y=\"$cy\" class=\"normal\" text-anchor=\"left\">$line</text>\n"
             }
             incr cy 30
         }
     }
-    puts $out [::tblocks::footer]
-    close $out
+    append res [::tblocks::footer]
+    return $res
     
 }
 proc ::tblocks::main {argv} {
@@ -297,53 +320,68 @@ proc ::tblocks::main {argv} {
                 {#CCFFFF #80CCCC} \
                 {#CCE5FF #80B3E6} \
                 {#E5CCFF #B380E6}]
-    
+    if {$infile eq "-"} {
+        set infh stdin
+    } elseif {![file exists $infile]} {
+        puts "Error: File '$infile' does not exists!"
+        exit 0
+    }
     if [catch {open $infile r} infh] {
         puts stderr "Cannot open $infile: $infh"
         exit
-    } else {
-        set lines [list]
-        set n 0
-        set max 0
-        set lnr 0
-        set yaml false
-        while {[gets $infh line] >= 0} {
-            incr lnr
-            if {$lnr == 1 && [regexp {^---} $line]} {
-                set yaml true
-                continue
-            } 
-            if {$yaml && [regexp {^---} $line]} {
-                set yaml false
-                continue
+    } 
+    set lines [list]
+    set n 0
+    set max 0
+    set lnr 0
+    set yaml false
+    while {[gets $infh line] >= 0} {
+        incr lnr
+        if {$lnr == 1 && [regexp {^---} $line]} {
+            set yaml true
+            continue
+        } 
+        if {$yaml && [regexp {^---} $line]} {
+            set yaml false
+            continue
+        }
+        if {$yaml} {
+            regexp {^mode: "?([-a-zA-Z0-9]+)"?} $line -> mode
+            if {[regexp {^sans-font: "?([-a-zA-Z0-9 ]+)"?} $line -> font]} {
+                lset fonts 0 [string trim $font9
+            } elseif {[regexp {^mono-font: "?([-a-zA-Z0-9 ]+)"?} $line -> font]} {
+                lset fonts 1 [string trim $font ]
+            } elseif {[regexp {^color([0-9]): "?([-#a-zA-Z0-9]+)"? "?([-#a-zA-Z0-9]+)"?}  $line -> x col1 col2]} {
+                lset colors $x [list [string trim $col1] [string trim $col2]]
             }
-            if {$yaml} {
-                regexp {^mode: ([-a-zA-Z0-9]+)} $line -> mode
-                if {[regexp {^sans-font: "([-a-zA-Z0-9 ]+)"} $line -> font]} {
-                    lset fonts 0 $font
-                } elseif {[regexp {^mono-font: "([-a-zA-Z0-9 ]+)"} $line -> font]} {
-                    lset fonts 1 $font
-                } elseif {[regexp {^color([0-9]): "([-#a-zA-Z0-9]+)" "([-#a-zA-Z0-9]+)"}  $line -> x col1 col2]} {
-                    lset colors $x [list $col1 $col2]
-                }
-                continue
-            }
-            if {[regexp {^__.+__} $line] || [regexp {^## } $line]} {
-                incr n
-                set m 0
-                lappend lines $line
-            } else {
-                lappend lines $line
-                incr m
-                if {$m > $max} {
-                    set max $m
-                }
+            continue
+        }
+        if {[regexp {^__.+__} $line] || [regexp {^## } $line]} {
+            incr n
+            set m 0
+            lappend lines $line
+        } else {
+            lappend lines $line
+            incr m
+            if {$m > $max} {
+                set max $m
             }
         }
+    }
+    if {$infh ne "stdin"} {
         close $infh
     }
+    if {$outfile eq "-"} {
+        set out stdout
+    } else {
+        set out [open $outfile w 0600]
+    }
+
     if  {$mode eq "timeline"} {
-        ::tblocks::timeline $outfile $fonts $colors $lines $n $max
+        puts $out [::tblocks::timeline $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
         return
     }
     if {$mode eq "table"} {
@@ -388,8 +426,6 @@ proc ::tblocks::main {argv} {
             set coords [list [list 20 50] [list 520 50] [list 20 370] [list 520 370]]
         }
     }
-    set out [open $outfile w 0600]
-    
     puts $out [::tblocks::header $height $width $fonts]
     set n 0
     set m 0
@@ -458,7 +494,9 @@ proc ::tblocks::main {argv} {
         }
     }
     puts $out [::tblocks::footer]
-    close $out
+    if {$out ne "stdout"} {
+        close $out
+    }
 }
 package provide tblocks 0.0.1
 if {[info exists argv0] && $argv0 eq [info script]} {

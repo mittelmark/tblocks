@@ -1,3 +1,7 @@
+---
+mode: timeline
+---
+
 ## 1. Classical Era (PSA): Exact Alignment / String Metrics
 1965 - Levenshtein
 1970 - Needleman-Wunsch
