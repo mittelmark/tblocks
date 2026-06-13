@@ -33,6 +33,7 @@
 <text x="20" y="300" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;secondary structure</text>
 <text x="20" y="330" class="normal" text-anchor="left">1981 - Smith-Waterman       </text>
 <text x="20" y="360" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;local alignment</text>
+
 <polygon points="402,20 770,20 800,70 770,120 402,120 432,70" fill="#E6B380" stroke-width="2" stroke="#888888" />
 <rect x="410" y="140" width="352" height="250" fill="#FFE5CC" rx="20" stroke-width="2" stroke="#888888" />
 <text x="601" y="60" class="header" text-anchor="middle">2. Heuristic Era (DB)</text>
@@ -42,6 +43,7 @@
 <text x="420" y="240" class="normal" text-anchor="left">1985 - FASTA</text>
 <text x="420" y="270" class="normal" text-anchor="left">1990 - BLAST</text>
 <text x="420" y="300" class="normal" text-anchor="left">1992 - BLOSUM Matrix</text>
+
 <polygon points="802,20 1170,20 1200,70 1170,120 802,120 832,70" fill="#80CC80" stroke-width="2" stroke="#888888" />
 <rect x="810" y="140" width="352" height="250" fill="#CCFFCC" rx="20" stroke-width="2" stroke="#888888" />
 <text x="1001" y="60" class="header" text-anchor="middle">3. Profile Era (MSA)</text>
@@ -53,13 +55,16 @@
 <text x="820" y="300" class="normal" text-anchor="left">1998 - HMMER (HMM)</text>
 <text x="820" y="330" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Hidden Markov Model</text>
 <text x="820" y="360" class="normal" text-anchor="left">2011 - Clustal Omega (HMM)</text>
+
 <polygon points="1202,20 1570,20 1600,70 1570,120 1202,120 1232,70" fill="#80CCCC" stroke-width="2" stroke="#888888" />
 <rect x="1210" y="140" width="352" height="250" fill="#CCFFFF" rx="20" stroke-width="2" stroke="#888888" />
 <text x="1401" y="60" class="header" text-anchor="middle">4. Modern Era (NN, LLM)</text>
 <text x="1401" y="100" class="normal" text-anchor="middle">Deep Learning / Struc. Pred.</text>
-<text x="1220" y="180" class="normal" text-anchor="left">2018 - Alpha Fold (Deepmind)</text>
-<text x="1220" y="210" class="normal" text-anchor="left">2020 - Protein Language Models</text>
-<text x="1220" y="240" class="normal" text-anchor="left">2023 - Biological LLM's and</text>
-<text x="1220" y="270" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Retrieval Augmented</text>
-<text x="1220" y="300" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Generation (RAG)</text>
+<text x="1220" y="180" class="normal" text-anchor="left">2015 - AlphaGo (Deepmind)</text>
+<text x="1220" y="210" class="normal" text-anchor="left">2017 - AlphaZero (DeepMind)</text>
+<text x="1220" y="240" class="normal" text-anchor="left">2018 - AlphaFold (Deepmind)</text>
+<text x="1220" y="270" class="normal" text-anchor="left">2020 - Protein Language Models</text>
+<text x="1220" y="300" class="normal" text-anchor="left">2023 - Biological LLM's and</text>
+<text x="1220" y="330" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Retrieval Augmented</text>
+<text x="1220" y="360" class="normal" text-anchor="left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Generation (RAG)</text>
 </svg>

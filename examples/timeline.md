@@ -28,7 +28,9 @@ mode: timeline
 2011 - Clustal Omega (HMM)
 
 ## 4. Modern Era (NN, LLM): Deep Learning / Struc. Pred.
-2018 - Alpha Fold (Deepmind)
+2015 - AlphaGo (Deepmind)
+2017 - AlphaZero (DeepMind)
+2018 - AlphaFold (Deepmind)
 2020 - Protein Language Models
 2023 - Biological LLM's and
       Retrieval Augmented

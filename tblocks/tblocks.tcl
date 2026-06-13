@@ -13,7 +13,7 @@
 
 namespace eval ::tblocks { }
 proc ::tblocks::usage {app} {
-    puts "Usage $app \[-h,--help|--mode=(boxes|inout|timeline|table|sequence)\] INFILE.md OUTFILE.svg"
+    puts "Usage $app \[-h,--help|--mode=MODENAME INFILE.md OUTFILE.svg"
 }
 proc ::tblocks::help {app argv} {
     puts {
@@ -31,7 +31,7 @@ Arguments:
 Options:
     --help,-h        - display this help page
     --mode=MODE      - the type of output diagram, current diagram types are
-                       boxes, inout, sequence, table, timeline
+                       boxes, inout, linegraph, sequence, table, timeline
     --mono-font=FONT - a monospaced font from fonts.bunny.net               
     --sans-font=FONT - a sans serif font from fonts.bunny.net
 }
@@ -238,7 +238,7 @@ proc ::tblocks::pargs {} {
         if {[lsearch $argv --mode*] > -1} {
             set idx [lsearch $argv --mode*]
             set mode [regsub {.+=} [lindex $argv $idx] ""]
-            if {$mode ni [list table inout boxes sequence timeline]}  {
+            if {$mode ni [list table inout boxes sequence timeline linegraph]}  {
                 puts "Error: unkown mode $mode!"
                 ::tblocks::usage
                 exit 0
@@ -266,6 +266,36 @@ proc ::tblocks::pargs {} {
     }
 }
 
+proc ::tblocks::linegraph {fonts colors lines n m} {
+    set height [expr {190+($m-2)*30}]
+    set width [expr {$n*200}]
+    set res ""
+    append res [::tblocks::header $height $width $fonts]
+    set cn 0
+    foreach line $lines {
+        if {[regexp {^##} $line]} {
+            set txt [regsub {^## +} $line ""] 
+            set cx [expr {100+$cn*200}]
+            append res "<text x=\"$cx\" y=\"45\" class=\"normal\" text-anchor=\"middle\">$txt</text>\n"
+            if {$cn < [expr {$n-1}]} {
+                append res "<line x1=\"$cx\" y1=\"100\" x2=\"[expr {$cx+200}]\" y2=\"100\"  stroke-width=\"4\" stroke=\"#888888\" />\n"
+            }
+            append res  "<circle cx=\"$cx\" cy=\"100\" r=\"30\" fill=\"[lindex [lindex $colors $cn] 0]\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            set cy 165
+            incr cn
+        } elseif {[regexp {^- } $line]} {
+            set txt [regsub {^- +} $line ""] 
+            if {$txt ne ""} {
+                append res "<text x=\"$cx\" y=\"$cy\" class=\"normal\" text-anchor=\"middle\">$txt</text>\n"
+                incr cy 30
+            } else {
+                incr cy 15
+            }
+        }
+    }
+    append res [::tblocks::footer]
+    return $res
+}
 proc ::tblocks::timeline {fonts colors lines n m} {
     set height [expr {210+($m*30)}]
     set width [expr {$n*400}]
@@ -313,7 +343,7 @@ proc ::tblocks::main {argv} {
     ## lightgreen lightmagenta lightblue lightred sand1 sand2
    # set colors [list {#D7F5EB #B8EBDF} {#EADEF6 #D6BEEE} {#DCEBFE #BCDAFB}  {#FCE1E8 #FAC5D5} \
    #             {#FDE8D5 #FCD3B5} {#FAD0D5 #F9C9B2}]
-    set colors [list \
+   set colors [list \
                 {#FFCCCC #E68080} \
                 {#FFE5CC #E6B380} \
                 {#CCFFCC #80CC80} \
@@ -385,7 +415,14 @@ proc ::tblocks::main {argv} {
             close $out
         }
         return
-    }
+    } 
+    if {$mode eq "linegraph"} {
+        puts $out [::tblocks::linegraph $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        return
+    } 
     if {$mode eq "table"} {
         set width 500
         set height 620
