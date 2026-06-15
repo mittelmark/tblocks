@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="2000" height="750" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+  }
+  .large {
+      font-family: 'Andika', sans-serif;
+      font-size: 24px;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+  }
+  
+  </style>
+<text x="40" y="160" class="large" text-anchor="left">Memory</text>
+<text x="40" y="260" class="large" text-anchor="left">Safety</text>
+<text x="40" y="360" class="large" text-anchor="left">API </text>
+<text x="40" y="460" class="large" text-anchor="left">Speed</text>
+<rect x="150" y="10" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#c0e0c0"/>
+<text x="440" y="60" class="header" text-anchor="middle">C++ std::string</text>
+<rect x="153" y="110" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#e0f0e0"/>
+<text x="220" y="160" class="large" text-anchor="left">dynamic, expands on demand </text>
+
+        <circle cx="16" cy="16" r="10" fill="#A2CB90" stroke="#091812" transform="translate(168 126) scale(1.5)" />
+        <line  x1="10" y1="15" x2="14" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(168 126) scale(1.5)" />
+        <line  x1="14" y1="21" x2="22" y2="12" stroke="#091812" stroke-width="1.5" transform="translate(168 126) scale(1.5)" />
+    <rect x="153" y="210" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#e0f0e0"/>
+<text x="220" y="260" class="large" text-anchor="left">object representation, no decay </text>
+
+        <circle cx="16" cy="16" r="10" fill="#A2CB90" stroke="#091812" transform="translate(168 226) scale(1.5)" />
+        <line  x1="10" y1="15" x2="14" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(168 226) scale(1.5)" />
+        <line  x1="14" y1="21" x2="22" y2="12" stroke="#091812" stroke-width="1.5" transform="translate(168 226) scale(1.5)" />
+    <rect x="153" y="310" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#e0f0e0"/>
+<text x="220" y="360" class="large" text-anchor="left">rich build-in functionalities </text>
+
+        <circle cx="16" cy="16" r="10" fill="#A2CB90" stroke="#091812" transform="translate(168 326) scale(1.5)" />
+        <line  x1="10" y1="15" x2="14" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(168 326) scale(1.5)" />
+        <line  x1="14" y1="21" x2="22" y2="12" stroke="#091812" stroke-width="1.5" transform="translate(168 326) scale(1.5)" />
+    <rect x="153" y="410" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#e0f0e0"/>
+<text x="220" y="460" class="large" text-anchor="left">slight runtime overhead </text>
+
+        <circle cx="16" cy="16" r="10" fill="#E48981" stroke="#181206" transform="translate(168 426) scale(1.5)" />
+        <line  x1="11" y1="11" x2="21" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(168 426) scale(1.5)" />
+        <line  x1="11" y1="21" x2="21" y2="11" stroke="#091812" stroke-width="1.5" transform="translate(168 426) scale(1.5)"  />
+    <rect x="750" y="10" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#e0c0c0"/>
+<text x="1040" y="60" class="header" text-anchor="middle">C char* Character Arrays</text>
+<rect x="753" y="110" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#f0e0e0"/>
+<text x="820" y="160" class="large" text-anchor="left">static, wasted or insufficient space </text>
+
+        <circle cx="16" cy="16" r="10" fill="#E48981" stroke="#181206" transform="translate(768 126) scale(1.5)" />
+        <line  x1="11" y1="11" x2="21" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(768 126) scale(1.5)" />
+        <line  x1="11" y1="21" x2="21" y2="11" stroke="#091812" stroke-width="1.5" transform="translate(768 126) scale(1.5)"  />
+    <rect x="753" y="210" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#f0e0e0"/>
+<text x="820" y="260" class="large" text-anchor="left">vulnerable to array decay </text>
+
+        <circle cx="16" cy="16" r="10" fill="#E48981" stroke="#181206" transform="translate(768 226) scale(1.5)" />
+        <line  x1="11" y1="11" x2="21" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(768 226) scale(1.5)" />
+        <line  x1="11" y1="21" x2="21" y2="11" stroke="#091812" stroke-width="1.5" transform="translate(768 226) scale(1.5)"  />
+    <rect x="753" y="310" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#f0e0e0"/>
+<text x="820" y="360" class="large" text-anchor="left">limited native manipulation </text>
+
+        <circle cx="16" cy="16" r="10" fill="#E48981" stroke="#181206" transform="translate(768 326) scale(1.5)" />
+        <line  x1="11" y1="11" x2="21" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(768 326) scale(1.5)" />
+        <line  x1="11" y1="21" x2="21" y2="11" stroke="#091812" stroke-width="1.5" transform="translate(768 326) scale(1.5)"  />
+    <rect x="753" y="410" width="580" height="80" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#f0e0e0"/>
+<text x="820" y="460" class="large" text-anchor="left">faster raw imlementation </text>
+
+        <circle cx="16" cy="16" r="10" fill="#A2CB90" stroke="#091812" transform="translate(768 426) scale(1.5)" />
+        <line  x1="10" y1="15" x2="14" y2="21" stroke="#091812" stroke-width="1.5" transform="translate(768 426) scale(1.5)" />
+        <line  x1="14" y1="21" x2="22" y2="12" stroke="#091812" stroke-width="1.5" transform="translate(768 426) scale(1.5)" />
+    </svg>
