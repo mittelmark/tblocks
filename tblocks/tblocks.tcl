@@ -296,7 +296,6 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
     set res ""
     append res [::tblocks::header $height $width $fonts]
     set cn 0
-    puts $n
     set coords [list {} \
                 {{10 10}} \
                 {{10 10} {410 10}} \
@@ -326,8 +325,6 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
                 puts stderr "Cannot open $filename: $infh"
                 exit
             } else {
-                puts $cn
-                puts "[lindex $coords $n]"
                 set cx [lindex [lindex [lindex $coords $n] $cn] 0]
                 set cy [lindex [lindex [lindex $coords $n] $cn] 1]
                 append res "<rect  x=\"$cx\" y=\"$cy\" width=\"380\" height=\"380\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors $cn] 0]\"/>\n"
