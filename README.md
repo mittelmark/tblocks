@@ -185,7 +185,9 @@ Click on the images to see the source code:
 [<img src="assets/sequence.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/sequence.md)
 [<img src="assets/cpp-func-colors.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/cpp-func-colors.md)
 
-[<img src="assets/linegraph.vg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/linegraph.md)
+[<img src="assets/linegraph.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/linegraph.md)
+[<img src="assets/iblocks.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/iblocks.md)
+
 
 ## Documentation
 
@@ -212,6 +214,7 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
+- 2026-06-15 version 0.0.3 - adding iblocks type with icon support from https://github.com/Templarian/MaterialDesign
 - 2026-06-12 Version 0.0.2 - implemented blocks, inout, linegraph, sequence, timeline, table
 - 2026-06-12 Version 0.0.1 - development started
 - 2026-06-05 development started with version 0.0.1

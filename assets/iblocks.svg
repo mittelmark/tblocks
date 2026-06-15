@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="800" height="800" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+  }
+  
+  </style>
+<rect  x="10" y="10" width="380" height="380" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#FFCCCC"/>
+   <text x="200" y="150" class="header" text-anchor="middle">Const Methods </text>
+<text x="200" y="215" class="normal" text-anchor="middle">Can only invoke</text>
+<text x="200" y="245" class="normal" text-anchor="middle">const member functions.</text>
+<text x="200" y="275" class="normal" text-anchor="middle">Any attempt to modify</text>
+<text x="200" y="305" class="normal" text-anchor="middle">data members</text>
+<text x="200" y="335" class="normal" text-anchor="middle">results in a compiler error.</text>
+<rect  x="410" y="10" width="380" height="380" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#FFE5CC"/>
+   <text x="600" y="150" class="header" text-anchor="middle">Non-Const Methods </text>
+<text x="600" y="215" class="normal" text-anchor="middle">Can invoke</text>
+<text x="600" y="245" class="normal" text-anchor="middle">const member and non-const</text>
+<text x="600" y="275" class="normal" text-anchor="middle">member functions.</text>
+<rect  x="210" y="410" width="380" height="380" rx="20" ry="20"  stroke-width="2" stroke="#888888" fill="#CCFFCC"/>
+   <text x="400" y="550" class="header" text-anchor="middle">Static Methods </text>
+<text x="400" y="615" class="normal" text-anchor="middle">Are called without</text>
+<text x="400" y="645" class="normal" text-anchor="middle">creating an object before.</text>
+<text x="400" y="675" class="normal" text-anchor="middle">Can only call other</text>
+<text x="400" y="705" class="normal" text-anchor="middle">static member functions.</text>
+
+<defs>
+<symbol id="lock" viewBox="0 0 24 24">
+    <path d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
+</symbol>
+<symbol id="lock-open" viewBox="0 0 24 24">
+    <path d="M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10A2,2 0 0,1 6,8H15V6A3,3 0 0,0 12,3A3,3 0 0,0 9,6H7A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,17A2,2 0 0,0 14,15A2,2 0 0,0 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17Z" />
+</symbol>
+<symbol id="code-parentheses-box" viewBox="0 0 24 24">
+    <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M10 17.3L8.4 18C6.9 16.5 6 14.3 6 12S6.9 7.5 8.4 6L10 6.7C8.7 7.9 8 9.9 8 12S8.7 16.1 10 17.3M15.6 18L14 17.3C15.3 16 16 14.1 16 12S15.3 7.9 14 6.7L15.6 6C17.1 7.5 18 9.7 18 12C18 14.3 17.1 16.5 15.6 18Z" />
+</symbol>
+</defs>
+<svg x="176" y="50" width="48" height="48" viewBox="0 0 48 48" fill="#B64040">
+   <use href="#lock" />
+</svg>
+<svg x="576" y="50" width="48" height="48" viewBox="0 0 48 48" fill="#B68040">
+   <use href="#lock-open" />
+</svg>
+<svg x="376" y="450" width="48" height="48" viewBox="0 0 48 48" fill="#40B640">
+   <use href="#code-parentheses-box" />
+</svg>
+</svg>
