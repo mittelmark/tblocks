@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="800" height="280" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+  }
+  
+  </style>
+<text x="100" y="45" class="normal" text-anchor="middle">Birth</text>
+<line x1="100" y1="100" x2="300" y2="100"  stroke-width="4" stroke="#888888" />
+<circle cx="100" cy="100" r="30" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
+<text x="100" y="165" class="normal" text-anchor="middle">Constructor</text>
+<text x="100" y="195" class="normal" text-anchor="middle">Initialization</text>
+<text x="300" y="45" class="normal" text-anchor="middle">Usage</text>
+<line x1="300" y1="100" x2="500" y2="100"  stroke-width="4" stroke="#888888" />
+<circle cx="300" cy="100" r="30" fill="#FFE5CC" stroke-width="2" stroke="#888888" />
+<text x="300" y="180" class="normal" text-anchor="middle">animal.run()</text>
+<text x="500" y="45" class="normal" text-anchor="middle">Out-of-Scope</text>
+<line x1="500" y1="100" x2="700" y2="100"  stroke-width="4" stroke="#888888" />
+<circle cx="500" cy="100" r="30" fill="#CCFFCC" stroke-width="2" stroke="#888888" />
+<text x="500" y="180" class="normal" text-anchor="middle">End-of-Function</text>
+<text x="700" y="45" class="normal" text-anchor="middle">Death</text>
+<circle cx="700" cy="100" r="30" fill="#CCFFFF" stroke-width="2" stroke="#888888" />
+<text x="700" y="165" class="normal" text-anchor="middle">Destructor</text>
+<text x="700" y="195" class="normal" text-anchor="middle">Cleanup</text>
+</svg>
