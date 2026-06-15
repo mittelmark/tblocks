@@ -186,7 +186,7 @@ Click on the images to see the source code:
 [<img src="assets/cpp-func-colors.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/cpp-func-colors.md)
 
 [<img src="assets/linegraph.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/linegraph.md)
-[<img src="assets/iblocks.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/iblocks.md)
+[<img src="assets/iblocks.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/iblocks.md)
 
 
 ## Documentation
