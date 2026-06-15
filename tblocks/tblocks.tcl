@@ -287,7 +287,7 @@ proc ::tblocks::icon-get {folder iconfile} {
 ## itable 
 proc ::tblocks::itable {fonts colors lines n m} {
     set height [expr {150+($m*100)}]
-    set width  [expr {200+($n*600)}]
+    set width  [expr {200+(($n-1)*600)}]
     set res ""
     append res [::tblocks::header $height $width $fonts]
     set cn 0
