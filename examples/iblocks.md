@@ -4,10 +4,8 @@ mode: "iblocks"
 
 ## Const Methods icon:lock
 
-Can only invoke
-const member functions.
-Any attempt to modify
-data members
+Can only invoke const member functions.
+Any attempt to modify data members
 results in a compiler error.
 
 ## Non-Const Methods icon:lock-open
@@ -19,8 +17,8 @@ member functions.
 
 ## Static Methods icon:code-parentheses-box
 
-Are called without
-creating an object before.
-Can only call other
+Are called without creating
+an object before.
+Can only call only other
 static member functions.
 

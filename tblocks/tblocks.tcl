@@ -51,6 +51,10 @@ proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
       font-family: '__Sans-Font__', sans-serif;
       font-size: 22px;
   }
+  .large {
+      font-family: '__Sans-Font__', sans-serif;
+      font-size: 24px;
+  }
   .mono {
       font-family: '__Mono-Font__', monospaced;
       font-size: 22px;
@@ -284,11 +288,11 @@ proc ::tblocks::icon-get {folder iconfile} {
 proc ::tblocks::iblocks {fonts colors lines n m} {
     set height 400
     if {$n == 1} {
-        set width 400
+        set width 600
     } elseif {$n <= 4} {
-        set width 800
-    } elseif {$n <= 6} {
         set width 1200
+    } elseif {$n <= 6} {
+        set width 1800
     }
     if {$n > 2} {
         set height 800
@@ -298,11 +302,11 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
     set cn 0
     set coords [list {} \
                 {{10 10}} \
-                {{10 10} {410 10}} \
-                {{10 10} {410 10} {210 410}} \
-                {{10 10} {410 10} {10  410} {410 410}} \
-                {{10 10} {410 10} {810  10} {210 410} {610 410}} \
-                {{10 10} {410 10} {810  10} {10  410} {410 410} {810 410}}]
+                {{10 10} {610 10}} \
+                {{10 10} {610 10} {310 410}} \
+                {{10 10} {610 10} {10  410} {610 410}} \
+                {{10 10} {610 10} {1210  10} {310 410} {910 410}} \
+                {{10 10} {610 10} {1210  10} {10  410} {610 410} {1210 410}}]
     set defs "\n<defs>\n"
     set uses ""
     foreach line $lines {
@@ -327,25 +331,25 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
             } else {
                 set cx [lindex [lindex [lindex $coords $n] $cn] 0]
                 set cy [lindex [lindex [lindex $coords $n] $cn] 1]
-                append res "<rect  x=\"$cx\" y=\"$cy\" width=\"380\" height=\"380\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors $cn] 0]\"/>\n"
-                append res [tblocks::text [expr {$cx+190}] [expr {$cy+140}] $txt header middle]
+                append res "<rect  x=\"$cx\" y=\"$cy\" width=\"580\" height=\"380\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors $cn] 0]\"/>\n"
+                append res [tblocks::text [expr {$cx+290}] [expr {$cy+140}] $txt header middle]
                 set icontext [read $infh]
                 close $infh
                 set icontext [regsub {.+<path(.+)</svg>} $icontext "<path\\1"]
                 append defs "<symbol id=\"$iconname\" viewBox=\"0 0 24 24\">\n"
                 append defs "    $icontext\n</symbol>\n"
-                append uses "<svg x=\"[expr {$cx+166}]\" y=\"[expr {$cy+40}]\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"[lindex [lindex $colors $cn] 2]\">\n"
+                append uses "<svg x=\"[expr {$cx+266}]\" y=\"[expr {$cy+40}]\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"[lindex [lindex $colors $cn] 2]\">\n"
                 append uses "   <use href=\"#${iconname}\" />\n"
                 append uses "</svg>\n"
-                incr cy 190
+                incr cy 180
             }
             incr cn
         } else {
             if {[regexp {[A-za-z0-9]+} $line]} {
-                append res "<text x=\"[expr {$cx+190}]\" y=\"$cy\" class=\"normal\" text-anchor=\"middle\">$line</text>\n"
-                incr cy 30
+                append res "<text x=\"[expr {$cx+290}]\" y=\"$cy\" class=\"header\" text-anchor=\"middle\">$line</text>\n"
+                incr cy 40
             } else {
-                incr cy 15
+                incr cy 20
             }
             
         }
