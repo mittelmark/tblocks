@@ -354,7 +354,89 @@ proc ::tblocks::itable {fonts colors lines n m} {
     append res [::tblocks::footer]
     return "$res"
 }
-    
+
+proc ::tblocks::in-out-blocks {fonts colors lines n m} {
+    if {$n == 4} {
+        set height 600
+        set width 1200
+    } else {
+        set height 600
+        set width 1200
+    }
+    set res ""
+    append res [::tblocks::header $height $width $fonts]
+    set col1 [lindex [lindex $colors 0] 0]
+    set col2 [lindex [lindex $colors 0] 1]
+    set col3 [lindex [lindex $colors 1] 0]
+    set code {
+        <polygon points="380,130 430,130 430,115 455,150 430,185 430,170 380,170" fill="__col2__" stroke-width="2" stroke="#888888" />
+        <polygon points="600,130 795,130 795,115 820,150 795,185 795,170 600,170" fill="__col2__" stroke-width="2" stroke="#888888" />
+        <rect width="360" height="280" x="20" y="10" rx="20" ry="20" fill="__col1__" stroke-width="2" stroke="#888888" />
+        <circle cx="600" cy="150" r="145" fill="__col1__" stroke-width="2" stroke="#888888" />
+        <rect width="360" height="280" x="820" y="10" rx="20" ry="20" fill="__col1__" stroke-width="2" stroke="#888888" />
+    }
+    if {$n == 4} {
+        append code {
+            <rect width="660" height="180" x="270" y="370" rx="20" ry="20" fill="__col3__" stroke-width="2" stroke="#888888" />
+        }
+    }
+    set code [regsub -all {__col1__} $code $col1]
+    set code [regsub -all {__col2__} $code $col2]
+    set code [regsub -all {__col3__} $code $col3]
+    append res $code
+    set cn 0
+    set cm 0
+    foreach line $lines {
+        if {[regexp {^##} $line]} {
+            set txt [regsub {^## +} $line ""] 
+            if {$cn == 0} {
+                append res "<text x=\"200\" y=\"70\" class=\"header\" text-anchor=\"middle\">$txt</text>"
+                set cy 120
+            } elseif {$cn == 1} {
+                append res [tblocks::text 600 130 $txt header middle]
+                set cy 150
+            } elseif {$cn == 2} {
+                append res [tblocks::text 1000 70 $txt header middle]
+                set cy 120
+            } elseif {$cn == 3} {
+                set cy 450
+                set cx 310
+                append res [tblocks::text 600 410 $txt header middle]
+            } 
+            incr cn
+            set cm 0
+        } elseif {[regexp {[^\\s]} $line]} {
+            set txt $line
+            if {$cn == 1} {
+                append res [tblocks::text 60 $cy $txt header left]
+                incr cy 40
+            } elseif {$cn == 2} {
+                append res [tblocks::text 600 $cy $txt header middle]
+                incr cy 40
+            } elseif {$cn == 3} {
+                append res [tblocks::text 860 $cy $txt header left]
+                incr cy 40
+            } elseif {$cn == 4} {
+                if {$cm > 1} {
+                    append res [tblocks::text $cx $cy $txt header left]
+                } else {
+                    append res [tblocks::text $cx $cy $txt header left]
+                }
+                incr cy 40
+                if {$cm == 1} {
+                    set cy 450
+                    set cx 600
+                }
+            } 
+            incr cm
+        } else {
+            incr cy 20
+        }
+    }
+    append res [::tblocks::footer]
+    return "$res"
+}
+
 ## icon blocks
 proc ::tblocks::iblocks {fonts colors lines n m} {
     set height 400
@@ -434,6 +516,80 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
     append res [::tblocks::footer]
     return "$res"
 }
+
+proc ::tblocks::blocks {fonts colors lines n m} {
+    set width 500
+    set height 320
+    if {$n > 1} {
+        set width 1000
+    } 
+    if {$n > 4} {
+        set width 1500
+    }
+    if {$n > 2} {
+        set height 640
+    }
+    set coords [list [list 20 50]]
+    if {$n == 2} {
+        set coords [list [list 20 50] [list 520 50]]
+    } elseif {$n == 3} {
+        set coords [list [list 270 50] [list 20 370] [list 520 370]]
+    } elseif {$n == 4} {
+        set coords [list [list 20 50] [list 520 50] [list 20 370] [list 520 370]]
+    } elseif {$n == 5} {
+        set coords [list [list 20 50] [list 520 50] [list 1020 50] [list 270 370] [list 770 370]] 
+    }
+    
+    set res ""
+    append res [::tblocks::header $height $width $fonts]
+    set cn 0
+    set cn 0
+    set cm 0
+    set cy 0
+    set cx 0
+    if {$m < 6} {
+        set fontsize header
+        set i 20
+    } elseif {$m < 8} {
+        set fontsize large
+        set i 16
+    } else {
+        set fontsize normal
+        set i 12
+    }
+    foreach line $lines {
+        if {[regexp {^__} $line] || [regexp {^## } $line]} {
+            append res [::tblocks::box [lindex $coords $cn] [lindex $colors $cn] $line]
+            set xy [lindex $coords $cn]
+            set x [lindex $xy 0]
+            set y [lindex $xy 1]
+            incr cn
+            set cx [expr {$x+15}]
+            set cy [expr {$y+55}]
+            if {$fontsize eq "header"} {
+                set cx [expr {$x+50}]
+                set cy [expr {$y+80}]
+            }
+
+        } else {
+            if {[regexp {[^\\s]} $line]} {
+                if {[regexp {`.+`} $line]} {
+                    append res [::tblocks::text $cx $cy [regsub -all {`} $line ""] mono left]
+                } elseif {[regexp {.+:$} $line]} {
+                    append res [::tblocks::text $cx $cy $line bold left]
+                } else {
+                    append res [::tblocks::text $cx $cy $line $fontsize left]
+                }
+                incr cy $i
+            }
+            incr cy $i ;# default for empty lines
+
+        }
+    }
+    append res [::tblocks::footer]    
+    return $res
+    
+}
 proc ::tblocks::linegraph {fonts colors lines n m} {
     set height [expr {190+($m-2)*30}]
     set width [expr {$n*200}]
@@ -461,7 +617,7 @@ proc ::tblocks::linegraph {fonts colors lines n m} {
             }
         }
     }
-    append res [::tblocks::footer]
+    append res [::tblocks::footer]    
     return $res
 }
 proc ::tblocks::timeline {fonts colors lines n m} {
@@ -607,6 +763,22 @@ proc ::tblocks::main {argv} {
         }
         return
     } 
+    if {$mode in [list boxes blocks]} {
+
+        puts $out [::tblocks::blocks $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        return 
+    }
+    if {$mode in [list inout-block]} {
+        puts $out [::tblocks::in-out-blocks $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        return 
+    }
+
     if {$mode eq "table"} {
         set width 500
         set height 620
@@ -620,18 +792,8 @@ proc ::tblocks::main {argv} {
         set width 900
         set height 400
     } else {
-        set width 500
-        set height 320
-        if {$n > 1} {
-            set width 1000
-        } 
-        if {$n > 4} {
-            set width 1500
-        }
-        if {$n > 2} {
-            set height 640
-        }
-
+        puts stderr "Error: Unkown mode '$mode'!"
+        exit
     }
     set coords [list [list 20 50]]
     if {$mode eq "sequence"} {
@@ -640,15 +802,7 @@ proc ::tblocks::main {argv} {
         set coords [list [list 150 30] [list 450 30] [list 750 30]]
     } elseif {$mode eq "table"} {
         set coords [list [list 20 20] [list 520 20]]
-    } else {
-        if {$n == 2} {
-            set coords [list [list 20 50] [list 520 50]]
-        } elseif {$n == 3} {
-            set coords [list [list 270 50] [list 20 370] [list 520 370]]
-        } elseif {$n == 4} {
-            set coords [list [list 20 50] [list 520 50] [list 20 370] [list 520 370]]
-        }
-    }
+    } 
     puts $out [::tblocks::header $height $width $fonts]
     set n 0
     set m 0
@@ -672,9 +826,7 @@ proc ::tblocks::main {argv} {
                         puts $out [::tblocks::arrow-right [lindex $coords $n] [lindex $colors [expr {$n-1}]]]
                     }
                     puts $out [::tblocks::sequence [lindex $coords $n] [lindex $colors $n] $line]
-                } else {
-                    puts $out [::tblocks::box [lindex $coords $n] [lindex $colors $n] $line]
-                }
+                } 
                 set xy [lindex $coords $n]
                 set x [lindex $xy 0]
                 set y [lindex $xy 1]
@@ -721,7 +873,7 @@ proc ::tblocks::main {argv} {
         close $out
     }
 }
-package provide tblocks 0.0.3
+package provide tblocks 0.0.4
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv
