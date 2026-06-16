@@ -51,6 +51,10 @@ proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
       font-family: '__Sans-Font__', sans-serif;
       font-size: 22px;
   }
+  .small {
+      font-family: '__Sans-Font__', sans-serif;
+      font-size: 16px;
+  }
   .large {
       font-family: '__Sans-Font__', sans-serif;
       font-size: 24px;
@@ -272,17 +276,35 @@ proc ::tblocks::pargs {} {
     }
 }
 
-proc ::tblocks::icon-get {folder iconfile} {
+proc ::tblocks::icon-get {folder iconname cx cy color} {
     if {![file isdir $folder]} {
         file mkdir $folder
     }
-    if {[auto_execok wget] eq ""} {
-        puts stderr "Error: wget is required!"
-        exit 0
-    } else {
-        exec wget -q https://raw.githubusercontent.com/Templarian/MaterialDesign/refs/heads/master/svg/$iconfile -O [file join $folder $iconfile]
-        puts done
+    set iconfile [file join $folder ${iconname}.svg]
+    if {![file exists $iconfile] } {
+        if {[auto_execok wget] eq ""} {
+            puts stderr "Error: wget is required!"
+            exit 0
+        } else {
+            puts "wget -q https://raw.githubusercontent.com/Templarian/MaterialDesign/refs/heads/master/svg/${iconname}.svg -O $iconfile"
+            exec wget -q https://raw.githubusercontent.com/Templarian/MaterialDesign/refs/heads/master/svg/${iconname}.svg -O [string tolower $iconfile]
+        }
     }
+    if [catch {open $iconfile r} infh] {
+        puts stderr "Cannot open $iconfile: $infh"
+        exit
+    }
+    set icontext [read $infh]
+    close $infh
+    set icontext [regsub {.+<path(.+)</svg>} $icontext "<path\\1"]
+    set defs ""
+    set uses ""
+    append defs "<symbol id=\"$iconname\" viewBox=\"0 0 24 24\">\n"
+    append defs "    $icontext\n</symbol>\n"
+    append uses "<svg x=\"[expr {$cx+30}]\" y=\"[expr {$cy+30}]\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"$color\">\n"
+    append uses "   <use href=\"#${iconname}\" />\n"
+    append uses "</svg>\n"
+    return [list $defs $uses]
 }
 ## itable 
 proc ::tblocks::itable {fonts colors lines n m} {
@@ -322,22 +344,9 @@ proc ::tblocks::itable {fonts colors lines n m} {
                 } elseif {$iconname eq "no"} {
                     append res [tblocks::icon-no [list [expr {$cx+18}] [expr {$cy+16}]]]
                 } elseif {$iconname ne ""} {
-                    set iconfile [file join icons ${iconname}.svg]
-                    if {![file exists $iconfile] } {
-                        ::tblocks::icon-get "icons" ${iconname}.svg
-                    } 
-                    if [catch {open $iconfile r} infh] {
-                        puts stderr "Cannot open $filename: $infh"
-                        exit
-                    }
-                    set icontext [read $infh]
-                    close $infh
-                    set icontext [regsub {.+<path(.+)</svg>} $icontext "<path\\1"]
-                    append defs "<symbol id=\"$iconname\" viewBox=\"0 0 24 24\">\n"
-                    append defs "    $icontext\n</symbol>\n"
-                    append uses "<svg x=\"[expr {$cx+30}]\" y=\"[expr {$cy+30}]\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"[lindex [lindex $colors $cn] 2]\">\n"
-                    append uses "   <use href=\"#${iconname}\" />\n"
-                    append uses "</svg>\n"
+                    set icode [::tblocks::icon-get "icons" ${iconname} $cx $cy [lindex [lindex $colors $cn] 2]]
+                    append defs [lindex $icode 0]
+                    append uses [lindex $icode 1]
                 }
             } else {
                 append res "<text x=\"[expr {$cx+10}]\" y=\"[expr {$cy+50}]\" class=\"large\" text-anchor=\"left\">$txt</text>\n"
@@ -360,10 +369,17 @@ proc ::tblocks::in-out-blocks {fonts colors lines n m} {
         set height 600
         set width 1200
     } else {
-        set height 600
+        set height 300
         set width 1200
     }
     set res ""
+    if {$m > 3} {
+        set fontsize large
+        set yi 28
+    } else {
+        set fontsize header
+        set yi 40
+    }
     append res [::tblocks::header $height $width $fonts]
     set col1 [lindex [lindex $colors 0] 0]
     set col2 [lindex [lindex $colors 0] 1]
@@ -408,21 +424,21 @@ proc ::tblocks::in-out-blocks {fonts colors lines n m} {
         } elseif {[regexp {[^\\s]} $line]} {
             set txt $line
             if {$cn == 1} {
-                append res [tblocks::text 60 $cy $txt header left]
-                incr cy 40
+                append res [tblocks::text 60 $cy $txt $fontsize left]
+                incr cy $yi
             } elseif {$cn == 2} {
                 append res [tblocks::text 600 $cy $txt header middle]
                 incr cy 40
             } elseif {$cn == 3} {
-                append res [tblocks::text 860 $cy $txt header left]
-                incr cy 40
+                append res [tblocks::text 860 $cy $txt $fontsize left]
+                incr cy $yi
             } elseif {$cn == 4} {
                 if {$cm > 1} {
-                    append res [tblocks::text $cx $cy $txt header left]
+                    append res [tblocks::text $cx $cy $txt $fontsize left]
                 } else {
-                    append res [tblocks::text $cx $cy $txt header left]
+                    append res [tblocks::text $cx $cy $txt $fontsize left]
                 }
-                incr cy 40
+                incr cy $yi
                 if {$cm == 1} {
                     set cy 450
                     set cx 600
@@ -430,7 +446,7 @@ proc ::tblocks::in-out-blocks {fonts colors lines n m} {
             } 
             incr cm
         } else {
-            incr cy 20
+            incr cy [expr {$yi/2}]
         }
     }
     append res [::tblocks::footer]
@@ -473,23 +489,9 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
                 } elseif {$iconname eq "no"} {
                     append res [tblocks::icon-no [list [expr {$cx+266}] [expr {$cy+40}]]]
                 } else {
-                    set iconfile [file join icons ${iconname}.svg]
-                    if {![file exists $iconfile] } {
-                        ::tblocks::icon-get "icons" ${iconname}.svg
-                        puts stderr "File $iconfile does not exists!"
-                    } 
-                    if [catch {open $iconfile r} infh] {
-                        puts stderr "Cannot open $filename: $infh"
-                        exit
-                    } 
-                    set icontext [read $infh]
-                    close $infh
-                    set icontext [regsub {.+<path(.+)</svg>} $icontext "<path\\1"]
-                    append defs "<symbol id=\"$iconname\" viewBox=\"0 0 24 24\">\n"
-                    append defs "    $icontext\n</symbol>\n"
-                    append uses "<svg x=\"[expr {$cx+266}]\" y=\"[expr {$cy+40}]\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"[lindex [lindex $colors $cn] 2]\">\n"
-                    append uses "   <use href=\"#${iconname}\" />\n"
-                    append uses "</svg>\n"
+                    set icode [::tblocks::icon-get "icons" ${iconname} $cx $cy [lindex [lindex $colors $cn] 2]]
+                    append defs [lindex $icode 0]
+                    append uses [lindex $icode 1]
                 }
                 set cx [lindex [lindex [lindex $coords $n] $cn] 0]
                 set cy [lindex [lindex [lindex $coords $n] $cn] 1]
@@ -538,6 +540,8 @@ proc ::tblocks::blocks {fonts colors lines n m} {
         set coords [list [list 20 50] [list 520 50] [list 20 370] [list 520 370]]
     } elseif {$n == 5} {
         set coords [list [list 20 50] [list 520 50] [list 1020 50] [list 270 370] [list 770 370]] 
+    } elseif {$n == 6} {
+        set coords [list [list 20 50] [list 520 50] [list 1020 50] [list 20 370] [list 520 370]  [list 1020 370]]  
     }
     
     set res ""
@@ -564,7 +568,7 @@ proc ::tblocks::blocks {fonts colors lines n m} {
             set x [lindex $xy 0]
             set y [lindex $xy 1]
             incr cn
-            set cx [expr {$x+15}]
+            set cx [expr {$x+25}]
             set cy [expr {$y+55}]
             if {$fontsize eq "header"} {
                 set cx [expr {$x+50}]
@@ -620,6 +624,42 @@ proc ::tblocks::linegraph {fonts colors lines n m} {
     append res [::tblocks::footer]    
     return $res
 }
+## create hexagon icons
+proc ::tblocks::hexicons {fonts colors lines n m} {
+    set height 100
+    set width 100
+    set polygon {<polygon points="2,20 20,2 80,2 98,20 98,80 80,98 20,98 2,80" style="fill:__col__;stroke:#333333;stroke-width:0" />}
+    set cn 0
+    foreach line $lines {
+        if {[regexp {^## } $line]} {
+            set defs "\n<defs>\n"
+            set uses ""
+            set iconname ""
+            set txt [regsub {^## +} $line ""]
+            if {[regexp {icon:([-a-z0-9A-Z]+)} $txt]} {
+                set res [::tblocks::header $height $width $fonts]
+                set iconname [regsub {.*icon:([-a-z0-9A-Z]+).*} $txt "\\1"]
+                append res [regsub {__col__} $polygon [lindex [lindex $colors $cn] 0]]
+                set txt [string trim [regsub {icon:[-a-zA-Z0-9]+} $txt ""]]
+                set icode [::tblocks::icon-get "icons" ${iconname} -4 -14 [lindex [lindex $colors $cn] 2]]                
+                append defs [lindex $icode 0]
+                append uses [lindex $icode 1]
+                append res [tblocks::text 50 80 $txt small middle]
+                if {[string length $defs] > 20} {
+                    append res $defs
+                    append res "</defs>\n"
+                    append res $uses
+                }
+                append res [::tblocks::footer]
+                set out [open "hexicon-[string tolower [string trim $txt]].svg" w 0600]
+                puts $out $res
+                close $out
+                incr cn
+            }
+        }
+    }
+}
+    
 proc ::tblocks::timeline {fonts colors lines n m} {
     set height [expr {210+($m*30)}]
     set width [expr {$n*400}]
@@ -671,7 +711,7 @@ proc ::tblocks::main {argv} {
                 {#FFCCCC #E68080 #B64040} \
                 {#FFE5CC #E6B380 #B68040} \
                 {#CCFFCC #80CC80 #40B640} \
-                {#CCFFFF #80CCCC #40B640} \
+                {#CCFFFF #80CCCC #40B6B6} \
                 {#CCE5FF #80B3E6 #4080B6} \
                 {#E5CCFF #B380E6 #8040B6}]
     if {$infile eq "-"} {
@@ -729,6 +769,11 @@ proc ::tblocks::main {argv} {
     if {$infh ne "stdin"} {
         close $infh
     }
+    if  {$mode in [list hexicon hexicons]} {
+        ::tblocks::hexicons $fonts $colors $lines $n $max]
+        return
+    } 
+
     if {$outfile eq "-"} {
         set out stdout
     } else {

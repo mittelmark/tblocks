@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="1200" height="300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+  }
+  .small {
+      font-family: 'Andika', sans-serif;
+      font-size: 16px;
+  }
+  .large {
+      font-family: 'Andika', sans-serif;
+      font-size: 24px;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+  }
+  
+  </style>
+
+        <polygon points="380,130 430,130 430,115 455,150 430,185 430,170 380,170" fill="#E68080" stroke-width="2" stroke="#888888" />
+        <polygon points="600,130 795,130 795,115 820,150 795,185 795,170 600,170" fill="#E68080" stroke-width="2" stroke="#888888" />
+        <rect width="360" height="280" x="20" y="10" rx="20" ry="20" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
+        <circle cx="600" cy="150" r="145" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
+        <rect width="360" height="280" x="820" y="10" rx="20" ry="20" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
+    <text x="200" y="70" class="header" text-anchor="middle">The Problem</text>   <text x="60" y="134" class="large" text-anchor="left">Historically filesystem </text>
+   <text x="60" y="162" class="large" text-anchor="left">operations require bulky, </text>
+   <text x="60" y="190" class="large" text-anchor="left">error-prone, platform </text>
+   <text x="60" y="218" class="large" text-anchor="left">specific libraries.</text>
+   <text x="600" y="130" class="header" text-anchor="middle">c++17</text>
+   <text x="600" y="164" class="header" text-anchor="middle">namespace fs =</text>
+   <text x="600" y="204" class="header" text-anchor="middle">std::filesystem</text>
+   <text x="1000" y="70" class="header" text-anchor="middle">The Solution</text>
+   <text x="860" y="134" class="large" text-anchor="left">The &lt;filesystems&gt; library</text>
+   <text x="860" y="162" class="large" text-anchor="left">provides a portable, </text>
+   <text x="860" y="190" class="large" text-anchor="left">standardized way to </text>
+   <text x="860" y="218" class="large" text-anchor="left">interact with the </text>
+   <text x="860" y="246" class="large" text-anchor="left">OS environment.</text>
+</svg>
