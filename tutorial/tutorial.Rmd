@@ -1,0 +1,33 @@
+---
+title: tblocks tutorial
+author: Detlef Groth, University of Potsdam
+date: 2026-06-17 17:51
+---
+
+## Introduction
+
+_tblocks_ is a Tcl application and Tcl package which can be used to translate
+simple Markdown files into SVG graphics.
+
+Here the typical Hello World example with the Markdown code shown above will be automatically converted to a SVG graphics:
+
+```{.shell label=Main cmd="tblocks %i %b.svg" chunk.ext=md ext=svg}
+## Hello
+
+- entry 1
+- entry 2
+- entry 3
+
+There can be as well some more text
+in the lines below of the list.
+
+## World!
+
+- entry 4
+- entry 5
+- entry 6
+
+There can be as well some more text
+in the lines below of the list.
+```
+
