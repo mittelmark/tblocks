@@ -216,7 +216,8 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
-- 2026-06-16 version 0.0.4 adding inout-block and extending blocks to 5 blocks
+- 2026-06-17 version 0.0.5 - flexible size of iblocks height
+- 2026-06-16 version 0.0.4 - adding inout-block and extending blocks to 5 blocks
 - 2026-06-15 version 0.0.3 - adding iblocks and itable types with icon support from https://github.com/Templarian/MaterialDesign
 - 2026-06-12 Version 0.0.2 - implemented blocks, inout, linegraph, sequence, timeline, table
 - 2026-06-12 Version 0.0.1 - development started

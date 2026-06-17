@@ -43,7 +43,7 @@
    <text x="600" y="164" class="header" text-anchor="middle">namespace fs =</text>
    <text x="600" y="204" class="header" text-anchor="middle">std::filesystem</text>
    <text x="1000" y="70" class="header" text-anchor="middle">The Solution</text>
-   <text x="860" y="134" class="large" text-anchor="left">The &lt;filesystems&gt; library</text>
+   <text x="860" y="134" class="large" text-anchor="left">The &lt;filesystem&gt; library</text>
    <text x="860" y="162" class="large" text-anchor="left">provides a portable, </text>
    <text x="860" y="190" class="large" text-anchor="left">standardized way to </text>
    <text x="860" y="218" class="large" text-anchor="left">interact with the </text>

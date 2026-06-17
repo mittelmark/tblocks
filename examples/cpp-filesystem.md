@@ -16,7 +16,7 @@ std::filesystem
 
 ## The Solution
 
-The <filesystems> library
+The <filesystem> library
 provides a portable, 
 standardized way to 
 interact with the 

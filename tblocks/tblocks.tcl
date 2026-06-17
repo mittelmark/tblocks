@@ -301,7 +301,7 @@ proc ::tblocks::icon-get {folder iconname cx cy color} {
     set uses ""
     append defs "<symbol id=\"$iconname\" viewBox=\"0 0 24 24\">\n"
     append defs "    $icontext\n</symbol>\n"
-    append uses "<svg x=\"[expr {$cx+30}]\" y=\"[expr {$cy+30}]\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"$color\">\n"
+    append uses "<svg x=\"[expr {$cx+30}]\" y=\"[expr {$cy+30}]\" width=\"72\" height=\"72\" viewBox=\"0 0 72 72\" fill=\"$color\">\n"
     append uses "   <use href=\"#${iconname}\" />\n"
     append uses "</svg>\n"
     return [list $defs $uses]
@@ -456,6 +456,7 @@ proc ::tblocks::in-out-blocks {fonts colors lines n m} {
 ## icon blocks
 proc ::tblocks::iblocks {fonts colors lines n m} {
     set height 400
+    set iheight [expr {($m - 6) * 40}]
     if {$n == 1} {
         set width 600
     } elseif {$n <= 4} {
@@ -463,8 +464,10 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
     } elseif {$n <= 6} {
         set width 1800
     }
+    incr height $iheight
     if {$n > 2} {
         set height 800
+        incr height $iheight
     }
     set res ""
     append res [::tblocks::header $height $width $fonts]
@@ -484,18 +487,18 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
             if {[regexp {icon:} $txt]} {
                 set iconname [regsub {.+icon:([-a-z]+).*} $txt "\\1"]
                 set txt [regsub {icon:.+} $txt ""]
+                set cx [lindex [lindex [lindex $coords $n] $cn] 0]
+                set cy [lindex [lindex [lindex $coords $n] $cn] 1]
+                append res "<rect  x=\"$cx\" y=\"$cy\" width=\"580\" height=\"[expr {380+$iheight}]\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors $cn] 0]\"/>\n"
                 if {$iconname eq "yes"} {
                     append res [tblocks::icon-yes [list [expr {$cx+266}] [expr {$cy+40}]]]
                 } elseif {$iconname eq "no"} {
                     append res [tblocks::icon-no [list [expr {$cx+266}] [expr {$cy+40}]]]
                 } else {
-                    set icode [::tblocks::icon-get "icons" ${iconname} $cx $cy [lindex [lindex $colors $cn] 2]]
+                    set icode [::tblocks::icon-get "icons" ${iconname} [expr {$cx+235}] $cy [lindex [lindex $colors $cn] 2]]
                     append defs [lindex $icode 0]
                     append uses [lindex $icode 1]
                 }
-                set cx [lindex [lindex [lindex $coords $n] $cn] 0]
-                set cy [lindex [lindex [lindex $coords $n] $cn] 1]
-                append res "<rect  x=\"$cx\" y=\"$cy\" width=\"580\" height=\"380\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors $cn] 0]\"/>\n"
                 append res [tblocks::text [expr {$cx+290}] [expr {$cy+140}] $txt header middle]
                 incr cy 180
             }
@@ -918,7 +921,7 @@ proc ::tblocks::main {argv} {
         close $out
     }
 }
-package provide tblocks 0.0.4
+package provide tblocks 0.0.5
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv
