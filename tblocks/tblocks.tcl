@@ -114,8 +114,8 @@ proc ::tblocks::sequence {xy colors title} {
     set code [regsub -all __y4__ $code $y]; 
     set code [regsub -all __x1__ $code $x]; incr x 120
     set code [regsub -all __x2__ $code $x]; 
-    set code [regsub -all __col1__ $code [lindex $colors 1]]
-    set code [regsub -all __col2__ $code [lindex $colors 2]]
+    set code [regsub -all __col1__ $code [lindex $colors 0]]
+    set code [regsub -all __col2__ $code [lindex $colors 1]]
     set code [regsub __title__ $code [regsub -all {[#_]{2}} [regsub { *icon:[a-z0-9]+} $title ""] ""]]
     if {[regexp {icon:} $title]} {
         set cmd [regsub {.*icon:([0-9a-zA-z]+).*} $title "\\1"]
