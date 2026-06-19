@@ -202,8 +202,8 @@ proc ::tblocks::table {xy colors title} {
     return $code
 }
 proc ::tblocks::in-out {colors} {
-    set col1 [lindex $colors 1]
-    set col2 [lindex $colors 2]
+    set col1 [lindex $colors 0]
+    set col2 [lindex $colors 1]
     set code {
         <polygon points="180,130 290,130 290,115 320,150 290,185 290,170 180,170" fill="__col2__" stroke-width="2" stroke="#888888" />
         <polygon points="540,130 650,130 650,115 680,150 650,185 650,170 540,170" fill="__col2__" stroke-width="2" stroke="#888888" />
