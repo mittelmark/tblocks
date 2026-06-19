@@ -146,7 +146,7 @@ proc ::tblocks::arrow-right {xy colors} {
     set code [regsub -all __x1__ $code $x]; 
     set code [regsub -all __y1__ $code $y];   
     set code [regsub -all __points__ $code $points]; 
-    set code [regsub -all __col1__ $code [lindex $colors 2]]
+    set code [regsub -all __col1__ $code [lindex $colors 1]]
     return $code
 }
 proc ::tblocks::icon-yes {xy} {
