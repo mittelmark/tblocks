@@ -5,55 +5,65 @@
   .header {
       font-family: 'Andika', sans-serif;
       font-size: 28px;
+      fill: #000000;
   }
   .normal {
       font-family: 'Andika', sans-serif;
       font-size: 22px;
+      fill: __COL2__;
+  }
+  .small {
+      font-family: 'Andika', sans-serif;
+      font-size: 16px;
+      fill: __COL2__;
+  }
+  .large {
+      font-family: 'Andika', sans-serif;
+      font-size: 24px;
+      fill: __COL2__;
   }
   .mono {
       font-family: 'Ubuntu Mono', monospaced;
       font-size: 22px;
+      fill: __COL2__;
   }
   .bold {
       font-family: 'Andika', sans-serif;
       font-weight: bold;
       font-size: 22px;
+      fill: __COL2__;
   }
   
   </style>
 
-
 <rect width="460" height="240" x="270" y="50" rx="20" ry="20" fill="#FFCCCC" stroke-width="2" stroke="#888888" />
 <rect width="260" height="60" x="370" y="20" rx="20" ry="20" fill="#E68080" stroke-width="2" stroke="#888888" />   
 <text x="500" y="60" class="header" text-anchor="middle"> Call by Value</text>
-
-   <text x="285" y="105" class="bold" text-anchor="left">Concept:</text>
-   <text x="285" y="129" class="normal" text-anchor="left">&#160;   Clones the data.</text>
-   <text x="285" y="165" class="mono" text-anchor="left">int add(int x, int y);</text>
-   <text x="285" y="189" class="mono" text-anchor="left">add(x,y);</text>
-   <text x="285" y="225" class="normal" text-anchor="left">Safe but inefficient for large</text>
-   <text x="285" y="249" class="normal" text-anchor="left">data structures.</text>
+   <text x="295" y="105" class="bold" text-anchor="left">Concept:</text>
+   <text x="295" y="129" class="normal" text-anchor="left">&#160;   Clones the data.</text>
+   <text x="295" y="165" class="mono" text-anchor="left">int add(int x, int y);</text>
+   <text x="295" y="189" class="mono" text-anchor="left">add(x,y);</text>
+   <text x="295" y="225" class="normal" text-anchor="left">Safe but inefficient for large</text>
+   <text x="295" y="249" class="normal" text-anchor="left">data structures.</text>
 
 <rect width="460" height="240" x="20" y="370" rx="20" ry="20" fill="#FFE5CC" stroke-width="2" stroke="#888888" />
 <rect width="260" height="60" x="120" y="340" rx="20" ry="20" fill="#E6B380" stroke-width="2" stroke="#888888" />   
 <text x="250" y="380" class="header" text-anchor="middle"> Pointers</text>
-
-   <text x="35" y="425" class="bold" text-anchor="left">Concept:</text>
-   <text x="35" y="449" class="normal" text-anchor="left">&#160;   Passes memory address.</text>
-   <text x="35" y="485" class="mono" text-anchor="left">void swap(int *x, int *y);</text>
-   <text x="35" y="509" class="mono" text-anchor="left">swap(&amp;x,&amp;y);</text>
-   <text x="35" y="545" class="normal" text-anchor="left">Requires eight '*' and two '&amp;' symbols</text>
-   <text x="35" y="569" class="normal" text-anchor="left">for resolving the address issues.</text>
+   <text x="45" y="425" class="bold" text-anchor="left">Concept:</text>
+   <text x="45" y="449" class="normal" text-anchor="left">&#160;   Passes memory address.</text>
+   <text x="45" y="485" class="mono" text-anchor="left">void swap(int *x, int *y);</text>
+   <text x="45" y="509" class="mono" text-anchor="left">swap(&amp;x,&amp;y);</text>
+   <text x="45" y="545" class="normal" text-anchor="left">Requires eight '*' and two '&amp;' symbols</text>
+   <text x="45" y="569" class="normal" text-anchor="left">for resolving the address issues.</text>
 
 <rect width="460" height="240" x="520" y="370" rx="20" ry="20" fill="#CCFFCC" stroke-width="2" stroke="#888888" />
 <rect width="260" height="60" x="620" y="340" rx="20" ry="20" fill="#80CC80" stroke-width="2" stroke="#888888" />   
 <text x="750" y="380" class="header" text-anchor="middle"> References</text>
-
-   <text x="535" y="425" class="bold" text-anchor="left">Concept:</text>
-   <text x="535" y="449" class="normal" text-anchor="left">&#160;   Creates an alias.</text>
-   <text x="535" y="485" class="mono" text-anchor="left">void swap(int &amp;x, int &amp;y);</text>
-   <text x="535" y="509" class="mono" text-anchor="left">swap(x,y);</text>
-   <text x="535" y="545" class="normal" text-anchor="left">Requires only 4 '&amp;' and only in the</text>
-   <text x="535" y="569" class="normal" text-anchor="left">argument lists. Clean function call.</text>
-   <text x="535" y="593" class="normal" text-anchor="left">References can't be reassigned.</text>
+   <text x="545" y="425" class="bold" text-anchor="left">Concept:</text>
+   <text x="545" y="449" class="normal" text-anchor="left">&#160;   Creates an alias.</text>
+   <text x="545" y="485" class="mono" text-anchor="left">void swap(int &amp;x, int &amp;y);</text>
+   <text x="545" y="509" class="mono" text-anchor="left">swap(x,y);</text>
+   <text x="545" y="545" class="normal" text-anchor="left">Requires only 4 '&amp;' and only in the</text>
+   <text x="545" y="569" class="normal" text-anchor="left">argument lists. Clean function call.</text>
+   <text x="545" y="593" class="normal" text-anchor="left">References can't be reassigned.</text>
 </svg>

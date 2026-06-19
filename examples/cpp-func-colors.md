@@ -2,9 +2,9 @@
 mode: blocks
 sans-font: "Mali"
 mono-font: "Chivo Mono"
-color0: "#eeeeee" "#bbbbbb"
 color1: "#eeeeee" "#bbbbbb"
 color2: "#eeeeee" "#bbbbbb"
+color3: "#eeeeee" "#bbbbbb"
 ---
 ## Call by Value
 Concept:

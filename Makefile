@@ -20,8 +20,8 @@ tasks:  ## list all tasks
 	@grep -Eo '^[a-z0-9]+:.+' $(CURRENT_MAKEFILE) | sed -E 's/:\s+##/\t- /g'
 
 example:
-	tclsh tblocks/tblocks.tcl --mode=table examples/cpp-does.md examples/cpp-does.svg
-	tclsh tblocks/tblocks.tcl --mode=boxes examples/cpp-overload.md examples/cpp-overload.svg	
-	tclsh tblocks/tblocks.tcl --mode=boxes examples/cpp-func.md examples/cpp-func.svg
-	tclsh tblocks/tblocks.tcl --mode=sequence examples/sequence.md examples/sequence.svg	
+	tclsh tblocks/tblocks.tcl --mode=table examples/cpp-does.md assets/cpp-does.svg
+	tclsh tblocks/tblocks.tcl --mode=boxes examples/cpp-overload.md assets/cpp-overload.svg	
+	tclsh tblocks/tblocks.tcl --mode=boxes examples/cpp-func.md assets/cpp-func.svg
+	tclsh tblocks/tblocks.tcl --mode=sequence examples/sequence.md assets/sequence.svg	
 	tclsh tblocks/tblocks.tcl --mode=inout examples/flow.md assets/flow.svg

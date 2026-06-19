@@ -216,7 +216,7 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
-- 2026-06-18 version 0.0.6 - adding `--colorN="COLORS"` command line option
+- 2026-06-19 version 0.0.6 - adding `--colorN="COLORS"` command line option
 - 2026-06-17 version 0.0.5 - flexible size of iblocks height
 - 2026-06-16 version 0.0.4 - adding inout-block and extending blocks to 5 blocks
 - 2026-06-15 version 0.0.3 - adding iblocks and itable types with icon support from https://github.com/Templarian/MaterialDesign

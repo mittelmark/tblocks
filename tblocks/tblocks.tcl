@@ -895,7 +895,7 @@ proc ::tblocks::main {argv} {
                     if {$n > 0} {
                         puts $out [::tblocks::arrow-right [lindex $coords $n] [lindex $colors [expr {$n}]]]
                     }
-                    puts $out [::tblocks::sequence [lindex $coords $n] [lindex $colors [expr {$n+1}] $line]
+                    puts $out [::tblocks::sequence [lindex $coords $n] [lindex $colors [expr {$n+1}]] $line]
                 } 
                 set xy [lindex $coords $n]
                 set x [lindex $xy 0]
