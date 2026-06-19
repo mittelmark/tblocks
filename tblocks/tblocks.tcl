@@ -13,7 +13,7 @@
 
 namespace eval ::tblocks { }
 proc ::tblocks::usage {app} {
-    puts "Usage $app \[-h,--help|--mode=MODENAME INFILE.md OUTFILE.svg"
+    puts "Usage $app \[-h,--help|--mode=MODENAME\] INFILE.md OUTFILE.svg"
 }
 proc ::tblocks::help {app argv} {
     puts {
@@ -32,11 +32,16 @@ Options:
     --help,-h        - display this help page
     --mode=MODE      - the type of output diagram, current diagram types are
                        boxes, iblocks, inout, linegraph, sequence, table, timeline
-    --mono-font=FONT - a monospaced font from fonts.bunny.net               
-    --sans-font=FONT - a sans serif font from fonts.bunny.net
+    --mono-font=FONT          - a monospaced font from fonts.bunny.net               
+    --sans-font=FONT          - a sans serif font from fonts.bunny.net
+    --colorN="COL1 COL2 COL3" - setting the color N for the diagram, color1 sets
+                                the text color, the next ones set the backgrounds
 }
 }
-proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
+proc ::tblocks::header {height width args} {
+    array set arg [list -font {Andika "Ubuntu Mono"} -colors [list black black black]]
+    array set arg $args
+    set fonts $arg(-font)
     set sans [lindex $fonts 0]
     set mono [lindex $fonts 1]
     set code {<?xml version="1.0" encoding="ISO-8859-1"?>
@@ -46,27 +51,33 @@ proc ::tblocks::header {height width {fonts {Andika "Ubuntu Mono"}}} {
   .header {
       font-family: '__Sans-Font__', sans-serif;
       font-size: 28px;
+      fill: __COL1__;
   }
   .normal {
       font-family: '__Sans-Font__', sans-serif;
       font-size: 22px;
+      fill: __COL2__;
   }
   .small {
       font-family: '__Sans-Font__', sans-serif;
       font-size: 16px;
+      fill: __COL2__;
   }
   .large {
       font-family: '__Sans-Font__', sans-serif;
       font-size: 24px;
+      fill: __COL2__;
   }
   .mono {
       font-family: '__Mono-Font__', monospaced;
       font-size: 22px;
+      fill: __COL2__;
   }
   .bold {
       font-family: '__Sans-Font__', sans-serif;
       font-weight: bold;
       font-size: 22px;
+      fill: __COL2__;
   }
   
   </style>
@@ -79,6 +90,8 @@ set code [regsub -all {__Sans-Font__} $code $sans]
 set code [regsub -all {__Mono-Font__} $code $mono]
 set code [regsub -all {__sans-font__} $code $sansfont]
 set code [regsub -all {__mono-font__} $code $monofont]
+set code [regsub -all {__COL1__} $code [lindex $arg(-colors) 0]]
+set code [regsub -all {__COL1__} $code [lindex $arg(-colors) 1]]
 return $code
 }
 
@@ -101,8 +114,8 @@ proc ::tblocks::sequence {xy colors title} {
     set code [regsub -all __y4__ $code $y]; 
     set code [regsub -all __x1__ $code $x]; incr x 120
     set code [regsub -all __x2__ $code $x]; 
-    set code [regsub -all __col1__ $code [lindex $colors 0]]
-    set code [regsub -all __col2__ $code [lindex $colors 1]]
+    set code [regsub -all __col1__ $code [lindex $colors 1]]
+    set code [regsub -all __col2__ $code [lindex $colors 2]]
     set code [regsub __title__ $code [regsub -all {[#_]{2}} [regsub { *icon:[a-z0-9]+} $title ""] ""]]
     if {[regexp {icon:} $title]} {
         set cmd [regsub {.*icon:([0-9a-zA-z]+).*} $title "\\1"]
@@ -133,7 +146,7 @@ proc ::tblocks::arrow-right {xy colors} {
     set code [regsub -all __x1__ $code $x]; 
     set code [regsub -all __y1__ $code $y];   
     set code [regsub -all __points__ $code $points]; 
-    set code [regsub -all __col1__ $code [lindex $colors 1]]
+    set code [regsub -all __col1__ $code [lindex $colors 2]]
     return $code
 }
 proc ::tblocks::icon-yes {xy} {
@@ -177,8 +190,8 @@ proc ::tblocks::table {xy colors title} {
     set code [regsub -all __y4__ $code $y]; 
     set code [regsub -all __x1__ $code $x]; incr x 230
     set code [regsub -all __x2__ $code $x]; 
-    set code [regsub -all __col1__ $code [lindex $colors 0]]
-    set code [regsub -all __col2__ $code [lindex $colors 1]]
+    set code [regsub -all __col1__ $code [lindex $colors 1]]
+    set code [regsub -all __col2__ $code [lindex $colors 2]]
     set code [regsub __title__ $code [regsub -all {[#_]{2}} [regsub { *icon:[a-zA-Z0-9]+} $title ""] ""]]
     if {[regexp {icon:} $title]} {
         set cmd [regsub {.*icon:([0-9a-zA-z]+).*} $title "\\1"]
@@ -189,8 +202,8 @@ proc ::tblocks::table {xy colors title} {
     return $code
 }
 proc ::tblocks::in-out {colors} {
-    set col1 [lindex $colors 0]
-    set col2 [lindex $colors 1]
+    set col1 [lindex $colors 1]
+    set col2 [lindex $colors 2]
     set code {
         <polygon points="180,130 290,130 290,115 320,150 290,185 290,170 180,170" fill="__col2__" stroke-width="2" stroke="#888888" />
         <polygon points="540,130 650,130 650,115 680,150 650,185 650,170 540,170" fill="__col2__" stroke-width="2" stroke="#888888" />
@@ -267,6 +280,14 @@ proc ::tblocks::pargs {} {
             lset fonts 1 $font
             set argv [lreplace $argv $idx $idx]
         }
+        while {[lsearch -regex $argv --color\[0-9\]=] > -1} {
+            set idx [lsearch -regex $argv --color\[0-9\]]
+            set col [regsub {.+=} [lindex $argv $idx] ""]
+            set n [regsub {.+color([0-9])=.+} [lindex $argv $idx] "\\1"]
+            lset colors $n $col
+            set argv [lreplace $argv $idx $idx]
+        }
+
         if {[lsearch -regex $argv {^--}] > -1} { 
             set idx [lsearch -regex $argv {^--}] 
             puts "Error: Wrong argument '[lindex $argv $idx]'!"
@@ -311,7 +332,7 @@ proc ::tblocks::itable {fonts colors lines n m} {
     set height [expr {150+($m*100)}]
     set width  [expr {200+(($n-1)*600)}]
     set res ""
-    append res [::tblocks::header $height $width $fonts]
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
     set cn 0
     set cx 30
     set defs "\n<defs>\n"
@@ -324,7 +345,7 @@ proc ::tblocks::itable {fonts colors lines n m} {
             if {$cn > 0} {
                 set cx [expr {150+(($cn-1)*600)}]
                 set cy 10
-                append res "<rect x=\"$cx\" y=\"$cy\" width=\"580\" height=\"80\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors $cn] 1]\"/>\n"
+                append res "<rect x=\"$cx\" y=\"$cy\" width=\"580\" height=\"80\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors [expr {$cn+1}]] 1]\"/>\n"
                 append res "<text x=\"[expr {290+$cx}]\" y=\"60\" class=\"header\" text-anchor=\"middle\">$txt</text>\n"
             }
         
@@ -332,7 +353,7 @@ proc ::tblocks::itable {fonts colors lines n m} {
             incr cy 100
         } elseif {[regexp {^- (.+)$} $line -> txt]} {
             if {$cn > 1} {
-                append res "<rect x=\"[expr {$cx+3}]\" y=\"$cy\" width=\"580\" height=\"80\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors [expr {$cn-1}]] 0]\"/>\n"
+                append res "<rect x=\"[expr {$cx+3}]\" y=\"$cy\" width=\"580\" height=\"80\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors [expr {$cn}]] 0]\"/>\n"
                 set iconname ""
                 if {[regexp {icon:([-a-z0-9A-Z]+)} $txt]} {
                     set iconname [regsub {.+icon:([-a-z0-9A-Z]+).*} $txt "\\1"]
@@ -344,7 +365,7 @@ proc ::tblocks::itable {fonts colors lines n m} {
                 } elseif {$iconname eq "no"} {
                     append res [tblocks::icon-no [list [expr {$cx+18}] [expr {$cy+16}]]]
                 } elseif {$iconname ne ""} {
-                    set icode [::tblocks::icon-get "icons" ${iconname} $cx $cy [lindex [lindex $colors $cn] 2]]
+                    set icode [::tblocks::icon-get "icons" ${iconname} $cx $cy [lindex [lindex $colors {$cn+1}] 2]]
                     append defs [lindex $icode 0]
                     append uses [lindex $icode 1]
                 }
@@ -380,10 +401,10 @@ proc ::tblocks::in-out-blocks {fonts colors lines n m} {
         set fontsize header
         set yi 40
     }
-    append res [::tblocks::header $height $width $fonts]
-    set col1 [lindex [lindex $colors 0] 0]
-    set col2 [lindex [lindex $colors 0] 1]
-    set col3 [lindex [lindex $colors 1] 0]
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
+    set col1 [lindex [lindex $colors 1] 0]
+    set col2 [lindex [lindex $colors 2] 1]
+    set col3 [lindex [lindex $colors 3] 0]
     set code {
         <polygon points="380,130 430,130 430,115 455,150 430,185 430,170 380,170" fill="__col2__" stroke-width="2" stroke="#888888" />
         <polygon points="600,130 795,130 795,115 820,150 795,185 795,170 600,170" fill="__col2__" stroke-width="2" stroke="#888888" />
@@ -470,7 +491,7 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
         incr height $iheight
     }
     set res ""
-    append res [::tblocks::header $height $width $fonts]
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
     set cn 0
     set coords [list {} \
                 {{10 10}} \
@@ -489,13 +510,13 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
                 set txt [regsub {icon:.+} $txt ""]
                 set cx [lindex [lindex [lindex $coords $n] $cn] 0]
                 set cy [lindex [lindex [lindex $coords $n] $cn] 1]
-                append res "<rect  x=\"$cx\" y=\"$cy\" width=\"580\" height=\"[expr {380+$iheight}]\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors $cn] 0]\"/>\n"
+                append res "<rect  x=\"$cx\" y=\"$cy\" width=\"580\" height=\"[expr {380+$iheight}]\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors {$cn+1}] 0]\"/>\n"
                 if {$iconname eq "yes"} {
                     append res [tblocks::icon-yes [list [expr {$cx+266}] [expr {$cy+40}]]]
                 } elseif {$iconname eq "no"} {
                     append res [tblocks::icon-no [list [expr {$cx+266}] [expr {$cy+40}]]]
                 } else {
-                    set icode [::tblocks::icon-get "icons" ${iconname} [expr {$cx+235}] $cy [lindex [lindex $colors $cn] 2]]
+                    set icode [::tblocks::icon-get "icons" ${iconname} [expr {$cx+235}] $cy [lindex [lindex $colors {$cn+1}] 2]]
                     append defs [lindex $icode 0]
                     append uses [lindex $icode 1]
                 }
@@ -548,7 +569,7 @@ proc ::tblocks::blocks {fonts colors lines n m} {
     }
     
     set res ""
-    append res [::tblocks::header $height $width $fonts]
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
     set cn 0
     set cn 0
     set cm 0
@@ -566,7 +587,7 @@ proc ::tblocks::blocks {fonts colors lines n m} {
     }
     foreach line $lines {
         if {[regexp {^__} $line] || [regexp {^## } $line]} {
-            append res [::tblocks::box [lindex $coords $cn] [lindex $colors $cn] $line]
+            append res [::tblocks::box [lindex $coords $cn] [lindex $colors [expr {$cn+1}]] $line]
             set xy [lindex $coords $cn]
             set x [lindex $xy 0]
             set y [lindex $xy 1]
@@ -601,7 +622,7 @@ proc ::tblocks::linegraph {fonts colors lines n m} {
     set height [expr {190+($m-2)*30}]
     set width [expr {$n*200}]
     set res ""
-    append res [::tblocks::header $height $width $fonts]
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
     set cn 0
     foreach line $lines {
         if {[regexp {^##} $line]} {
@@ -611,7 +632,7 @@ proc ::tblocks::linegraph {fonts colors lines n m} {
             if {$cn < [expr {$n-1}]} {
                 append res "<line x1=\"$cx\" y1=\"100\" x2=\"[expr {$cx+200}]\" y2=\"100\"  stroke-width=\"4\" stroke=\"#888888\" />\n"
             }
-            append res  "<circle cx=\"$cx\" cy=\"100\" r=\"30\" fill=\"[lindex [lindex $colors $cn] 0]\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            append res  "<circle cx=\"$cx\" cy=\"100\" r=\"30\" fill=\"[lindex [lindex $colors [expr {$cn+1}]] 0]\" stroke-width=\"2\" stroke=\"#888888\" />\n"
             set cy 165
             incr cn
         } elseif {[regexp {^- } $line]} {
@@ -640,11 +661,11 @@ proc ::tblocks::hexicons {fonts colors lines n m} {
             set iconname ""
             set txt [regsub {^## +} $line ""]
             if {[regexp {icon:([-a-z0-9A-Z]+)} $txt]} {
-                set res [::tblocks::header $height $width $fonts]
+                set res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
                 set iconname [regsub {.*icon:([-a-z0-9A-Z]+).*} $txt "\\1"]
-                append res [regsub {__col__} $polygon [lindex [lindex $colors $cn] 0]]
+                append res [regsub {__col__} $polygon [lindex [lindex $colors [expr {$cn+1}]] 0]]
                 set txt [string trim [regsub {icon:[-a-zA-Z0-9]+} $txt ""]]
-                set icode [::tblocks::icon-get "icons" ${iconname} -4 -14 [lindex [lindex $colors $cn] 2]]                
+                set icode [::tblocks::icon-get "icons" ${iconname} -4 -14 [lindex [lindex $colors [expr {$cn+1}]] 2]]                
                 append defs [lindex $icode 0]
                 append uses [lindex $icode 1]
                 append res [tblocks::text 50 80 $txt small middle]
@@ -668,12 +689,12 @@ proc ::tblocks::timeline {fonts colors lines n m} {
     set width [expr {$n*400}]
     set boxh [expr {$m*30+10}]
     set res ""
-    append res [::tblocks::header $height $width $fonts]
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
     set n 0
     foreach line $lines {
         if {[regexp {^##} $line]} {
-            append res "\n<polygon points=\"[expr {$n*400+2}],20 [expr {($n+1)*400-30}],20 [expr {($n+1)*400}],70 [expr {($n+1)*400-30}],120 [expr {$n*400+2}],120 [expr {$n*400+32}],70\" fill=\"[lindex [lindex $colors $n] 1]\" stroke-width=\"2\" stroke=\"#888888\" />\n"
-            append res "<rect x=\"[expr {$n*400+10}]\" y=\"140\" width=\"352\" height=\"$boxh\" fill=\"[lindex [lindex $colors $n] 0]\" rx=\"20\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            append res "\n<polygon points=\"[expr {$n*400+2}],20 [expr {($n+1)*400-30}],20 [expr {($n+1)*400}],70 [expr {($n+1)*400-30}],120 [expr {$n*400+2}],120 [expr {$n*400+32}],70\" fill=\"[lindex [lindex $colors [expr {$n+1}]] 1]\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            append res "<rect x=\"[expr {$n*400+10}]\" y=\"140\" width=\"352\" height=\"$boxh\" fill=\"[lindex [lindex $colors [expr {$n+1}]] 0]\" rx=\"20\" stroke-width=\"2\" stroke=\"#888888\" />\n"
             set cx [expr {$n*400+201}]
             if {[regexp {^## (.+): (.+)} $line -> l1 l2]} {
                 append res "<text x=\"$cx\" y=\"60\" class=\"header\" text-anchor=\"middle\">$l1</text>\n"
@@ -704,19 +725,20 @@ proc ::tblocks::timeline {fonts colors lines n m} {
 proc ::tblocks::main {argv} {
     set fonts [list Andika "Ubuntu Mono"]
     set mode boxes
-    ::tblocks::pargs
-    set infile [lindex $argv 0]
-    set outfile [lindex $argv 1]
     ## lightgreen lightmagenta lightblue lightred sand1 sand2
    # set colors [list {#D7F5EB #B8EBDF} {#EADEF6 #D6BEEE} {#DCEBFE #BCDAFB}  {#FCE1E8 #FAC5D5} \
    #             {#FDE8D5 #FCD3B5} {#FAD0D5 #F9C9B2}]
    set colors [list \
+                {#000000 #333366 #000000} \
                 {#FFCCCC #E68080 #B64040} \
                 {#FFE5CC #E6B380 #B68040} \
                 {#CCFFCC #80CC80 #40B640} \
                 {#CCFFFF #80CCCC #40B6B6} \
                 {#CCE5FF #80B3E6 #4080B6} \
                 {#E5CCFF #B380E6 #8040B6}]
+    ::tblocks::pargs
+    set infile [lindex $argv 0]
+    set outfile [lindex $argv 1]
     if {$infile eq "-"} {
         set infh stdin
             
@@ -851,7 +873,7 @@ proc ::tblocks::main {argv} {
     } elseif {$mode eq "table"} {
         set coords [list [list 20 20] [list 520 20]]
     } 
-    puts $out [::tblocks::header $height $width $fonts]
+    puts $out [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
     set n 0
     set m 0
     set cy 0
@@ -860,7 +882,7 @@ proc ::tblocks::main {argv} {
         if {[regexp {^__} $line] || [regexp {^## } $line]} {
             if {$mode eq "inout"} {
                 if {$n == 0} {
-                    puts $out [::tblocks::in-out [list [lindex [lindex $colors 0] 0] [lindex [lindex $colors 0] 1]]]
+                    puts $out [::tblocks::in-out [list [lindex [lindex $colors 1] 0] [lindex [lindex $colors 1] 1]]]
                 }
                 puts $out [::tblocks::text [lindex [lindex $coords $n] 0] [lindex [lindex $coords $n] 1] [regsub {^[#_]+ } $line ""] header middle]
                 set cy 160
@@ -868,12 +890,12 @@ proc ::tblocks::main {argv} {
                 incr n
             } else {
                 if {$mode eq "table"} {
-                    puts $out [::tblocks::table [lindex $coords $n] [lindex $colors $n] $line]
+                    puts $out [::tblocks::table [lindex $coords $n] [lindex $colors [expr {$n+1}]] $line]
                 } elseif {$mode eq "sequence"} {
                     if {$n > 0} {
-                        puts $out [::tblocks::arrow-right [lindex $coords $n] [lindex $colors [expr {$n-1}]]]
+                        puts $out [::tblocks::arrow-right [lindex $coords $n] [lindex $colors [expr {$n}]]]
                     }
-                    puts $out [::tblocks::sequence [lindex $coords $n] [lindex $colors $n] $line]
+                    puts $out [::tblocks::sequence [lindex $coords $n] [lindex $colors [expr {$n+1}] $line]
                 } 
                 set xy [lindex $coords $n]
                 set x [lindex $xy 0]
@@ -921,7 +943,7 @@ proc ::tblocks::main {argv} {
         close $out
     }
 }
-package provide tblocks 0.0.5
+package provide tblocks 0.0.6
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv

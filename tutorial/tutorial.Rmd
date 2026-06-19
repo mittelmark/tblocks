@@ -1,7 +1,7 @@
 ---
 title: tblocks tutorial
 author: Detlef Groth, University of Potsdam
-date: 2026-06-17 17:51
+date: 2026-06-19 06:37
 ---
 
 ## Introduction
@@ -9,9 +9,46 @@ date: 2026-06-17 17:51
 _tblocks_ is a Tcl application and Tcl package which can be used to translate
 simple Markdown files into SVG graphics.
 
-Here the typical Hello World example with the Markdown code shown above will be automatically converted to a SVG graphics:
+Here the typical Hello World example with Markdown code 
+which be automatically converted to a SVG graphics using a command line like
+`tblocks hello.md hello.svg`: 
 
-```{.shell label=Main cmd="tblocks %i %b.svg" chunk.ext=md ext=svg}
+```{.shell label=hello1 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg}
+## Hello
+
+- entry 1
+- entry 2
+- entry 3
+
+There can be as well some more text
+in the lines below of the list.
+
+## World!
+
+- entry 4
+- entry 5
+- entry 6
+
+There can be as well some more text
+in the lines below of the list.
+```
+
+You can see the default color coding and the default diagram style which is
+blocks. By using a YAML header you can changing these defaults.
+
+## Styling the Diagram
+
+There are two ways to change the diagram type, the font and the colors for the
+output. Either you provide the application the appropriate command line
+option, or you give these settings within a YAML header section at the
+beginning of the Markdown file.
+
+Here a modified version where we set the colors for the first diagram to blueish:
+
+```{.shell label=hello2 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg}
+---
+color1: "#DDDDFF" "#BBBBEE" "#404090"
+---
 ## Hello
 
 - entry 1

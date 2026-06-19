@@ -158,9 +158,9 @@ the file. Here an example where we create grey color diagram.
 ---
 sans-font: "Mali"
 mono-font: "Chivo Mono"
-color0: "#eeeeee" "#bbbbbb"
 color1: "#eeeeee" "#bbbbbb"
 color2: "#eeeeee" "#bbbbbb"
+color3: "#eeeeee" "#bbbbbb"
 ---
 ## Call by Value
 Concept:
@@ -203,19 +203,20 @@ Tcl programming language installed on your machine.
 
 ## TODO's
 
-- font change via bunny.net
-- first level header sets the type or/and colors so '# mode:inout color1:#eeeeee #bbbbbbb' creates an inout diagram and sets color 1 to greyish
-- greyish backgrounds #eeeeee and #bbbbbb as defaut for all blocks
+- font change via bunny.net (done)
+- first level header sets the type or/and colors so '# mode:inout color1:#eeeeee #bbbbbbb' creates an inout diagram and sets color 1 to greyish (done)
+- greyish backgrounds #eeeeee and #bbbbbb as defaut for all blocks 
 - bluish backgrounds #eeeeff and #aaaaff for all blocks - etc
 - list items starting with - are always left aligned
-- flexible block height based on the number of input lines
-- 5 and 6 blocks for default blocks with 2/3 and 3/3 layout
+- flexible block height based on the number of input lines (partially done)
+- 5 and 6 blocks for default blocks with 2/3 and 3/3 layout (done)
 - more block types
-- more icons
-- documentation
+- more icons (done via [https://github.com/Templarian/MaterialDesign](https://github.com/Templarian/MaterialDesign))
+- tutorial documentation (started)
 
 ## Changes
 
+- 2026-06-18 version 0.0.6 - adding `--colorN="COLORS"` command line option
 - 2026-06-17 version 0.0.5 - flexible size of iblocks height
 - 2026-06-16 version 0.0.4 - adding inout-block and extending blocks to 5 blocks
 - 2026-06-15 version 0.0.3 - adding iblocks and itable types with icon support from https://github.com/Templarian/MaterialDesign
