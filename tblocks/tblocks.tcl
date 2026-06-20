@@ -731,11 +731,12 @@ proc ::tblocks::main {argv} {
    set colors [list \
                 {#000000 #333366 #000000} \
                 {#FFCCCC #E68080 #B64040} \
-                {#FFE5CC #E6B380 #B68040} \
                 {#CCFFCC #80CC80 #40B640} \
-                {#CCFFFF #80CCCC #40B6B6} \
+                {#FFE5CC #E6B380 #B68040} \
                 {#CCE5FF #80B3E6 #4080B6} \
-                {#E5CCFF #B380E6 #8040B6}]
+                {#E5CCFF #B380E6 #8040B6} \
+                {#CCFFFF #80CCCC #40B6B6} \
+               ]
     ::tblocks::pargs
     set infile [lindex $argv 0]
     set outfile [lindex $argv 1]
