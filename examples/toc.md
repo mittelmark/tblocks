@@ -5,7 +5,8 @@ mode: "toc"
 ## 01
 
 Inheritance vs 
-Composition
+Composition vs
+Mixins
 
 ## 02
 

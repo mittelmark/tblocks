@@ -40,7 +40,8 @@
 <circle cx="255" cy="155" r="10" fill="#B64040" />
 <text x="40" y="60" style="fill: #B64040;font-size:28px;">01</text>
 <text x="40" y="100" style="fill: #000000;font-size:24px;">Inheritance vs </text>
-<text x="40" y="130" style="fill: #000000;font-size:24px;">Composition</text>
+<text x="40" y="130" style="fill: #000000;font-size:24px;">Composition vs</text>
+<text x="40" y="160" style="fill: #000000;font-size:24px;">Mixins</text>
 <rect x="325" y="25" rx="10" ry="10" fill="#999999" width="260" height="160" stroke-width="0" stroke="#999999" />
 <rect x="320" y="20" rx="10" ry="10" fill="white" width="260" height="160" stroke-width="3" stroke="#999999" />
 <circle cx="555" cy="155" r="10" fill="#B64040" />
