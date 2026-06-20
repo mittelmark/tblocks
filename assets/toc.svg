@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="900" height="400" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+      fill: #000000;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+      fill: #333366;
+  }
+  .small {
+      font-family: 'Andika', sans-serif;
+      font-size: 16px;
+      fill: #333366;
+  }
+  .large {
+      font-family: 'Andika', sans-serif;
+      font-size: 24px;
+      fill: #333366;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+      fill: #333366;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+      fill: #333366;
+  }
+  
+  </style>
+<rect x="25" y="25" rx="10" ry="10" fill="#999999" width="260" height="160" stroke-width="0" stroke="#999999" />
+<rect x="20" y="20" rx="10" ry="10" fill="white" width="260" height="160" stroke-width="3" stroke="#999999" />
+<circle cx="255" cy="155" r="10" fill="#B64040" />
+<text x="40" y="60" style="fill: #B64040;font-size:28px;">01</text>
+<text x="40" y="100" style="fill: #000000;font-size:24px;">Inheritance vs </text>
+<text x="40" y="130" style="fill: #000000;font-size:24px;">Composition</text>
+<rect x="325" y="25" rx="10" ry="10" fill="#999999" width="260" height="160" stroke-width="0" stroke="#999999" />
+<rect x="320" y="20" rx="10" ry="10" fill="white" width="260" height="160" stroke-width="3" stroke="#999999" />
+<circle cx="555" cy="155" r="10" fill="#B64040" />
+<text x="340" y="60" style="fill: #B64040;font-size:28px;">02</text>
+<text x="340" y="100" style="fill: #000000;font-size:24px;">The Multiple</text>
+<text x="340" y="130" style="fill: #000000;font-size:24px;">Inheritance Trap</text>
+<rect x="625" y="25" rx="10" ry="10" fill="#999999" width="260" height="160" stroke-width="0" stroke="#999999" />
+<rect x="620" y="20" rx="10" ry="10" fill="white" width="260" height="160" stroke-width="3" stroke="#999999" />
+<circle cx="855" cy="155" r="10" fill="#B64040" />
+<text x="640" y="60" style="fill: #B64040;font-size:28px;">03</text>
+<text x="640" y="100" style="fill: #000000;font-size:24px;">Virtual Functions</text>
+<text x="640" y="130" style="fill: #000000;font-size:24px;">vs auto</text>
+<rect x="25" y="225" rx="10" ry="10" fill="#999999" width="260" height="160" stroke-width="0" stroke="#999999" />
+<rect x="20" y="220" rx="10" ry="10" fill="white" width="260" height="160" stroke-width="3" stroke="#999999" />
+<circle cx="255" cy="355" r="10" fill="#B64040" />
+<text x="40" y="260" style="fill: #B64040;font-size:28px;">04</text>
+<text x="40" y="300" style="fill: #000000;font-size:24px;">Regular Expressions</text>
+<text x="40" y="330" style="fill: #000000;font-size:24px;">Pros and Cons</text>
+<rect x="325" y="225" rx="10" ry="10" fill="#999999" width="260" height="160" stroke-width="0" stroke="#999999" />
+<rect x="320" y="220" rx="10" ry="10" fill="white" width="260" height="160" stroke-width="3" stroke="#999999" />
+<circle cx="555" cy="355" r="10" fill="#B64040" />
+<text x="340" y="260" style="fill: #B64040;font-size:28px;">05</text>
+<text x="340" y="300" style="fill: #000000;font-size:24px;">Command Line </text>
+<text x="340" y="330" style="fill: #000000;font-size:24px;">Parsers and Pargs</text>
+</svg>

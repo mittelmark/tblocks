@@ -91,7 +91,7 @@ set code [regsub -all {__Mono-Font__} $code $mono]
 set code [regsub -all {__sans-font__} $code $sansfont]
 set code [regsub -all {__mono-font__} $code $monofont]
 set code [regsub -all {__COL1__} $code [lindex $arg(-colors) 0]]
-set code [regsub -all {__COL1__} $code [lindex $arg(-colors) 1]]
+set code [regsub -all {__COL2__} $code [lindex $arg(-colors) 1]]
 return $code
 }
 
@@ -618,6 +618,49 @@ proc ::tblocks::blocks {fonts colors lines n m} {
     return $res
     
 }
+
+proc ::tblocks::toc-blocks {fonts colors lines n m} {
+    set width 200
+    set height 200
+    if {$n > 1} {
+        set width 600
+    } 
+    if {$n > 2} {
+        set width 900
+        set height 400
+    }
+    set coords [list {20 20} {320 20} {620 20} {20 220} {320 220} {620 220}] 
+    set res ""
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
+    set cn 0
+    set cm 0
+    set cy 0
+    set cx 0
+    set i 15
+    foreach line $lines {
+        if {[regexp {^__} $line] || [regexp {^## } $line]} {
+            set cx [lindex [lindex $coords $cn] 0]
+            set cy [lindex [lindex $coords $cn] 1]
+            append res "<rect x=\"[expr {$cx+5}]\" y=\"[expr {$cy+5}]\" rx=\"10\" ry=\"10\" fill=\"#999999\" width=\"260\" height=\"160\" stroke-width=\"0\" stroke=\"#999999\" />\n"
+            append res "<rect x=\"$cx\" y=\"$cy\" rx=\"10\" ry=\"10\" fill=\"white\" width=\"260\" height=\"160\" stroke-width=\"3\" stroke=\"#999999\" />\n"
+            append res "<circle cx=\"[expr {$cx+235}]\" cy=\"[expr {$cy+135}]\" r=\"10\" fill=\"[lindex [lindex $colors 1] 2]\" />\n"
+            set txt [regsub {^[#_]+ +} $line ""]
+            append res "<text x=\"[expr {$cx+20}]\" y=\"[expr {$cy+40}]\" style=\"fill: [lindex [lindex $colors 1] 2];font-size:28px;\">$txt</text>\n" 
+            incr cy 45
+            incr cn
+        } else {
+            if {[regexp {[^\\s]} $line]} {
+                append res "<text x=\"[expr {$cx+20}]\" y=\"[expr {$cy+20}]\" style=\"fill: [lindex [lindex $colors 0] 2];font-size:24px;\">$line</text>\n" 
+                incr cy $i
+            }
+            incr cy $i ;# default for empty lines
+
+        }
+    }
+    append res [::tblocks::footer]    
+    return $res
+}
+
 proc ::tblocks::linegraph {fonts colors lines n m} {
     set height [expr {190+($m-2)*30}]
     set width [expr {$n*200}]
@@ -850,6 +893,13 @@ proc ::tblocks::main {argv} {
         return 
     }
 
+    if {$mode in [list toc]} {
+        puts $out [::tblocks::toc-blocks $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        return 
+    }
     if {$mode eq "table"} {
         set width 500
         set height 620
@@ -944,10 +994,12 @@ proc ::tblocks::main {argv} {
         close $out
     }
 }
-package provide tblocks 0.0.6
+package provide tblocks 0.0.7
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv
+    } elseif {[lsearch -regex $argv {(-v|--version)}] > -1} {
+        puts [package present tblocks]
     } elseif {[llength $argv] <2} {
         ::tblocks::usage $argv0
     } else {

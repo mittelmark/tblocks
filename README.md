@@ -191,9 +191,11 @@ Click on the images to see the source code:
 [<img src="assets/itable.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/itable.md)
 [<img src="assets/inout-block.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/inout-block.md)
 
+[<img src="assets/toc.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/toc.md)
+
 ## Documentation
 
-WIP
+[WIP Tutorial](http://htmlpreview.github.io/?https://github.com/mittelmark/tblocks/blob/master/tutorial/tutorial.html)
 
 ## Installation
 
@@ -216,6 +218,7 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
+- 2026-06-19 version 0.0.7 - adding 'toc' node
 - 2026-06-19 version 0.0.6 - adding `--colorN="COLORS"` command line option
 - 2026-06-17 version 0.0.5 - flexible size of iblocks height
 - 2026-06-16 version 0.0.4 - adding inout-block and extending blocks to 5 blocks
