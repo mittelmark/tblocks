@@ -218,7 +218,8 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
-- 2026-06-19 version 0.0.7 - adding 'toc' node
+- 2026-06-21 version 0.0.8 - adding support for pdf conversion with cairosvg or rsvg-convert
+- 2026-06-20 version 0.0.7 - adding 'toc' node
 - 2026-06-19 version 0.0.6 - adding `--colorN="COLORS"` command line option
 - 2026-06-17 version 0.0.5 - flexible size of iblocks height
 - 2026-06-16 version 0.0.4 - adding inout-block and extending blocks to 5 blocks

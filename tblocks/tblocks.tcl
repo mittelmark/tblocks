@@ -261,7 +261,7 @@ proc ::tblocks::pargs {} {
         if {[lsearch $argv --mode*] > -1} {
             set idx [lsearch $argv --mode*]
             set mode [regsub {.+=} [lindex $argv $idx] ""]
-            if {$mode ni [list table inout iblocks boxes sequence timeline linegraph]}  {
+            if {$mode ni [list table inout iblocks boxes sequence toc timeline linegraph]}  {
                 puts "Error: unkown mode $mode!"
                 ::tblocks::usage
                 exit 0
@@ -765,6 +765,16 @@ proc ::tblocks::timeline {fonts colors lines n m} {
     return $res
     
 }
+
+proc ::tblocks::svg2pdf {svgfile pdffile} {
+    if {[auto_execok "cairosvg"] ne ""} {
+        exec cairosvg $svgfile -o $pdffile
+    } elseif {[auto_execok "rsvg-convert"] ne ""} {
+        exec rsvg-convert $svgfile -f pdf -o $pdffile
+    } else {
+        puts stderr "Error: Missing cairosvg or rsvg-convert for pdf creation!\nPlease install!"
+    }
+}
 proc ::tblocks::main {argv} {
     set fonts [list Andika "Ubuntu Mono"]
     set mode boxes
@@ -783,6 +793,11 @@ proc ::tblocks::main {argv} {
     ::tblocks::pargs
     set infile [lindex $argv 0]
     set outfile [lindex $argv 1]
+    set pdffile ""
+    if {[file extension $outfile] eq ".pdf"} {
+        set pdffile $outfile
+        set outfile [file rootname $outfile].svg
+    }
     if {$infile eq "-"} {
         set infh stdin
             
@@ -854,12 +869,18 @@ proc ::tblocks::main {argv} {
         if {$out ne "stdout"} {
             close $out
         }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
+        }
         return
     } 
     if {$mode eq "linegraph"} {
         puts $out [::tblocks::linegraph $fonts $colors $lines $n $max]
         if {$out ne "stdout"} {
             close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
         }
         return
     } 
@@ -868,12 +889,18 @@ proc ::tblocks::main {argv} {
         if {$out ne "stdout"} {
             close $out
         }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
+        }
         return
     } 
     if {$mode eq "itable"} {
         puts $out [::tblocks::itable $fonts $colors $lines $n $max]
         if {$out ne "stdout"} {
             close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
         }
         return
     } 
@@ -883,12 +910,18 @@ proc ::tblocks::main {argv} {
         if {$out ne "stdout"} {
             close $out
         }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
+        }
         return 
     }
     if {$mode in [list inout-block]} {
         puts $out [::tblocks::in-out-blocks $fonts $colors $lines $n $max]
         if {$out ne "stdout"} {
             close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
         }
         return 
     }
@@ -897,6 +930,9 @@ proc ::tblocks::main {argv} {
         puts $out [::tblocks::toc-blocks $fonts $colors $lines $n $max]
         if {$out ne "stdout"} {
             close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
         }
         return 
     }
@@ -993,15 +1029,27 @@ proc ::tblocks::main {argv} {
     if {$out ne "stdout"} {
         close $out
     }
+    if {$pdffile ne ""} {
+        ::tblocks::svg2pdf $outfile $pdffile
+    }
 }
-package provide tblocks 0.0.7
+package provide tblocks 0.0.8
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv
     } elseif {[lsearch -regex $argv {(-v|--version)}] > -1} {
         puts [package present tblocks]
-    } elseif {[llength $argv] <2} {
-        ::tblocks::usage $argv0
+    } elseif {[llength $argv] == 1} {
+        if {[lindex $argv 0] eq "-"} {
+            lappend argv "-"
+        } elseif {![file exists [lindex $argv 0]]} {
+            puts stderr "Error: File '[lindex $argv 0]' does not exists!"
+            ::tblocks::usage $argv0
+        } else {
+            lappend argv [file rootname [lindex $argv 0]].svg
+        }
+        tblocks::main $argv
+        
     } else {
         ::tblocks::main $argv
     }
