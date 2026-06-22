@@ -193,6 +193,48 @@ Click on the images to see the source code:
 
 [<img src="assets/toc.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/toc.md)
 
+## Embedding into LaTeX
+
+You can as well embed tblocks into your LaTeX code by writing a macro like this:
+
+```latex
+\usepackage{xparse}
+\usepackage{verbatim}
+\NewDocumentEnvironment{tblocks}{m}
+  {%
+    \edef\mdfile{#1.md}%
+    \edef\pdffile{#1.pdf}%
+    \VerbatimOut{\mdfile}%
+  }
+  {%
+    \endVerbatimOut
+    \immediate\write18{tblocks "\mdfile" "\pdffile"}%
+  } 
+```
+
+And within your LaTeX code you then can write tblocks Markdown code like so:
+
+```latex
+\begin{tblocks}{regexp}
+## Classes
+
+- basic_regex
+- sub_match
+- match_results
+
+...
+\end{tblocks}
+
+\begin{center}
+\hspace{-0.2cm}\includegraphics[width=14cm]{regexp}
+\end{center}
+```
+
+Which then displays the generated PDF graphics within your LaTeX output file.
+Please note that you must execute your LaTeX compiler with the --shell-escape
+option to allow execution of embedded programming code.
+
+
 ## Documentation
 
 [WIP Tutorial](http://htmlpreview.github.io/?https://github.com/mittelmark/tblocks/blob/master/tutorial/tutorial.html)
