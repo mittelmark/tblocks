@@ -191,8 +191,8 @@ Click on the images to see the source code:
 [<img src="assets/itable.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/itable.md)
 [<img src="assets/inout-block.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/inout-block.md)
 
-[<img src="assets/toc.svg" width="380" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/toc.md)
-[<img src="assets/compare.svg" width="380" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/compare.md)
+[<img src="assets/toc.svg" width="360" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/toc.md)
+[<img src="assets/compare.svg" width="360" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/compare.md)
 
 
 ## Embedding into LaTeX
