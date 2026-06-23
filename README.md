@@ -192,6 +192,8 @@ Click on the images to see the source code:
 [<img src="assets/inout-block.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/inout-block.md)
 
 [<img src="assets/toc.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/toc.md)
+[<img src="assets/compare.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/compare.md)
+
 
 ## Embedding into LaTeX
 
@@ -260,6 +262,7 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
+- 2026-06-23 version 0.0.9 - adding compare diagram type
 - 2026-06-21 version 0.0.8 - adding support for pdf conversion with cairosvg or rsvg-convert
 - 2026-06-20 version 0.0.7 - adding 'toc' node
 - 2026-06-19 version 0.0.6 - adding `--colorN="COLORS"` command line option

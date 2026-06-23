@@ -619,6 +619,40 @@ proc ::tblocks::blocks {fonts colors lines n m} {
     
 }
 
+proc ::tblocks::compare {fonts colors lines n nn m} {
+    set width [expr {500*$n}] 
+    set height [expr {100+$nn*100}]
+    set boxh [expr {$m*30+10}]
+    set res ""
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
+    set cn 0
+    set cy 20
+    foreach line $lines {
+        if {[regexp {^## } $line]} {
+            set cy 20
+            incr cn
+            set txt [string trim [regsub {^## +} $line ""]]
+            append res "<rect x=\"[expr {20+($cn-1)*500}]\" y=\"10\" width=\"460\" height=\"80\" fill=\"[lindex [lindex $colors [expr {$cn+1}]] 0]\" rx=\"20\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            append res "<text x=\"[expr {($cn-1)*500+250}]\" y=\"60\" class=\"bold\" text-anchor=\"middle\">$txt</text>"
+            incr cy 80
+        } elseif {[regexp {^### } $line]} {
+            set txt [string trim [regsub {^### +} $line ""]]
+            append res "<rect x=\"[expr {20+($cn-1)*500}]\" y=\"$cy\" width=\"460\" height=\"100\" fill=\"white\" rx=\"2\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            append res "<text x=\"[expr {($cn-1)*500+35}]\" y=\"[expr {$cy+30}]\" class=\"bold\">$txt</text>"
+            append res "<line x1=\"[expr {($cn-1)*500+5}]\" y1=\"[expr {$cy-80}]\" x2=\"[expr {($cn-1)*500+5}]\" y2=\"[expr {$cy+50}]\" stroke-width=\"2\" stroke=\"#888888\" />\n"
+            append res "<line x1=\"[expr {($cn-1)*500+5}]\" y1=\"[expr {$cy-80}]\" x2=\"[expr {($cn-1)*500+20}]\" y2=\"[expr {$cy-80}]\" stroke-width=\"2\" stroke=\"#888888\" />\n"            
+            append res "<line x1=\"[expr {($cn-1)*500+5}]\" y1=\"[expr {$cy+50}]\" x2=\"[expr {($cn-1)*500+20}]\" y2=\"[expr {$cy+50}]\" stroke-width=\"2\" stroke=\"#888888\" />\n"                        
+            incr cy 30
+        } elseif {[regexp {[a-z]+} $line]} {
+            append res "<text x=\"[expr {($cn-1)*500+35}]\" y=\"[expr {$cy+10}]\" class=\"normal\">$line</text>"
+            incr cy 30
+        } else {
+            incr cy 20
+        }
+    }
+    append res [::tblocks::footer]    
+    return $res
+}
 proc ::tblocks::toc-blocks {fonts colors lines n m} {
     set width 200
     set height 200
@@ -812,6 +846,7 @@ proc ::tblocks::main {argv} {
     }
     set lines [list]
     set n 0
+    set nn 0
     set max 0
     set lnr 0
     set yaml false
@@ -842,6 +877,10 @@ proc ::tblocks::main {argv} {
             incr n
             set m 0
             lappend lines $line
+        } elseif {[regexp {^### } $line]} {
+            incr nn
+            set m 0
+            lappend lines $line
         } else {
             lappend lines $line
             incr m
@@ -863,9 +902,18 @@ proc ::tblocks::main {argv} {
     } else {
         set out [open $outfile w 0600]
     }
-
     if  {$mode eq "timeline"} {
         puts $out [::tblocks::timeline $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
+        }
+        return
+    } 
+    if  {$mode eq "compare"} {
+        puts $out [::tblocks::compare $fonts $colors $lines $n $nn $max]
         if {$out ne "stdout"} {
             close $out
         }
@@ -1033,7 +1081,7 @@ proc ::tblocks::main {argv} {
         ::tblocks::svg2pdf $outfile $pdffile
     }
 }
-package provide tblocks 0.0.8
+package provide tblocks 0.0.9
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv

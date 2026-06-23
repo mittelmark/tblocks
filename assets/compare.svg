@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="1000" height="700" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+      fill: #000000;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+      fill: #333366;
+  }
+  .small {
+      font-family: 'Andika', sans-serif;
+      font-size: 16px;
+      fill: #333366;
+  }
+  .large {
+      font-family: 'Andika', sans-serif;
+      font-size: 24px;
+      fill: #333366;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+      fill: #333366;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+      fill: #333366;
+  }
+  
+  </style>
+<rect x="20" y="10" width="460" height="80" fill="#CCFFCC" rx="20" stroke-width="2" stroke="#888888" />
+<text x="250" y="60" class="bold" text-anchor="middle">Inheritance (Is-A)</text><rect x="20" y="120" width="460" height="100" fill="white" rx="2" stroke-width="2" stroke="#888888" />
+<text x="35" y="150" class="bold">Definition:</text><line x1="5" y1="40" x2="5" y2="170" stroke-width="2" stroke="#888888" />
+<line x1="5" y1="40" x2="20" y2="40" stroke-width="2" stroke="#888888" />
+<line x1="5" y1="170" x2="20" y2="170" stroke-width="2" stroke="#888888" />
+<text x="35" y="180" class="normal">Class B is a proper subtype of</text><text x="35" y="210" class="normal">Class A (e.g., Dog is-a Animal).</text><rect x="20" y="250" width="460" height="100" fill="white" rx="2" stroke-width="2" stroke="#888888" />
+<text x="35" y="280" class="bold">Diagnostic:</text><line x1="5" y1="170" x2="5" y2="300" stroke-width="2" stroke="#888888" />
+<line x1="5" y1="170" x2="20" y2="170" stroke-width="2" stroke="#888888" />
+<line x1="5" y1="300" x2="20" y2="300" stroke-width="2" stroke="#888888" />
+<text x="35" y="310" class="normal">Both classes exist in the exact</text><text x="35" y="340" class="normal">same logical domain.</text><rect x="20" y="380" width="460" height="100" fill="white" rx="2" stroke-width="2" stroke="#888888" />
+<text x="35" y="410" class="bold">Implementation:</text><line x1="5" y1="300" x2="5" y2="430" stroke-width="2" stroke="#888888" />
+<line x1="5" y1="300" x2="20" y2="300" stroke-width="2" stroke="#888888" />
+<line x1="5" y1="430" x2="20" y2="430" stroke-width="2" stroke="#888888" />
+<text x="35" y="440" class="normal">Subclass enhancements are </text><text x="35" y="470" class="normal">primarily additive.</text><rect x="520" y="10" width="460" height="80" fill="#FFE5CC" rx="20" stroke-width="2" stroke="#888888" />
+<text x="750" y="60" class="bold" text-anchor="middle">Composition (Has-A / Part-Of)</text><rect x="520" y="120" width="460" height="100" fill="white" rx="2" stroke-width="2" stroke="#888888" />
+<text x="535" y="150" class="bold">Definition:</text><line x1="505" y1="40" x2="505" y2="170" stroke-width="2" stroke="#888888" />
+<line x1="505" y1="40" x2="520" y2="40" stroke-width="2" stroke="#888888" />
+<line x1="505" y1="170" x2="520" y2="170" stroke-width="2" stroke="#888888" />
+<text x="535" y="180" class="normal">Class B embeds class A as a</text><text x="535" y="210" class="normal">component (e.g., Dog has-a Leg).</text><rect x="520" y="250" width="460" height="100" fill="white" rx="2" stroke-width="2" stroke="#888888" />
+<text x="535" y="280" class="bold">Diagnostic:</text><line x1="505" y1="170" x2="505" y2="300" stroke-width="2" stroke="#888888" />
+<line x1="505" y1="170" x2="520" y2="170" stroke-width="2" stroke="#888888" />
+<line x1="505" y1="300" x2="520" y2="300" stroke-width="2" stroke="#888888" />
+<text x="535" y="310" class="normal">You only need specific methods from base </text><text x="535" y="340" class="normal">class, or wish to hide base class methods.</text><rect x="520" y="380" width="460" height="100" fill="white" rx="2" stroke-width="2" stroke="#888888" />
+<text x="535" y="410" class="bold">Implementation:</text><line x1="505" y1="300" x2="505" y2="430" stroke-width="2" stroke="#888888" />
+<line x1="505" y1="300" x2="520" y2="300" stroke-width="2" stroke="#888888" />
+<line x1="505" y1="430" x2="520" y2="430" stroke-width="2" stroke="#888888" />
+<text x="535" y="440" class="normal">Enables delegation of methods to</text><text x="535" y="470" class="normal">embedded components on the fly.</text></svg>
