@@ -621,7 +621,7 @@ proc ::tblocks::blocks {fonts colors lines n m} {
 
 proc ::tblocks::compare {fonts colors lines n nn m} {
     set width [expr {500*$n}] 
-    set height [expr {100+$nn*100}]
+    set height [expr {100+$nn*130}]
     set boxh [expr {$m*30+10}]
     set res ""
     append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
@@ -847,6 +847,7 @@ proc ::tblocks::main {argv} {
     set lines [list]
     set n 0
     set nn 0
+    set maxnn 0
     set max 0
     set lnr 0
     set yaml false
@@ -876,6 +877,10 @@ proc ::tblocks::main {argv} {
         if {[regexp {^__.+__} $line] || [regexp {^## } $line]} {
             incr n
             set m 0
+            if {$nn > $maxnn} {
+                set maxnn $nn
+            }
+            set nn 0
             lappend lines $line
         } elseif {[regexp {^### } $line]} {
             incr nn
@@ -913,7 +918,7 @@ proc ::tblocks::main {argv} {
         return
     } 
     if  {$mode eq "compare"} {
-        puts $out [::tblocks::compare $fonts $colors $lines $n $nn $max]
+        puts $out [::tblocks::compare $fonts $colors $lines $n $maxnn $max]
         if {$out ne "stdout"} {
             close $out
         }
