@@ -264,6 +264,7 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
+- 2026-06-29 version 0.0.10 - tweaking itable output to make it less wide, fixing missing command line message" 
 - 2026-06-23 version 0.0.9 - adding compare diagram type, making itable more flexible with height determining and text wrapping
 - 2026-06-21 version 0.0.8 - adding support for pdf conversion with cairosvg or rsvg-convert
 - 2026-06-20 version 0.0.7 - adding 'toc' node

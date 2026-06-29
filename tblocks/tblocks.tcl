@@ -346,13 +346,13 @@ proc splitNN {s {max 40}} {
     return $res
 }
 proc ::tblocks::itable {fonts colors lines n m maxstl} {
-    set width  [expr {200+(($n-1)*600)}]
+    set width  [expr {180+(($n-1)*520)}]
     set boxh [expr {10+(1+$maxstl/45)*40}]
     set height [expr {100+($m-2)*(20+$boxh)}]
     set res ""
     append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
     set cn 0
-    set cx 30
+    set cx 20
     set defs "\n<defs>\n"
     set uses ""
 
@@ -361,17 +361,17 @@ proc ::tblocks::itable {fonts colors lines n m maxstl} {
             set cy 10
             set txt [regsub {^## +} $line ""]
             if {$cn > 0} {
-                set cx [expr {200+(($cn-1)*600)}]
+                set cx [expr {180+(($cn-1)*520)}]
                 set cy 10
-                append res "<rect x=\"$cx\" y=\"$cy\" width=\"580\" height=\"80\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors [expr {$cn+1}]] 1]\"/>\n"
-                append res "<text x=\"[expr {290+$cx}]\" y=\"60\" class=\"header\" text-anchor=\"middle\">$txt</text>\n"
+                append res "<rect x=\"$cx\" y=\"$cy\" width=\"500\" height=\"80\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors [expr {$cn+1}]] 1]\"/>\n"
+                append res "<text x=\"[expr {250+$cx}]\" y=\"60\" class=\"header\" text-anchor=\"middle\">$txt</text>\n"
             }
         
             incr cn
             incr cy 100
         } elseif {[regexp {^- (.+)$} $line -> txt]} {
             if {$cn > 1} {
-                append res "<rect x=\"[expr {$cx+3}]\" y=\"$cy\" width=\"580\" height=\"${boxh}\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors [expr {$cn}]] 0]\"/>\n"
+                append res "<rect x=\"[expr {$cx+3}]\" y=\"$cy\" width=\"500\" height=\"${boxh}\" rx=\"20\" ry=\"20\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex [lindex $colors [expr {$cn}]] 0]\"/>\n"
                 set iconname ""
                 set iind -20
                 if {[regexp {icon:([-a-z0-9A-Z]+)} $txt]} {
@@ -379,12 +379,16 @@ proc ::tblocks::itable {fonts colors lines n m maxstl} {
                     set txt [regsub {icon:.+} $txt ""]
                     set iind 30
                 }
-                set txts [splitNN $txt 45] 
+                set txts [splitNN $txt 40] 
                 if {[llength $txts] == 1} {
                     append res "<text x=\"[expr {$cx+50+$iind}]\" y=\"[expr {$cy+$boxh/2+10}]\" class=\"large\" text-anchor=\"left\">[lindex $txts 0]</text>\n"
-                } elseif {[llength $txts] == 2} {
+                } elseif {[llength $txts] > 1} {
                     append res "<text x=\"[expr {$cx+50+$iind}]\" y=\"[expr {$cy+$boxh/2-10}]\" class=\"large\" text-anchor=\"left\">[lindex $txts 0]</text>\n"
-                    append res "<text x=\"[expr {$cx+50+$iind}]\" y=\"[expr {$cy+$boxh/2+20}]\" class=\"large\" text-anchor=\"left\">[lindex $txts 1]</text>\n"                    
+                    if {[llength $txts] > 2} {
+                        append res "<text x=\"[expr {$cx+50+$iind}]\" y=\"[expr {$cy+$boxh/2+20}]\" class=\"large\" text-anchor=\"left\">[lindex $txts 1] ...</text>\n"
+                    } else {
+                        append res "<text x=\"[expr {$cx+50+$iind}]\" y=\"[expr {$cy+$boxh/2+20}]\" class=\"large\" text-anchor=\"left\">[lindex $txts 1]</text>\n"
+                    }
                 }
                 if {$iconname eq "yes"} {
                     append res [tblocks::icon-yes [list [expr {$cx+18}] [expr {$cy+($boxh/2-24)}]]]
@@ -396,7 +400,13 @@ proc ::tblocks::itable {fonts colors lines n m maxstl} {
                     append uses [lindex $icode 1]
                 }
             } else {
-                append res "<text x=\"[expr {$cx-10}]\" y=\"[expr {$cy+$boxh/2+10}]\" class=\"large\" text-anchor=\"left\">$txt</text>\n"
+                set txts [splitNN $txt 12] 
+                if {[llength $txts] == 1} {
+                    append res "<text x=\"[expr {$cx-10}]\" y=\"[expr {$cy+$boxh/2+10}]\" class=\"large\" text-anchor=\"left\">$txt</text>\n"
+                } else {
+                    append res "<text x=\"[expr {$cx-10}]\" y=\"[expr {$cy+$boxh/2-10}]\" class=\"large\" text-anchor=\"left\">[lindex $txts 0]</text>\n"
+                    append res "<text x=\"[expr {$cx-10}]\" y=\"[expr {$cy+$boxh/2+20}]\" class=\"large\" text-anchor=\"left\">[lindex $txts 1]</text>\n"
+                }
             }
             incr cy $boxh
             incr cy 20
@@ -1134,7 +1144,7 @@ proc ::tblocks::main {argv} {
         ::tblocks::svg2pdf $outfile $pdffile
     }
 }
-package provide tblocks 0.0.9
+package provide tblocks 0.0.10
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv

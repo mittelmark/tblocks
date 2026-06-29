@@ -21,4 +21,4 @@ mode: "itable"
 - Step-functions and Boolean splits.
 - Completely immune to non-linear data structures.
 - Handles native categorical data cleany and effortlessly.
-- Prone to overfitting unless explicitly managed (e.g., Tree pruning, Random Forest).
+- Prone to overfitting unless explicitly managed (Pruning or Random Forests).
