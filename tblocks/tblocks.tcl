@@ -13,7 +13,7 @@
 
 namespace eval ::tblocks { }
 proc ::tblocks::usage {app} {
-    puts "Usage $app \[-h,--help|--mode=MODENAME\] INFILE.md OUTFILE.svg"
+    puts "Usage $app \[-h,--help|--mode=MODENAME\] INFILE.md \[OUTFILE.svg\]"
 }
 proc ::tblocks::help {app argv} {
     puts {
@@ -216,16 +216,16 @@ proc ::tblocks::in-out {colors} {
     return $code
 }
     
-proc ::tblocks::box {xy colors title} {
+proc ::tblocks::box {xy colors title {titleboxw 260}} {
     set x [lindex $xy 0]
     set y [lindex $xy 1]
     set code {
 <rect width="460" height="240" x="__x1__" y="__y1__" rx="20" ry="20" fill="__col1__" stroke-width="2" stroke="#888888" />
-<rect width="260" height="60" x="__x2__" y="__y2__" rx="20" ry="20" fill="__col2__" stroke-width="2" stroke="#888888" />   
+<rect width="__titleboxw__" height="60" x="__x2__" y="__y2__" rx="20" ry="20" fill="__col2__" stroke-width="2" stroke="#888888" />   
 <text x="__x3__" y="__y3__" class="header" text-anchor="middle">__title__</text>
 }        
-    set code [regsub __x1__ $code $x]; incr x 100
-    set code [regsub __x2__ $code $x]; incr x 130
+    set code [regsub __x1__ $code $x]; incr x [expr {(460-$titleboxw)/2}]
+    set code [regsub __x2__ $code $x]; incr x [expr {$titleboxw/2}]
     set code [regsub __x3__ $code $x]; 
     set code [regsub __y1__ $code $y]; incr y -30
     set code [regsub __y2__ $code $y]; incr y 40
@@ -233,6 +233,7 @@ proc ::tblocks::box {xy colors title} {
     set code [regsub __col1__ $code [lindex $colors 0]]
     set code [regsub __col2__ $code [lindex $colors 1]]
     set code [regsub __title__ $code [regsub -all {[#_]{2}} $title ""]]
+    set code [regsub __titleboxw__ $code $titleboxw]
     return $code
 }
 proc ::tblocks::text {cx cy text style anchor} {
@@ -611,9 +612,20 @@ proc ::tblocks::blocks {fonts colors lines n m} {
         set fontsize normal
         set i 12
     }
+    set titleboxw 260
     foreach line $lines {
         if {[regexp {^__} $line] || [regexp {^## } $line]} {
-            append res [::tblocks::box [lindex $coords $cn] [lindex $colors [expr {$cn+1}]] $line]
+            if {[string length [string trim $line]] > 18} {
+                set titleboxw 300
+            }
+            if {[string length [string trim $line]] > 24} {
+                set titleboxw 340
+            }
+        }
+    }
+    foreach line $lines {
+        if {[regexp {^__} $line] || [regexp {^## } $line]} {
+            append res [::tblocks::box [lindex $coords $cn] [lindex $colors [expr {$cn+1}]] $line $titleboxw]
             set xy [lindex $coords $cn]
             set x [lindex $xy 0]
             set y [lindex $xy 1]
@@ -861,8 +873,13 @@ proc ::tblocks::main {argv} {
     if {$infile eq "-"} {
         set infh stdin
             
+    } elseif {$infile eq ""} {
+        puts "Error: Missing INFILE argument!"
+        usage $::argv0
+        exit 0
     } elseif {![file exists $infile]} {
         puts "Error: File '$infile' does not exists!"
+        usage $::argv0 
         exit 0
     } else {
         if [catch {open $infile r} infh] {
