@@ -188,8 +188,8 @@ Click on the images to see the source code:
 [<img src="assets/linegraph.svg" width="450" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/linegraph.md)
 [<img src="assets/iblocks.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/iblocks.md)
 
-[<img src="assets/itable.svg" width="380" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/itable.md)
-[<img src="assets/itable2.svg" width="380" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/itable2.md)
+[<img src="assets/itable.svg" width="350" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/itable.md)
+[<img src="assets/itable2.svg" width="350" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/itable2.md)
 
 [<img src="assets/inout-block.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/inout-block.md)
 

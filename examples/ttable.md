@@ -39,8 +39,8 @@ p.adjust(x,method="holm")
 Balanced Strictness
 
 Controls the False Discovery
-Rate by ranking larges to
-smallest.
+Rate by ranking values from
+largest to smallest.
 
 Verdict: The modern standard
 for high-volume testing.

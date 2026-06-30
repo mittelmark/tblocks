@@ -64,8 +64,8 @@
 <text x="1000.0" y="90" class="header" text-anchor="middle">Benjamini-Hochberg (FDR)</text>
 <text x="1000.0" y="150" class="normal" text-anchor="middle">Balanced Strictness</text>
 <text x="1000.0" y="210" class="normal" text-anchor="middle">Controls the False Discovery</text>
-<text x="1000.0" y="240" class="normal" text-anchor="middle">Rate by ranking larges to</text>
-<text x="1000.0" y="270" class="normal" text-anchor="middle">smallest.</text>
+<text x="1000.0" y="240" class="normal" text-anchor="middle">Rate by ranking values from</text>
+<text x="1000.0" y="270" class="normal" text-anchor="middle">largest to smallest.</text>
 <text x="1000.0" y="330" class="normal" text-anchor="middle">Verdict: The modern standard</text>
 <text x="1000.0" y="360" class="normal" text-anchor="middle">for high-volume testing.</text>
 <text x="1000.0" y="390" class="normal" text-anchor="middle">Balances discovery with </text>
