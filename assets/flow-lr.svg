@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <svg width="1200" height="360" xmlns="http://www.w3.org/2000/svg">
+  <style>
+  @import url(https://fonts.bunny.net/css?family=andika:400,400i,700,700i|ubuntu-mono:400,400i,700,700i);
+  .header {
+      font-family: 'Andika', sans-serif;
+      font-size: 28px;
+      fill: #000000;
+  }
+  .normal {
+      font-family: 'Andika', sans-serif;
+      font-size: 22px;
+      fill: #333366;
+  }
+  .small {
+      font-family: 'Andika', sans-serif;
+      font-size: 16px;
+      fill: #333366;
+  }
+  .large {
+      font-family: 'Andika', sans-serif;
+      font-size: 24px;
+      fill: #333366;
+  }
+  .mono {
+      font-family: 'Ubuntu Mono', monospaced;
+      font-size: 22px;
+      fill: #333366;
+  }
+  .bold {
+      font-family: 'Andika', sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+      fill: #333366;
+  }
+  
+  </style>
+<line x1="50" x2="370" y1="180.0" y2="180.0" stroke-width="4" stroke="#888888" /><line x1="370" x2="370" y1="60.0" y2="300.0" stroke-width="4" stroke="#888888" /><rect width="300" height="80" x="20" y="140" rx="20" ry="20" fill="#FFCCCC" stroke-width="2" stroke="#888888" /><text x="170" y="170" class="bold" text-anchor="middle"> Dependent Variable</text>
+<text x="170" y="200" class="bold" text-anchor="middle">(Continuous/Normal)</text>
+<line x1="368" x2="420" y1="60.0" y2="60.0" stroke-width="4" stroke="#888888" /><rect width="300" height="80" x="420" y="20" rx="20" ry="20" fill="#CCFFCC" stroke-width="2" stroke="#888888" /><text x="570" y="50" class="bold" text-anchor="middle">One-Way ANOVA</text>
+<text x="570" y="80" class="bold" text-anchor="middle">n ~ c</text>
+<text x="760" y="50" class="normal" text-anchor="left">1 Categorical independent Variable</text>
+<text x="760" y="80" class="normal" text-anchor="left">(3+ groups).</text>
+<line x1="368" x2="420" y1="180.0" y2="180.0" stroke-width="4" stroke="#888888" /><rect width="300" height="80" x="420" y="140" rx="20" ry="20" fill="#CCFFCC" stroke-width="2" stroke="#888888" /><text x="570" y="170" class="bold" text-anchor="middle">Two-Way ANOVA </text>
+<text x="570" y="200" class="bold" text-anchor="middle">n ~ c + c</text>
+<text x="760" y="185" class="normal" text-anchor="left">2 Categorical independent Variables.</text>
+<line x1="368" x2="420" y1="300.0" y2="300.0" stroke-width="4" stroke="#888888" /><rect width="300" height="80" x="420" y="260" rx="20" ry="20" fill="#CCFFCC" stroke-width="2" stroke="#888888" /><text x="570" y="290" class="bold" text-anchor="middle">ANCOVA</text>
+<text x="570" y="320" class="bold" text-anchor="middle">n ~ c + n</text>
+<text x="760" y="290" class="normal" text-anchor="left"> 1 Categorical and 1 Continuous</text>
+<text x="760" y="320" class="normal" text-anchor="left">independent Variable.</text>
+</svg>

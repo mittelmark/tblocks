@@ -193,8 +193,10 @@ Click on the images to see the source code:
 
 [<img src="assets/inout-block.svg" width="300" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/inout-block.md)
 
-[<img src="assets/toc.svg" width="380" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/toc.md)
-[<img src="assets/compare.svg" width="340" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/compare.md)
+[<img src="assets/toc.svg" width="340" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/toc.md)
+[<img src="assets/compare.svg" width="320" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/compare.md)
+
+[<img src="assets/flow-lr.svg" width="320" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/flow-lr.md)
 
 
 ## Embedding into LaTeX
@@ -264,6 +266,7 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
+- 2026-06-10 version 0.0.11 - adding flow-lr diagram
 - 2026-06-29 version 0.0.10 - tweaking itable output to make it less wide, fixing missing command line message" 
 - 2026-06-23 version 0.0.9 - adding compare diagram type, making itable more flexible with height determining and text wrapping
 - 2026-06-21 version 0.0.8 - adding support for pdf conversion with cairosvg or rsvg-convert

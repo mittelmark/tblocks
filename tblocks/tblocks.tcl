@@ -31,7 +31,8 @@ Arguments:
 Options:
     --help,-h        - display this help page
     --mode=MODE      - the type of output diagram, current diagram types are
-                       boxes, iblocks, inout, linegraph, sequence, table, timeline
+                       boxes, flow-lr, iblocks, inout, linegraph, sequence, 
+                       table, timeline
     --mono-font=FONT          - a monospaced font from fonts.bunny.net               
     --sans-font=FONT          - a sans serif font from fonts.bunny.net
     --colorN="COL1 COL2 COL3" - setting the color N for the diagram, color1 sets
@@ -262,7 +263,7 @@ proc ::tblocks::pargs {} {
         if {[lsearch $argv --mode*] > -1} {
             set idx [lsearch $argv --mode*]
             set mode [regsub {.+=} [lindex $argv $idx] ""]
-            if {$mode ni [list table inout iblocks boxes sequence toc timeline linegraph]}  {
+            if {$mode ni [list table flow-lr inout iblocks itable boxes sequence toc timeline linegraph]}  {
                 puts "Error: unkown mode $mode!"
                 ::tblocks::usage
                 exit 0
@@ -580,6 +581,81 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
     return "$res"
 }
 
+proc ::tblocks::flow-lr {fonts colors lines n m} {
+    set unit 400
+    set boxh 80
+    set boxw 300
+    set height [expr {($n-1)*($boxh+40)}]
+    set width [expr {$unit*2}]
+    set cn 0
+    set res ""
+    set notes false
+    set figwidth $width
+    foreach line $lines {
+        if {[regexp {^- } $line]} {
+            set notes true
+            set figwidth 1200
+            break
+        }
+    }
+    append res [::tblocks::header $height $figwidth -font $fonts -colors [lindex $colors 0]]
+    foreach line $lines {
+        if {[regexp {^## } $line]} {
+            set txt [string trim [regsub {^## +} $line ""]]
+            if {[regexp { :: } $txt]} {
+                set txt [regsub " :: " $txt ":"]
+                set txts [split $txt ":"]
+            } else {
+                set txts [splitNN $txt 20] 
+            }
+            if {[incr cn] == 1} {
+                set cx 20
+                set cy [expr {($height/2)-$boxh/2}]
+                set col [lindex [lindex $colors 1] 0]
+            } else {
+                set cx [expr {$width/2+20}]
+                set col [lindex [lindex $colors 2] 0]
+                #incr cy [expr {$unit/2}] 
+            }
+            if {$cn == 1} {
+                append res "<line x1=\"50\" x2=\"370\" y1=\"[expr {$cy+0.5*$boxh}]\" y2=\"[expr {$cy+0.5*$boxh}]\" stroke-width=\"4\" stroke=\"#888888\" />"
+                append res "<line x1=\"370\" x2=\"370\" y1=\"[expr {20+0.5*$boxh}]\" y2=\"[expr {$height-20-0.5*$boxh}]\" stroke-width=\"4\" stroke=\"#888888\" />"                
+            } else {
+                append res "<line x1=\"368\" x2=\"420\" y1=\"[expr {$cy+0.5*$boxh}]\" y2=\"[expr {$cy+0.5*$boxh}]\" stroke-width=\"4\" stroke=\"#888888\" />"
+            }
+            append res "<rect width=\"$boxw\" height=\"$boxh\" x=\"$cx\" y=\"$cy\" rx=\"20\" ry=\"20\" fill=\"$col\" stroke-width=\"2\" stroke=\"#888888\" />"
+            if {[llength $txts] == 1} {
+                append res "<text x=\"[expr {$cx+$boxw/2}]\" y=\"[expr {$cy+45}]\" class=\"bold\" text-anchor=\"middle\">$txt</text>\n"         
+            } else {
+                append res "<text x=\"[expr {$cx+$boxw/2}]\" y=\"[expr {$cy+30}]\" class=\"bold\" text-anchor=\"middle\">[lindex $txts 0]</text>\n"                
+                append res "<text x=\"[expr {$cx+$boxw/2}]\" y=\"[expr {$cy+60}]\" class=\"bold\" text-anchor=\"middle\">[lindex $txts 1]</text>\n"                                    
+            }                     
+            if {$cn > 1} {
+                incr cy [expr {$boxh+40}]
+            } else {
+                set cy 20
+            }
+        } elseif {[regexp {^- } $line]} {
+            set txt [string trim [regsub {^- +} $line ""]]
+            if {[regexp { :: } $txt]} {
+                set txt [regsub " :: " $txt ":"]
+                set txts [split $txt ":"]
+            } else {
+                set txts [splitNN $txt 40] 
+            }
+            if {[llength $txts] == 1} {
+                append res "<text x=\"[expr {$cx+$boxw+40}]\" y=\"[expr {$cy-$boxh+5}]\" class=\"normal\" text-anchor=\"left\">$txt</text>\n"
+            } else {
+                append res "<text x=\"[expr {$cx+$boxw+40}]\" y=\"[expr {$cy-$boxh-40+30}]\" class=\"normal\" text-anchor=\"left\">[lindex $txts 0]</text>\n"
+                append res "<text x=\"[expr {$cx+$boxw+40}]\" y=\"[expr {$cy-$boxh-40+60}]\" class=\"normal\" text-anchor=\"left\">[lindex $txts 1]</text>\n"
+            }
+        }
+        
+    }
+    append res [::tblocks::footer]
+    return "$res"
+    
+}
 proc ::tblocks::blocks {fonts colors lines n m} {
     set width 500
     set height 320
@@ -975,6 +1051,16 @@ proc ::tblocks::main {argv} {
         }
         return
     } 
+    if  {$mode eq "flow-lr"} {
+        puts $out [::tblocks::flow-lr $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
+        }
+        return
+    } 
     if  {$mode eq "compare"} {
         puts $out [::tblocks::compare $fonts $colors $lines $n $maxnn $max]
         if {$out ne "stdout"} {
@@ -1144,7 +1230,7 @@ proc ::tblocks::main {argv} {
         ::tblocks::svg2pdf $outfile $pdffile
     }
 }
-package provide tblocks 0.0.10
+package provide tblocks 0.0.11
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv
