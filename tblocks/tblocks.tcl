@@ -32,7 +32,7 @@ Options:
     --help,-h        - display this help page
     --mode=MODE      - the type of output diagram, current diagram types are
                        boxes, flow-lr, iblocks, inout, linegraph, sequence, 
-                       table, timeline
+                       table, timeline, ttable
     --mono-font=FONT          - a monospaced font from fonts.bunny.net               
     --sans-font=FONT          - a sans serif font from fonts.bunny.net
     --colorN="COL1 COL2 COL3" - setting the color N for the diagram, color1 sets
@@ -263,7 +263,7 @@ proc ::tblocks::pargs {} {
         if {[lsearch $argv --mode*] > -1} {
             set idx [lsearch $argv --mode*]
             set mode [regsub {.+=} [lindex $argv $idx] ""]
-            if {$mode ni [list table flow-lr inout iblocks itable boxes sequence toc timeline linegraph]}  {
+            if {$mode ni [list table flow-lr inout iblocks itable boxes sequence toc timeline linegraph ttable]}  {
                 puts "Error: unkown mode $mode!"
                 ::tblocks::usage
                 exit 0
@@ -581,6 +581,34 @@ proc ::tblocks::iblocks {fonts colors lines n m} {
     return "$res"
 }
 
+proc ::tblocks::ttable {fonts colors lines n m} {
+    set unit 400
+    set width [expr {$unit*$n}]
+    set height [expr {100+($m-0.75)*30}]
+    set boxw 360
+    set boxh [expr {$height-20}]
+    set cn 0
+    append res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
+    foreach line $lines {
+        if {[regexp {^## } $line]} {
+            set txt [regsub {^## +} $line ""]
+            set cx [expr {$unit*$cn+20}]
+            set cy 20
+            append res "<rect  x=\"$cx\" y=\"$cy\" width=\"$boxw\" height=\"$boxh\" rx=\"0\" ry=\"0\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"#F6F6F6\"/>\n"
+            append res "<rect  x=\"$cx\" y=\"$cy\" width=\"$boxw\" height=\"30\" rx=\"0\" ry=\"0\"  stroke-width=\"2\" stroke=\"#888888\" fill=\"[lindex $colors [expr {$cn+1}] 1]\"/>\n"
+            append res "<text x=\"[expr {$cx+0.5*$boxw}]\" y=\"90\" class=\"header\" text-anchor=\"middle\">$txt</text>\n"
+            set cy 120
+            incr cn
+        } elseif {[regexp {[a-zA-Z]} $line]} {
+            append res "<text x=\"[expr {$cx+0.5*$boxw}]\" y=\"$cy\" class=\"normal\" text-anchor=\"middle\">$line</text>\n"
+            incr cy 30
+        } else {
+            incr cy 30
+        }
+    }
+    append res [::tblocks::footer]
+    return "$res"
+}
 proc ::tblocks::flow-lr {fonts colors lines n m} {
     set unit 400
     set boxh 80
@@ -1053,6 +1081,16 @@ proc ::tblocks::main {argv} {
     } 
     if  {$mode eq "flow-lr"} {
         puts $out [::tblocks::flow-lr $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
+        }
+        return
+    } 
+    if  {$mode eq "ttable"} {
+        puts $out [::tblocks::ttable $fonts $colors $lines $n $max]
         if {$out ne "stdout"} {
             close $out
         }
