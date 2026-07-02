@@ -1,3 +1,7 @@
+---
+mode: table
+---
+
 ## DO icon:yes
 
 - DO use references (&) instead of 
