@@ -25,3 +25,4 @@ example:
 	tclsh tblocks/tblocks.tcl --mode=boxes examples/cpp-func.md assets/cpp-func.svg
 	tclsh tblocks/tblocks.tcl --mode=sequence examples/sequence.md assets/sequence.svg	
 	tclsh tblocks/tblocks.tcl --mode=inout examples/flow.md assets/flow.svg
+	tclsh tblocks/tblocks.tcl --mode=circular examples/circular.md assets/circular.svg

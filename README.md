@@ -198,6 +198,37 @@ Click on the images to see the source code:
 
 [<img src="assets/flow-lr.svg" width="320" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/flow-lr.md)
 [<img src="assets/ttable.svg" width="320" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/ttable.md)
+[<img src="assets/circular.svg" width="320" />](https://raw.githubusercontent.com/mittelmark/tblocks/main/examples/circular.md)
+
+### Circular Diagram
+
+The `circular` mode places a central `#` heading in a large circle. Each `##`
+heading is a numbered subsection around it, with the text beneath the heading
+centered. Use ` :: ` in the central heading to wrap it across two lines.
+
+```md
+---
+mode: circular
+color1: "#17452d" "#ddf5df" "#86c99a"
+---
+
+# 1. Sustainable :: Development
+
+## 1.1 Social
+Support fair access and inclusive participation.
+
+## 1.2 Economic
+Build durable value and resilient processes.
+
+## 1.3 Environmental
+Reduce waste and preserve natural resources.
+```
+
+Generate the diagram with:
+
+```sh
+tclsh tblocks/tblocks.tcl --mode=circular circular.md circular.svg
+```
 
 
 ## Embedding into LaTeX
@@ -267,6 +298,7 @@ Tcl programming language installed on your machine.
 
 ## Changes
 
+- 2026-11-20 version 0.1.0 - adding circular diagram type
 - 2026-06-10 version 0.0.11 - adding flow-lr, ttable diagram types
 - 2026-06-29 version 0.0.10 - tweaking itable output to make it less wide, fixing missing command line message 
 - 2026-06-23 version 0.0.9 - adding compare diagram type, making itable more flexible with height determining and text wrapping

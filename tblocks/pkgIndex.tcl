@@ -1,2 +1,2 @@
 #!/usr/bin/env tclsh
-package ifneeded tblocks 0.0.11 [list source [file join $dir tblocks.tcl]]
+package ifneeded tblocks 0.1.0 [list source [file join $dir tblocks.tcl]]

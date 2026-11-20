@@ -148,4 +148,192 @@ There can be as well some more text
 in the lines below of the list.
 ```
 
+## Diagram Types
+
+The `mode` entry in the YAML header selects a diagram layout. The following
+examples show layouts which are useful beyond the default block diagram.
+
+### Sequence
+
+The `sequence` layout presents a row of steps and can place a small icon in a
+heading:
+
+```{.shell label=sequence1 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg fig.width=900}
+---
+mode: sequence
+---
+
+## Prepare
+
+- Collect the input
+- Validate the data
+
+## Process icon:yes
+
+- Apply the calculation
+- Store the result
+
+## Finish
+
+- Review the output
+- Report success
+```
+
+### Table
+
+The `table` layout places two or more titled columns next to each other. Each
+item should be a Markdown list entry:
+
+```{.shell label=table1 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg fig.width=900}
+---
+mode: table
+---
+
+## DO icon:yes
+
+- Use references for read-only parameters.
+- Keep class variables private.
+- Prefer standard-library containers.
+
+## DON'T icon:no
+
+- Pass large objects by value.
+- Use C strings when std::string is available.
+- Leave data members public in a class.
+```
+
+### Input and Output
+
+The `inout` layout is intended for an input, a processing function, and an
+output:
+
+```{.shell label=inout1 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg fig.width=700}
+---
+mode: inout
+---
+
+## KNOWN
+
+Input
+
+The data available
+at the start.
+
+## UNKNOWN
+
+Function
+
+The transformation
+to be developed.
+
+## KNOWN
+
+Output
+
+The expected result
+after processing.
+```
+
+### Timeline
+
+The `timeline` layout distributes dated or ordered events along a horizontal
+timeline:
+
+```{.shell label=timeline1 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg fig.width=900}
+---
+mode: timeline
+---
+
+## 1. Planning
+
+2024 - Requirements
+2025 - First prototype
+
+## 2. Development
+
+2025 - Implementation
+2026 - Integration
+
+## 3. Release
+
+2026 - Documentation
+2026 - Public release
+```
+
+### Comparison
+
+The `compare` layout uses `###` subheadings for labeled parts of each item:
+
+```{.shell label=compare1 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg fig.width=900}
+---
+mode: compare
+---
+
+## Inheritance (Is-A)
+
+### Definition
+
+Class B is a subtype of class A.
+
+### Implementation
+
+Reuse and specialize inherited behavior.
+
+## Composition (Has-A)
+
+### Definition
+
+Class B contains or delegates to class A.
+
+### Implementation
+
+Combine independent components.
+```
+
+### Circular
+
+The `circular` layout uses one top-level `#` heading for the central circle
+and one or more `##` headings for surrounding subsections. Three, four, and
+five subsections use compact fixed layouts; additional subsections are placed
+around the circle:
+
+```{.shell label=circular1 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg fig.width=900}
+---
+mode: circular
+---
+
+# 1. Core Topic :: With Two Lines
+
+## 1.1 First Area
+The first subsection is centered below
+its heading.
+
+## 1.2 Second Area
+The next subsection is placed clockwise.
+
+## 1.3 Third Area
+The remaining subsections follow around
+the central circle.
+```
+
+A second circular diagram can use a pastel palette by overriding `color1`
+with text, fill, and border colors:
+
+```{.shell label=circular2 cmd="tclsh ../tblocks/tblocks.tcl %i %b.svg" chunk.ext=md ext=svg fig.width=900}
+---
+mode: circular
+color1: "#17452d" "#ddf5df" "#86c99a"
+---
+
+# 1. Sustainable :: Development
+
+## 1.1 Social
+Support fair access and inclusive participation.
+
+## 1.2 Economic
+Build durable value and resilient processes.
+
+## 1.3 Environmental
+Reduce waste and preserve natural resources.
+```
 

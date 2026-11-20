@@ -31,8 +31,8 @@ Arguments:
 Options:
     --help,-h        - display this help page
     --mode=MODE      - the type of output diagram, current diagram types are
-                       boxes, flow-lr, iblocks, inout, linegraph, sequence, 
-                       table, timeline, ttable
+                       boxes, circular, flow-lr, iblocks, inout, linegraph,
+                       sequence, table, timeline, ttable
     --mono-font=FONT          - a monospaced font from fonts.bunny.net               
     --sans-font=FONT          - a sans serif font from fonts.bunny.net
     --colorN="COL1 COL2 COL3" - setting the color N for the diagram, color1 sets
@@ -263,7 +263,7 @@ proc ::tblocks::pargs {} {
         if {[lsearch $argv --mode*] > -1} {
             set idx [lsearch $argv --mode*]
             set mode [regsub {.+=} [lindex $argv $idx] ""]
-            if {$mode ni [list table flow-lr inout iblocks itable boxes sequence toc timeline linegraph ttable]}  {
+            if {$mode ni [list table circular flow-lr inout iblocks itable boxes sequence toc timeline linegraph ttable]}  {
                 puts "Error: unkown mode $mode!"
                 ::tblocks::usage
                 exit 0
@@ -912,7 +912,115 @@ proc ::tblocks::hexicons {fonts colors lines n m} {
         }
     }
 }
-    
+
+proc ::tblocks::circular {fonts colors lines n m} {
+    set width 1200
+    set height 700
+    set res [::tblocks::header $height $width -font $fonts -colors [lindex $colors 0]]
+    set maintitle ""
+    set sectitles [list]
+    set sectbodies [list]
+    set current -1
+
+    foreach line $lines {
+        if {[regexp {^# [^#]} $line]} {
+            set maintitle [string trim [regsub {^# +} $line ""]]
+        } elseif {[regexp {^## } $line]} {
+            set title [string trim [regsub {^## +} $line ""]]
+            lappend sectitles $title
+            lappend sectbodies [list]
+            set current [expr {[llength $sectitles]-1}]
+        } elseif {$current >= 0} {
+            set body [string trim $line]
+            if {$body ne ""} {
+                set bodies [lindex $sectbodies $current]
+                lappend bodies $body
+                lset sectbodies $current $bodies
+            }
+        }
+    }
+
+    set cx 600
+    set cy 350
+    set centerR 145
+
+    set sectionCount [llength $sectitles]
+    set positions [list]
+    if {$sectionCount == 5} {
+        set positions [list [list 600 75] [list 930 190] [list 930 430] [list 270 430] [list 270 190]]
+    } elseif {$sectionCount == 4} {
+        set positions [list [list 600 85] [list 930 350] [list 600 585] [list 270 350]]
+    } elseif {$sectionCount == 3} {
+        set positions [list [list 600 85] [list 930 430] [list 270 430]]
+    } else {
+        for {set i 0} {$i < $sectionCount} {incr i} {
+            set angle [expr {$i*2*3.141592653589793/$sectionCount-3.141592653589793/2}]
+            set px [expr {int($cx+350*cos($angle))}]
+            set py [expr {int($cy+245*sin($angle))}]
+            lappend positions [list $px $py]
+        }
+    }
+
+    set lineColor [lindex [lindex $colors 1] 0]
+    for {set i 0} {$i < $sectionCount} {incr i} {
+        set position [lindex $positions $i]
+        set px [lindex $position 0]
+        set py [lindex $position 1]
+
+        set dx [expr {($px-$cx)/hypot($px-$cx,$py-$cy)}]
+        set dy [expr {($py-$cy)/hypot($px-$cx,$py-$cy)}]
+        set sx [expr {int($cx+$dx*$centerR)}]
+        set sy [expr {int($cy+$dy*$centerR)}]
+        set ex [expr {int($sx+$dx*50)}]
+        set ey [expr {int($sy+$dy*50)}]
+        append res "<line x1=\"$sx\" y1=\"$sy\" x2=\"$ex\" y2=\"$ey\" stroke=\"$lineColor\" stroke-width=\"7\" stroke-linecap=\"round\" />\n"
+    }
+    append res "<circle cx=\"$cx\" cy=\"$cy\" r=\"$centerR\" fill=\"[lindex [lindex $colors 1] 1]\" stroke=\"[lindex [lindex $colors 1] 2]\" stroke-width=\"2\" />\n"
+
+    for {set i 0} {$i < $sectionCount} {incr i} {
+        set position [lindex $positions $i]
+        set px [lindex $position 0]
+        set py [lindex $position 1]
+
+        set title [lindex $sectitles $i]
+        set titleLines [splitNN $title 28]
+        set ty [expr {$py-12}]
+        foreach titleLine $titleLines {
+            append res [::tblocks::text $px $ty [string trim $titleLine] header middle]
+            incr ty 34
+        }
+
+        set bodies [lindex $sectbodies $i]
+        set bodyLines [list]
+        foreach bodyLine $bodies {
+            foreach wrapped [splitNN $bodyLine 42] {
+                lappend bodyLines [string trim $wrapped]
+            }
+        }
+        set by [expr {$ty+8}]
+        foreach bodyLine $bodyLines {
+            append res [::tblocks::text $px $by $bodyLine normal middle]
+            incr by 30
+        }
+    }
+
+    set mainLines [list]
+    if {[regexp {^(.+) :: (.+)$} $maintitle -> first second]} {
+        lappend mainLines [string trim $first]
+        lappend mainLines [string trim $second]
+    } else {
+        set mainLines [splitNN $maintitle 18]
+    }
+    set mainY [expr {$cy-(([llength $mainLines]-1)*17)}]
+    foreach mainLine $mainLines {
+        append res [::tblocks::text $cx $mainY [string trim $mainLine] header middle]
+        incr mainY 34
+    }
+
+    append res [::tblocks::footer]
+    return $res
+}
+
 proc ::tblocks::timeline {fonts colors lines n m} {
     set height [expr {210+($m*30)}]
     set width [expr {$n*400}]
@@ -1078,7 +1186,17 @@ proc ::tblocks::main {argv} {
             ::tblocks::svg2pdf $outfile $pdffile
         }
         return
-    } 
+    }
+    if {$mode eq "circular"} {
+        puts $out [::tblocks::circular $fonts $colors $lines $n $max]
+        if {$out ne "stdout"} {
+            close $out
+        }
+        if {$pdffile ne ""} {
+            ::tblocks::svg2pdf $outfile $pdffile
+        }
+        return
+    }
     if  {$mode eq "flow-lr"} {
         puts $out [::tblocks::flow-lr $fonts $colors $lines $n $max]
         if {$out ne "stdout"} {
@@ -1268,7 +1386,7 @@ proc ::tblocks::main {argv} {
         ::tblocks::svg2pdf $outfile $pdffile
     }
 }
-package provide tblocks 0.0.11
+package provide tblocks 0.1.0
 if {[info exists argv0] && $argv0 eq [info script]} {
     if {[lsearch -regex $argv {(-h|--help)}] > -1} {
         ::tblocks::help $argv0 $argv
